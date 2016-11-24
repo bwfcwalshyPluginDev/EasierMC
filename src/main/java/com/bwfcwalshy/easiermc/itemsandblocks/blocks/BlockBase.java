@@ -1,6 +1,6 @@
-package com.bwfcwalshy.easiermc.blocks;
+package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,24 +9,13 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public interface BlockBase {
+public interface BlockBase extends EasierMCBase {
 
     Random rand = new Random();
-
-    String getSimpleName();
-
-    String getName();
-
-    Category getCategory();
-
-    ItemStack getItem();
-
-    Recipe getRecipe();
 
     void tick(Location location);
 

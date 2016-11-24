@@ -1,6 +1,6 @@
-package com.bwfcwalshy.easiermc.blocks;
+package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.CustomHead;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

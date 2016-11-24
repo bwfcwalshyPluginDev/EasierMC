@@ -1,6 +1,6 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

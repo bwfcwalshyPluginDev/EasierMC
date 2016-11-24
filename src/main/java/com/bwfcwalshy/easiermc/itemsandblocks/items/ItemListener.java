@@ -1,4 +1,4 @@
-package com.bwfcwalshy.easiermc.items;
+package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

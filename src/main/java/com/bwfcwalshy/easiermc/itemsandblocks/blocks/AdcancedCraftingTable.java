@@ -1,26 +1,25 @@
-package com.bwfcwalshy.easiermc.blocks;
+package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.Category;
-import org.bukkit.ChatColor;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-public class Generator implements BlockBase {
+public class AdcancedCraftingTable implements BlockBase {
 
     @Override
     public String getSimpleName() {
-        return "Generator";
+        return null;
     }
 
     @Override
     public String getName() {
-        return ChatColor.GRAY + "Generator";
+        return null;
     }
 
     @Override
     public Category getCategory() {
-        return Category.MACHINE;
+        return null;
     }
 
     @Override

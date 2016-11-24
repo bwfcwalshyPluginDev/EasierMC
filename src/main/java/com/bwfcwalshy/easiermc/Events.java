@@ -1,6 +1,6 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

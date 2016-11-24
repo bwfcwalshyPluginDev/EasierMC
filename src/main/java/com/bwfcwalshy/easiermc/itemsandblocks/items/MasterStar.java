@@ -1,6 +1,6 @@
-package com.bwfcwalshy.easiermc.items;
+package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
-import com.bwfcwalshy.easiermc.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;

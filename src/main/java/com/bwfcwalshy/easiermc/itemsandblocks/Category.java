@@ -1,7 +1,6 @@
-package com.bwfcwalshy.easiermc;
+package com.bwfcwalshy.easiermc.itemsandblocks;
 
-import com.bwfcwalshy.easiermc.blocks.BlockBase;
-import com.bwfcwalshy.easiermc.items.ItemBase;
+import com.bwfcwalshy.easiermc.Handler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -23,12 +22,7 @@ public enum Category {
 
     public static Category[] values = values();
 
-    Category(BlockBase displayItem, String name){
-        this.displayItem = displayItem.getItem();
-        this.categoryName = name;
-    }
-
-    Category(ItemBase displayItem, String name){
+    Category(EasierMCBase displayItem, String name){
         this.displayItem = displayItem.getItem();
         this.categoryName = name;
     }

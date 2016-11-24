@@ -1,11 +1,9 @@
-package com.bwfcwalshy.easiermc.items;
+package com.bwfcwalshy.easiermc.itemsandblocks;
 
-import com.bwfcwalshy.easiermc.Category;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-public interface ItemBase {
+public interface EasierMCBase {
 
     String getName();
 
@@ -16,6 +14,4 @@ public interface ItemBase {
     ItemStack getItem();
 
     Recipe getRecipe();
-
-    void onInteract(PlayerInteractEvent e);
 }

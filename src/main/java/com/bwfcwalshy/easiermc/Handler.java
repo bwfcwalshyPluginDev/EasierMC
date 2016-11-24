@@ -1,10 +1,11 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.blocks.AutoShear;
-import com.bwfcwalshy.easiermc.blocks.BlockBase;
-import com.bwfcwalshy.easiermc.blocks.BlockBreaker;
-import com.bwfcwalshy.easiermc.blocks.WellMiner;
-import com.bwfcwalshy.easiermc.items.ItemBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -16,13 +17,14 @@ import java.util.Set;
 
 public class Handler {
 
-    private Set<BlockBase> registry;
+    private Set<BlockBase> blockRegistery;
+    private Set<ItemBase> itemRegistery;
     private Map<Location, BlockBase> blocks;
     private static Handler instance;
 
     public Handler(){
         blocks = new HashMap<>();
-        registry = new HashSet<>();
+        blockRegistery = new HashSet<>();
 
         instance = this;
     }
@@ -41,11 +43,15 @@ public class Handler {
     }
 
     private void registerBlock(BlockBase block){
-        this.registry.add(block);
+        this.blockRegistery.add(block);
+    }
+
+    private void registerItem(ItemBase item){
+        this.itemRegistery.add(item);
     }
 
     public boolean isBlock(ItemStack is){
-        for(BlockBase block : registry){
+        for(BlockBase block : blockRegistery){
             if(block.getItem().isSimilar(is))
                 return true;
         }
@@ -62,10 +68,8 @@ public class Handler {
      * @return The BlockBase of that ItemStack if found, null otherwise.
      */
     public BlockBase getBlock(ItemStack is){
-        for(BlockBase block : registry){
-            if(block.getItem().isSimilar(is))
-                return block;
-        }
+        for(BlockBase block : blockRegistery)
+            if(block.getItem().isSimilar(is)) return block;
         return null;
     }
 
@@ -75,7 +79,7 @@ public class Handler {
      * @return The BlockBase of that simple name if found, null otherwise.
      */
     public BlockBase getBlock(String simpleName) {
-        for(BlockBase block : registry)
+        for(BlockBase block : blockRegistery)
             if(block.getSimpleName().equalsIgnoreCase(simpleName)) return block;
         return null;
     }
@@ -104,11 +108,14 @@ public class Handler {
         registerBlock(new BlockBreaker());
         registerBlock(new AutoShear());
         registerBlock(new WellMiner());
+
+        registerItem(new MasterStar());
     }
 
     // This is best to call after the register blocks since this uses the registry.
     public void registerRecipes(){
-        registry.forEach(block -> { if(block.getRecipe() != null) Bukkit.addRecipe(block.getRecipe()); });
+        blockRegistery.forEach(block -> { if(block.getRecipe() != null) Bukkit.addRecipe(block.getRecipe()); });
+        itemRegistery.forEach(item -> { if(item.getRecipe() != null) Bukkit.addRecipe(item.getRecipe()); });
     }
 
     public Map<Location, BlockBase> getBlocks() {
