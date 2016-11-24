@@ -1,0 +1,102 @@
+package com.bwfcwalshy.easiermc;
+
+import com.bwfcwalshy.easiermc.blocks.AutoShear;
+import com.bwfcwalshy.easiermc.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.blocks.BlockBreaker;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
+import com.bwfcwalshy.easiermc.blocks.WellMiner;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class Handler {
+
+    private Set<BlockBase> registry;
+    private Map<Location, BlockBase> blocks;
+    private static Handler instance;
+
+    public Handler(){
+        blocks = new HashMap<>();
+        registry = new HashSet<>();
+
+        instance = this;
+    }
+
+    public static Handler getInstance(){
+        return instance;
+    }
+
+    public void addBlock(BlockBase block, Location loc){
+        this.blocks.put(loc, block);
+    }
+
+    public void removeBlock(Location location) {
+        if(this.blocks.containsKey(location))
+            this.blocks.remove(location);
+    }
+
+    private void registerBlock(BlockBase block){
+        this.registry.add(block);
+    }
+
+    public boolean isBlock(ItemStack is){
+        for(BlockBase block : registry){
+            if(block.getItem().isSimilar(is))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isBlock(Location loc){
+        return blocks.containsKey(loc);
+    }
+
+    /**
+     * Get a BlockBase from the ItemStack, this will return null if no block is found un the registery.
+     * @param is ItemStack of the BlockBase.
+     * @return The BlockBase of that ItemStack if found, null otherwise.
+     */
+    public BlockBase getBlock(ItemStack is){
+        for(BlockBase block : registry){
+            if(block.getItem().isSimilar(is))
+                return block;
+        }
+        return null;
+    }
+
+    /**
+     * Get a block by it's simple name, for example "BlockBreaker" will return the BlockBreaker instance.
+     * @param string The blocks simple name.
+     * @return The BlockBase of that simple name if found, null otherwise.
+     */
+    public BlockBase getBlock(String string) {
+        for(BlockBase block : registry)
+            if(block.getSimpleName().equalsIgnoreCase(string)) return block;
+        return null;
+    }
+
+    public BlockBase getBlock(Location location) {
+        if(blocks.containsKey(location))
+            return blocks.get(location);
+        return null;
+    }
+
+    public void registerBlocks() {
+        registerBlock(new BlockBreaker());
+        registerBlock(new AutoShear());
+        registerBlock(new WellMiner());
+    }
+
+    // This is best to call after the register blocks since this uses the registry.
+    public void registerRecipes(){
+        registry.forEach(block -> { if(block.getRecipe() != null) Bukkit.addRecipe(block.getRecipe()); });
+    }
+
+    public Map<Location, BlockBase> getBlocks() {
+        return blocks;
+    }
+}
