@@ -3,10 +3,11 @@ package com.bwfcwalshy.easiermc;
 import com.bwfcwalshy.easiermc.blocks.AutoShear;
 import com.bwfcwalshy.easiermc.blocks.BlockBase;
 import com.bwfcwalshy.easiermc.blocks.BlockBreaker;
+import com.bwfcwalshy.easiermc.blocks.WellMiner;
+import com.bwfcwalshy.easiermc.items.ItemBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import com.bwfcwalshy.easiermc.blocks.WellMiner;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -70,18 +71,32 @@ public class Handler {
 
     /**
      * Get a block by it's simple name, for example "BlockBreaker" will return the BlockBreaker instance.
-     * @param string The blocks simple name.
+     * @param simpleName The blocks simple name.
      * @return The BlockBase of that simple name if found, null otherwise.
      */
-    public BlockBase getBlock(String string) {
+    public BlockBase getBlock(String simpleName) {
         for(BlockBase block : registry)
-            if(block.getSimpleName().equalsIgnoreCase(string)) return block;
+            if(block.getSimpleName().equalsIgnoreCase(simpleName)) return block;
         return null;
     }
 
+    /**
+     * Get a block by a location, this has to be a location of a BlockBase otherwise this will return null!
+     * @param location Location of the block you are trying to get.
+     * @return Return the BlockBase at the passed location, null otherwise.
+     */
     public BlockBase getBlock(Location location) {
         if(blocks.containsKey(location))
             return blocks.get(location);
+        return null;
+    }
+
+    /**
+     * Get an item by it's simple name, for example "MasterStar" will return the MasterStar instance.
+     * @param simpleName Simple name of the item.
+     * @return Return the item of that simple name if found, null otherwise.
+     */
+    public ItemBase getItem(String simpleName) {
         return null;
     }
 
