@@ -1,5 +1,6 @@
 package com.bwfcwalshy.easiermc.itemsandblocks;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
@@ -14,4 +15,8 @@ public interface EasierMCBase {
     ItemStack getItem();
 
     Recipe getRecipe();
+
+    default AdvancedRecipe getAdvancedRecipe(){
+        return null;
+    }
 }

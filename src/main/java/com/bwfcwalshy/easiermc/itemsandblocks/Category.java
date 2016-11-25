@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public enum Category {
 
-    BLOCKS(getHandler().getMuiltiBlock("AdvancedCraftingTable"), ChatColor.AQUA + "Blocks"),
+    BLOCKS(new ItemStack(Material.WORKBENCH), ChatColor.AQUA + "Blocks"),
     BASIC_MACHINE(getHandler().getBlock("BlockBreaker"), ChatColor.DARK_GRAY + "Basic Machines"),
     MACHINE(getHandler().getBlock("Generator"), ChatColor.GRAY + "Machines"),
     WEAPONS(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Weapons"),

@@ -6,6 +6,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
+import nl.shanelab.multiblock.MultiBlockFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +24,9 @@ public class Handler {
     private Map<Location, BlockBase> blocks;
     private static Handler instance;
 
-    public Handler(){
+    private EasierMC main;
+    public Handler(EasierMC easierMC){
+        this.main = easierMC;
         blocks = new HashMap<>();
         blockRegistery = new HashSet<>();
         itemRegistery = new HashSet<>();
@@ -55,6 +58,7 @@ public class Handler {
 
     private void registerMultiBlock(MultiBlock multiblock) {
         this.multiBlockRegistery.add(multiblock);
+        MultiBlockFactory.INSTANCE.register(main, multiblock.getClass());
     }
 
     public boolean isBlock(ItemStack is){
@@ -118,7 +122,7 @@ public class Handler {
      * @param simpleName Simple name of the multiblock structure.
      * @return Returns the multiblock structure of that name if found, null otherwise.
      */
-    public ItemStack getMuiltiBlock(String simpleName) {
+    public MultiBlock getMuiltiBlock(String simpleName) {
         for(MultiBlock multiblock : multiBlockRegistery)
             if(multiblock.getSimpleName().equalsIgnoreCase(simpleName)) return multiblock;
         return null;

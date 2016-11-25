@@ -21,7 +21,7 @@ public class EasierMC extends JavaPlugin {
         if(!new File(getDataFolder(), "config.yml").exists())
             saveDefaultConfig();
 
-        handler = new Handler();
+        handler = new Handler(this);
         handler.registerBlocks();
         handler.registerRecipes();
 

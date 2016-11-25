@@ -1,13 +1,13 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.Arrays;
 
@@ -36,7 +36,12 @@ public class Generator implements BlockBase {
 
     @Override
     public Recipe getRecipe() {
-        return new ShapedRecipe(getItem()).shape(" i ", "rrr", "   ").setIngredient('i', Material.IRON_BLOCK).setIngredient('r', Material.IRON_INGOT);
+        return null;
+    }
+
+    @Override
+    public AdvancedRecipe getAdvancedRecipe(){
+        return new AdvancedRecipe(getItem(), " i ", "rrr", "   ").setIngredient('i', Material.IRON_BLOCK).setIngredient('r', Material.IRON_INGOT);
     }
 
     @Override
