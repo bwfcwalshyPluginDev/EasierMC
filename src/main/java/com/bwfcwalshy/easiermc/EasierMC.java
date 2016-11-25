@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -24,6 +25,8 @@ public class EasierMC extends JavaPlugin {
         handler.registerBlocks();
         handler.registerRecipes();
 
+        getCommand("easiermc").setExecutor(new EasierMCCommand());
+
         getServer().getPluginManager().registerEvents(new Events(this), this);
 
         tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
@@ -34,7 +37,22 @@ public class EasierMC extends JavaPlugin {
                 handler.addBlock(handler.getBlock(getConfig().getString("Blocks." + s + ".Block")), getLocationFromString(s));
             }
         }
-        System.out.println("Loaded " + handler.getBlocks().size() + " blocks!");
+
+        getLogger().info("*********************************");
+        getLogger().info("* EasierMC has finished loading *");
+        getLogger().info("*                               *");
+        String spacing = StringUtils.repeat(" ", getSpacing("Registered " + handler.getBlockRegistery().size() + " blocks"));
+        getLogger().info("*" + spacing + "Registered " + handler.getBlockRegistery().size() + " blocks" + spacing + "*");
+        spacing = StringUtils.repeat(" ", getSpacing("Registered " + handler.getItemRegistery().size() + " items"));
+        getLogger().info("*" + spacing + "Registered " + handler.getItemRegistery().size() + " items" + spacing + "*");
+        getLogger().info("*                               *");
+        spacing = StringUtils.repeat(" ", getSpacing("Loaded " + handler.getBlocks().size() + " blocks!"));
+        getLogger().info("*" + spacing + "Loaded " + handler.getBlocks().size() + " blocks!" + spacing + "*");
+        getLogger().info("*********************************");
+    }
+
+    public int getSpacing(String s){
+        return (31 - s.length()) / 2;
     }
 
     @Override

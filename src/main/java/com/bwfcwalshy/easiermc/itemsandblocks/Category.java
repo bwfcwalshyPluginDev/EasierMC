@@ -10,17 +10,18 @@ import java.util.Arrays;
 
 public enum Category {
 
+    BLOCKS(getHandler().getMuiltiBlock("AdvancedCraftingTable"), ChatColor.AQUA + "Blocks"),
     BASIC_MACHINE(getHandler().getBlock("BlockBreaker"), ChatColor.DARK_GRAY + "Basic Machines"),
     MACHINE(getHandler().getBlock("Generator"), ChatColor.GRAY + "Machines"),
     WEAPONS(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Weapons"),
     MISC(getHandler().getItem("MasterStar"), ChatColor.AQUA + "Miscellaneous");
 
-    private static Handler handler = Handler.getInstance();
+    private static Handler handler;
 
     private ItemStack displayItem;
     private String categoryName;
 
-    public static Category[] values = values();
+    public static final Category[] values = values();
 
     Category(EasierMCBase displayItem, String name){
         this.displayItem = displayItem.getItem();
@@ -33,10 +34,16 @@ public enum Category {
     }
 
     private static Handler getHandler(){
+        if(handler == null) handler = Handler.getInstance();
         return handler;
     }
 
+    public static Category[] getValues() {
+        return values;
+    }
+
     public ItemStack getDisplayItem(){
+        System.out.println(displayItem);
         ItemStack is = new ItemStack(displayItem.getType());
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(categoryName);

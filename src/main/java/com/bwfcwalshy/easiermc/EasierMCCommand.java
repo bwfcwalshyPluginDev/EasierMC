@@ -37,9 +37,10 @@ public class EasierMCCommand implements CommandExecutor {
     private Inventory recipeInventory;
     private void openInventory(Player player){
         if(recipeInventory == null){
-            recipeInventory = Bukkit.createInventory(null, 9*(Math.round(Category.values.length / 9)));
+            recipeInventory = Bukkit.createInventory(null, 9*(Math.round(Category.getValues().length / 9)));
 
-            for(Category category : Category.values){
+            for(Category category : Category.getValues()){
+                System.out.println(category.getCategoryName());
                 recipeInventory.addItem(category.getDisplayItem());
             }
         }

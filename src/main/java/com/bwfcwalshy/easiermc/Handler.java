@@ -1,11 +1,11 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +19,15 @@ public class Handler {
 
     private Set<BlockBase> blockRegistery;
     private Set<ItemBase> itemRegistery;
+    private Set<MultiBlock> multiBlockRegistery;
     private Map<Location, BlockBase> blocks;
     private static Handler instance;
 
     public Handler(){
         blocks = new HashMap<>();
         blockRegistery = new HashSet<>();
+        itemRegistery = new HashSet<>();
+        multiBlockRegistery = new HashSet<>();
 
         instance = this;
     }
@@ -48,6 +51,10 @@ public class Handler {
 
     private void registerItem(ItemBase item){
         this.itemRegistery.add(item);
+    }
+
+    private void registerMultiBlock(MultiBlock multiblock) {
+        this.multiBlockRegistery.add(multiblock);
     }
 
     public boolean isBlock(ItemStack is){
@@ -87,7 +94,7 @@ public class Handler {
     /**
      * Get a block by a location, this has to be a location of a BlockBase otherwise this will return null!
      * @param location Location of the block you are trying to get.
-     * @return Return the BlockBase at the passed location, null otherwise.
+     * @return Returns the BlockBase at the passed location, null otherwise.
      */
     public BlockBase getBlock(Location location) {
         if(blocks.containsKey(location))
@@ -98,9 +105,22 @@ public class Handler {
     /**
      * Get an item by it's simple name, for example "MasterStar" will return the MasterStar instance.
      * @param simpleName Simple name of the item.
-     * @return Return the item of that simple name if found, null otherwise.
+     * @return Returns the item of that simple name if found, null otherwise.
      */
     public ItemBase getItem(String simpleName) {
+        for(ItemBase item : itemRegistery)
+            if(item.getSimpleName().equalsIgnoreCase(simpleName)) return item;
+        return null;
+    }
+
+    /**
+     * get a multiblock structure by it's simple name, for example "AdvancedCraftingTable" will return the AdvancedCraftingTable multiblock instance.
+     * @param simpleName Simple name of the multiblock structure.
+     * @return Returns the multiblock structure of that name if found, null otherwise.
+     */
+    public ItemStack getMuiltiBlock(String simpleName) {
+        for(MultiBlock multiblock : multiBlockRegistery)
+            if(multiblock.getSimpleName().equalsIgnoreCase(simpleName)) return multiblock;
         return null;
     }
 
@@ -108,8 +128,12 @@ public class Handler {
         registerBlock(new BlockBreaker());
         registerBlock(new AutoShear());
         registerBlock(new WellMiner());
+        registerBlock(new Generator());
 
         registerItem(new MasterStar());
+        registerItem(new ReinforcedStick());
+
+        registerMultiBlock(new AdvancedCraftingTable());
     }
 
     // This is best to call after the register blocks since this uses the registry.
@@ -120,5 +144,13 @@ public class Handler {
 
     public Map<Location, BlockBase> getBlocks() {
         return blocks;
+    }
+
+    public Set<BlockBase> getBlockRegistery() {
+        return blockRegistery;
+    }
+
+    public Set<ItemBase> getItemRegistery() {
+        return itemRegistery;
     }
 }
