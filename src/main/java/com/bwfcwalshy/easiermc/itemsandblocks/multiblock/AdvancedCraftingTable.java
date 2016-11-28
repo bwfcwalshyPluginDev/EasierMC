@@ -11,8 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nonnull;
-
 public class AdvancedCraftingTable implements MultiBlock {
 
     @Override
@@ -34,7 +32,6 @@ public class AdvancedCraftingTable implements MultiBlock {
         }
     }
 
-    @Nonnull
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
         return new MultiBlockPattern(Material.WORKBENCH, new PatternBlock(Material.DISPENSER, 0, -1, 0));

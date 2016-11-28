@@ -25,6 +25,12 @@ public class ItemStackBuilder {
         im.setDisplayName(name);
     }
 
+    public ItemStackBuilder(Material material, String name){
+        is = new ItemStack(material);
+        im = is.getItemMeta();
+        im.setDisplayName(name);
+    }
+
     public ItemStackBuilder(String skullURL, String name){
         is = CustomHead.getSkull(skullURL);
         im = is.getItemMeta();

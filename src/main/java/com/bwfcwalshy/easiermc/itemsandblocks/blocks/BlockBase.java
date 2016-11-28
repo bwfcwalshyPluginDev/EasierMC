@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Item;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -17,7 +18,13 @@ public interface BlockBase extends EasierMCBase {
 
     Random rand = new Random();
 
-    void tick(Location location);
+    default void tick(Location location){
+        return;
+    }
+
+    default void onInteract(PlayerInteractEvent e){
+        return;
+    }
 
     default void tryToStore(Location location, ItemStack toStore) {
         Random rand = new Random();

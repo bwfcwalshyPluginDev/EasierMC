@@ -43,7 +43,6 @@ public enum Category {
     }
 
     public ItemStack getDisplayItem(){
-        System.out.println(displayItem);
         ItemStack is = new ItemStack(displayItem.getType());
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(categoryName);
@@ -54,5 +53,17 @@ public enum Category {
 
     public String getCategoryName(){
         return this.categoryName;
+    }
+
+    public static Category getCategory(ItemStack currentItem) {
+        for(Category c : values)
+            if(c.getDisplayItem().equals(currentItem)) return c;
+        return null;
+    }
+
+    public static boolean isCategory(String name) {
+        for(Category c : values)
+            if(c.getCategoryName().equals(name)) return true;
+        return false;
     }
 }

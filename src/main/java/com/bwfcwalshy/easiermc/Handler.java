@@ -1,5 +1,6 @@
 package com.bwfcwalshy.easiermc;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
@@ -11,16 +12,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Handler {
 
-    private Set<BlockBase> blockRegistery;
-    private Set<ItemBase> itemRegistery;
-    private Set<MultiBlock> multiBlockRegistery;
+    private Map<ItemCategory, Set<? extends EasierMCBase>> registery;
+
     private Map<Location, BlockBase> blocks;
     private static Handler instance;
 
@@ -28,9 +25,11 @@ public class Handler {
     public Handler(EasierMC easierMC){
         this.main = easierMC;
         blocks = new HashMap<>();
-        blockRegistery = new HashSet<>();
-        itemRegistery = new HashSet<>();
-        multiBlockRegistery = new HashSet<>();
+
+        registery = new HashMap<>();
+        registery.put(ItemCategory.BLOCKS, new HashSet<ItemBase>());
+        registery.put(ItemCategory.ITEMS, new HashSet<ItemBase>());
+        registery.put(ItemCategory.MULTIBLOCKS, new HashSet<ItemBase>());
 
         instance = this;
     }
@@ -49,23 +48,21 @@ public class Handler {
     }
 
     private void registerBlock(BlockBase block){
-        this.blockRegistery.add(block);
+        ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.BLOCKS)).add(block);
     }
 
     private void registerItem(ItemBase item){
-        this.itemRegistery.add(item);
+        ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.ITEMS)).add(item);
     }
 
     private void registerMultiBlock(MultiBlock multiblock) {
-        this.multiBlockRegistery.add(multiblock);
+        ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.MULTIBLOCKS)).add(multiblock);
         MultiBlockFactory.INSTANCE.register(main, multiblock.getClass());
     }
 
     public boolean isBlock(ItemStack is){
-        for(BlockBase block : blockRegistery){
-            if(block.getItem().isSimilar(is))
-                return true;
-        }
+        for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
+            if(block.getItem().isSimilar(is)) return true;
         return false;
     }
 
@@ -79,7 +76,7 @@ public class Handler {
      * @return The BlockBase of that ItemStack if found, null otherwise.
      */
     public BlockBase getBlock(ItemStack is){
-        for(BlockBase block : blockRegistery)
+        for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
             if(block.getItem().isSimilar(is)) return block;
         return null;
     }
@@ -90,7 +87,7 @@ public class Handler {
      * @return The BlockBase of that simple name if found, null otherwise.
      */
     public BlockBase getBlock(String simpleName) {
-        for(BlockBase block : blockRegistery)
+        for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
             if(block.getSimpleName().equalsIgnoreCase(simpleName)) return block;
         return null;
     }
@@ -112,7 +109,7 @@ public class Handler {
      * @return Returns the item of that simple name if found, null otherwise.
      */
     public ItemBase getItem(String simpleName) {
-        for(ItemBase item : itemRegistery)
+        for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
             if(item.getSimpleName().equalsIgnoreCase(simpleName)) return item;
         return null;
     }
@@ -123,7 +120,7 @@ public class Handler {
      * @return Returns the multiblock structure of that name if found, null otherwise.
      */
     public MultiBlock getMuiltiBlock(String simpleName) {
-        for(MultiBlock multiblock : multiBlockRegistery)
+        for(MultiBlock multiblock : (Set<MultiBlock>) registery.get(ItemCategory.MULTIBLOCKS))
             if(multiblock.getSimpleName().equalsIgnoreCase(simpleName)) return multiblock;
         return null;
     }
@@ -142,19 +139,30 @@ public class Handler {
 
     // This is best to call after the register blocks since this uses the registry.
     public void registerRecipes(){
-        blockRegistery.forEach(block -> { if(block.getRecipe() != null) Bukkit.addRecipe(block.getRecipe()); });
-        itemRegistery.forEach(item -> { if(item.getRecipe() != null) Bukkit.addRecipe(item.getRecipe()); });
+        for(ItemCategory category : registery.keySet()){
+            for(EasierMCBase base : registery.get(category)){
+                if(base.getRecipe() != null) Bukkit.addRecipe(base.getRecipe());
+            }
+        }
     }
 
     public Map<Location, BlockBase> getBlocks() {
         return blocks;
     }
 
+    public Set<EasierMCBase> getEntireRegistery(){
+        Set<EasierMCBase> entireRegistery = new HashSet<>();
+        for(Set<? extends EasierMCBase> base : registery.values()){
+            entireRegistery.addAll(base);
+        }
+        return entireRegistery;
+    }
+
     public Set<BlockBase> getBlockRegistery() {
-        return blockRegistery;
+        return (Set<BlockBase>) registery.get(ItemCategory.BLOCKS);
     }
 
     public Set<ItemBase> getItemRegistery() {
-        return itemRegistery;
+        return (Set<ItemBase>) registery.get(ItemCategory.ITEMS);
     }
 }
