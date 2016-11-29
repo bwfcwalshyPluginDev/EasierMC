@@ -6,4 +6,4 @@ main: com.bwfcwalshy.easiermc.EasierMC
 commands:
   easiermc:
     description: Main command for EasierMC
-    alises: [emc]
+    aliases: [emc]
