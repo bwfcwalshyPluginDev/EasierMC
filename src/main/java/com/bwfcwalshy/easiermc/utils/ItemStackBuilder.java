@@ -37,6 +37,11 @@ public class ItemStackBuilder {
         im.setDisplayName(name);
     }
 
+    public ItemStackBuilder(Material material){
+        is = new ItemStack(material);
+        im = is.getItemMeta();
+    }
+
     public ItemStackBuilder setData(short data){
         is.setDurability(data);
         return this;

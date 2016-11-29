@@ -16,9 +16,11 @@ public interface MultiBlock extends IMultiBlock, EasierMCBase {
         return null;
     }
 
-    default ItemStack getItem(){
-        return null;
-    }
+    /**
+     * This is used for the display item.
+     * @return An ItemStack for the display item of this multiblock.
+     */
+    ItemStack getItem();
 
     default Recipe getRecipe(){
         return null;

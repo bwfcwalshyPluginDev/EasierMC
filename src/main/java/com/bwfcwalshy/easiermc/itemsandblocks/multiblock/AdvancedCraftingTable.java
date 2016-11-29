@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import nl.shanelab.multiblock.MultiBlockActivation;
 import nl.shanelab.multiblock.MultiBlockActivationType;
 import nl.shanelab.multiblock.MultiBlockPattern;
@@ -9,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class AdvancedCraftingTable implements MultiBlock {
@@ -21,6 +23,11 @@ public class AdvancedCraftingTable implements MultiBlock {
     @Override
     public Category getCategory() {
         return Category.BLOCKS;
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return new ItemStackBuilder(Material.WORKBENCH, ChatColor.YELLOW + "Advanced Crafting Table").build();
     }
 
     @Override

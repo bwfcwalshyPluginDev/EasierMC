@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
@@ -125,14 +126,27 @@ public class Handler {
         return null;
     }
 
+    /**
+     * Checks if a simple name is a valid block. This is used to check blocks when loading.
+     * @param simpleName Simple name of the block you are trying to find.
+     * @return If that block exists.
+     */
+    public boolean isValidBlock(String simpleName) {
+        for(BlockBase block : getBlockRegistery())
+            if(block.getSimpleName().equalsIgnoreCase(simpleName)) return true;
+        return false;
+    }
+
     public void registerBlocks() {
         registerBlock(new BlockBreaker());
         registerBlock(new AutoShear());
         registerBlock(new WellMiner());
         registerBlock(new Generator());
+        registerBlock(new TrashBin());
 
         registerItem(new MasterStar());
         registerItem(new ReinforcedStick());
+        registerItem(new EnderSword());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }
@@ -164,5 +178,16 @@ public class Handler {
 
     public Set<ItemBase> getItemRegistery() {
         return (Set<ItemBase>) registery.get(ItemCategory.ITEMS);
+    }
+
+    /**
+     * This will return an item, block, multiblock, whatever the ItemStack returns. This is not limited to any one type.
+     * @param item
+     * @return
+     */
+    public EasierMCBase getItemFromEverything(ItemStack item) {
+        for(EasierMCBase base : getEntireRegistery())
+            if(base.getItem().equals(item)) return base;
+        return null;
     }
 }

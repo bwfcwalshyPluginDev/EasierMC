@@ -36,12 +36,13 @@ public class EasierMCCommand implements CommandExecutor {
 
     private Inventory recipeInventory;
     private void openInventory(Player player){
-        if(recipeInventory == null){
-            recipeInventory = Bukkit.createInventory(null, 9*(Math.round(Category.getValues().length / 9)));
+        if(recipeInventory == null){ //9*(Math.round(Category.getValues().length / 9))
+            recipeInventory = Bukkit.createInventory(null, 9, ChatColor.BLUE + "EasierMC Recipes");
 
             for(Category category : Category.getValues()){
                 System.out.println(category.getCategoryName());
                 recipeInventory.addItem(category.getDisplayItem());
+
             }
         }
 

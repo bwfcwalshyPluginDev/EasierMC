@@ -5,5 +5,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public interface ItemBase extends EasierMCBase {
 
-    void onInteract(PlayerInteractEvent e);
+    default void onInteract(PlayerInteractEvent e){
+        return;
+    }
 }

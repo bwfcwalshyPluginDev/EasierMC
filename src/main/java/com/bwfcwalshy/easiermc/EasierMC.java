@@ -34,7 +34,10 @@ public class EasierMC extends JavaPlugin {
         ConfigurationSection sec = getConfig().getConfigurationSection("Blocks");
         if(sec != null){
             for(String s : sec.getKeys(false)){
-                handler.addBlock(handler.getBlock(getConfig().getString("Blocks." + s + ".Block")), getLocationFromString(s));
+                if(handler.isValidBlock(getConfig().getString("Blocks." + s + ".Block")))
+                    handler.addBlock(handler.getBlock(getConfig().getString("Blocks." + s + ".Block")), getLocationFromString(s));
+                else
+                    getLogger().warning("Block with the name '" + s + "' attempted to load but was not a valid block!");
             }
         }
 

@@ -1,6 +1,6 @@
 name: EasierMC
 description: This plugin is just meant to add some simple machines which makes Minecraft much easier.
-version: 1.0.0
+version: 1.0.3
 author: bwfcwalshy
 main: com.bwfcwalshy.easiermc.EasierMC
 commands:

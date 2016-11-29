@@ -52,20 +52,38 @@ public class BlockBreaker implements BlockBase {
     @Override
     public void tick(Location location) {
         Block b = location.getBlock();
-        if(!(b.getState() instanceof Skull)){
+        if (!(b.getState() instanceof Skull)) {
             System.out.println("Block at " + location.getX() + "," + location.getY() + "," + location.getZ() + " is not a skull! BLOCK REMOVED!");
             Handler.getInstance().getBlocks().remove(location);
             return;
         }
         Skull skull = (Skull) b.getState();
         // If powered it will stop.
-        if(b.isBlockPowered())
+        if (b.isBlockPowered())
             return;
 
         Block b2 = b.getRelative(skull.getRotation());
-        if(b2.getType() != Material.AIR && b2.getType() != Material.BEDROCK){
+        if (isBreakableBlock(b2.getType())){
             tryToStore(location, new ItemStack(b2.getType(), 1, b2.getData()));
             b2.setType(Material.AIR);
+        }
+    }
+
+    private boolean isBreakableBlock(Material mat){
+        switch(mat){
+            case WATER:
+            case STATIONARY_WATER:
+            case LAVA:
+            case STATIONARY_LAVA:
+            case AIR:
+            case BEDROCK:
+            case BARRIER:
+            case PORTAL:
+            case ENDER_PORTAL:
+            case ENDER_PORTAL_FRAME:
+                return false;
+            default:
+                return true;
         }
     }
 }
