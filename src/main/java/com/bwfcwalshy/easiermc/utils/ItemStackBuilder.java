@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ItemStackBuilder {
 
+    private static final int MAX_LORE_LENGTH = 45;
+
     private ItemStack is;
     private ItemMeta im;
 
@@ -16,7 +18,7 @@ public class ItemStackBuilder {
         is = new ItemStack(material);
         im = is.getItemMeta();
         im.setDisplayName(name);
-        im.setLore(lore);
+        im.setLore(BetterLore.trimLoreToLength(lore, MAX_LORE_LENGTH));
     }
 
     public ItemStackBuilder(Material material, int amount, String name){
@@ -54,7 +56,7 @@ public class ItemStackBuilder {
     }
 
     public ItemStackBuilder setLore(List<String> lore){
-        im.setLore(lore);
+        im.setLore(BetterLore.trimLoreToLength(lore, MAX_LORE_LENGTH));
         return this;
     }
 

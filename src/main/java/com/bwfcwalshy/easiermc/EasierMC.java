@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -28,6 +29,8 @@ public class EasierMC extends JavaPlugin {
         getCommand("easiermc").setExecutor(new EasierMCCommand());
 
         getServer().getPluginManager().registerEvents(new Events(this), this);
+        getServer().getPluginManager().registerEvents(new CraftingEvents(this), this);
+        getServer().getPluginManager().registerEvents(new ItemListener(), this);
 
         tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
 

@@ -1,0 +1,116 @@
+package com.bwfcwalshy.easiermc;
+
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.*;
+
+public class CraftingEvents implements Listener {
+
+    private Handler handler;
+    public CraftingEvents(EasierMC main){
+        this.handler = main.getHandler();
+    }
+
+    @EventHandler
+    public void onInvClick(InventoryClickEvent e){
+        if(!(e.getWhoClicked() instanceof Player))
+            return;
+        Player player = (Player) e.getWhoClicked();
+
+        if(e.getInventory().getName().equals(ChatColor.BLUE + "EasierMC Recipes")){
+            e.setCancelled(true);
+
+            Category category = Category.getCategory(e.getCurrentItem());
+            System.out.println("Clicked " + category);
+
+            Inventory inv = generateInventory(category);
+            player.openInventory(inv);
+        }else if(Category.isCategory(e.getInventory().getName())){
+            e.setCancelled(true);
+
+            // Code for the recipe
+            openCraftingRecipe(player, e.getCurrentItem());
+        }else if(e.getInventory().getName().endsWith(ChatColor.BLUE + "'s Recipe")){
+            e.setCancelled(true);
+            System.out.println(e.getSlot());
+        }
+    }
+
+    private void openCraftingRecipe(Player player, ItemStack is){
+        if(is == null || is.getType() == Material.AIR) return;
+        EasierMCBase base = handler.getItemFromEverything(is);
+        if(base != null){
+            if(base.getRecipe() != null){
+                if(base.getRecipe() instanceof ShapedRecipe){
+                    Inventory craftInv = Bukkit.createInventory(null, InventoryType.WORKBENCH, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
+
+                    ShapedRecipe recipe = (ShapedRecipe) base.getRecipe();
+                    String shape = StringUtils.join(recipe.getShape());
+
+                    craftInv.setItem(0, base.getRecipe().getResult());
+                    for(int i = 0; i < 9; i++){
+                        craftInv.setItem(i+1, recipe.getIngredientMap().get(shape.charAt(i)));
+                    }
+
+                    player.openInventory(craftInv);
+                }else if(base.getRecipe() instanceof ShapelessRecipe){
+
+                }else if(base.getRecipe() instanceof FurnaceRecipe){
+
+                }
+            }else if(base.getAdvancedRecipe() != null){
+                Inventory craftInv = Bukkit.createInventory(null, 36, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
+
+                AdvancedRecipe recipe = base.getAdvancedRecipe();
+                String shape = StringUtils.join(recipe.getShape());
+
+                int slot = 0;
+                for(int i = 0; i < 9; i++){
+                    if(i >= 3 && i % 3 == 0)
+                        slot += 6;
+                    craftInv.setItem(slot, recipe.getIngredients().get(shape.charAt(i)));
+                    slot++;
+                }
+                for(int i = 27; i < 36; i++){
+                    craftInv.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
+                }
+                player.openInventory(craftInv);
+            }else{
+                // Item is uncraftable.
+            }
+        }else{
+            // Default MC item
+        }
+    }
+
+    private Inventory generateInventory(Category category) {
+        Inventory inv = Bukkit.createInventory(null, 54, category.getCategoryName());
+
+        int i = 0;
+        for(EasierMCBase base : handler.getEntireRegistery()){
+            if(base.getCategory() == category){
+                if(i >= 45) break;
+                inv.addItem(base.getItem());
+                i++;
+            }
+        }
+
+        // Bottom of the GUI
+        for(int ii = 45; ii < 54; ii++){
+            inv.setItem(ii, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
+        }
+
+        return inv;
+    }
+}

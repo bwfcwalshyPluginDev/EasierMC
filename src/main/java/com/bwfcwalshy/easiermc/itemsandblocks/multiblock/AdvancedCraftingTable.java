@@ -41,6 +41,6 @@ public class AdvancedCraftingTable implements MultiBlock {
 
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
-        return new MultiBlockPattern(Material.WORKBENCH, new PatternBlock(Material.DISPENSER, 0, -1, 0));
+        return new MultiBlockPattern(Material.WORKBENCH, new PatternBlock(Material.DROPPER, 0, -1, 0));
     }
 }

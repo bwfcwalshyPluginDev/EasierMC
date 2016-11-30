@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,12 +31,7 @@ public class MasterStar implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        ItemStack is = new ItemStack(Material.NETHER_STAR);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(getName());
-        im.setLore(Arrays.asList(ChatColor.AQUA + "This Master Star is used to make the most powerful weapons around!"));
-        is.setItemMeta(im);
-        return is;
+        return new ItemStackBuilder(Material.NETHER_STAR, getName(), Arrays.asList(ChatColor.AQUA + "This Master Star is used to make the most powerful weapons around!")).build();
     }
 
     @Override
