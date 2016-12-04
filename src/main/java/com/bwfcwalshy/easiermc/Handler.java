@@ -21,6 +21,7 @@ public class Handler {
 
     private Map<Location, BlockBase> blocks;
     private static Handler instance;
+    private CraftingEvents crafting;
 
     private EasierMC main;
     public Handler(EasierMC easierMC){
@@ -116,6 +117,18 @@ public class Handler {
     }
 
     /**
+     * Get an item by it's ItemStack, for example giving it the MasterStar ItemStack will return MasterStar.
+     * This method is mainly used for getting the item in a users hand.
+     * @param is ItemStack of the item you want to find.
+     * @return Returns the item of the ItemStack if found, null otherwise.
+     */
+    public ItemBase getItem(ItemStack is) {
+        for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
+            if(item.getItem().equals(is)) return item;
+        return null;
+    }
+
+    /**
      * get a multiblock structure by it's simple name, for example "AdvancedCraftingTable" will return the AdvancedCraftingTable multiblock instance.
      * @param simpleName Simple name of the multiblock structure.
      * @return Returns the multiblock structure of that name if found, null otherwise.
@@ -189,5 +202,21 @@ public class Handler {
         for(EasierMCBase base : getEntireRegistery())
             if(base.getItem().equals(item)) return base;
         return null;
+    }
+
+    /**
+     * This will return an item, block, multiblock, whatever the simple name returns. This is not limited to any one type.
+     * @param simpleName
+     * @return
+     */
+    public EasierMCBase getItemFromEverything(String simpleName) {
+        for(EasierMCBase base : getEntireRegistery())
+            if(base.getSimpleName().equalsIgnoreCase(simpleName)) return base;
+        return null;
+    }
+
+    public CraftingEvents getInventories() {
+        if(crafting == null) crafting = main.getCraftingEvents();
+        return crafting;
     }
 }

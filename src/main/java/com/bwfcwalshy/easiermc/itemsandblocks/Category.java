@@ -43,12 +43,17 @@ public enum Category {
     }
 
     public ItemStack getDisplayItem(){
-        ItemStack is = new ItemStack(displayItem.getType(), displayItem.getAmount(), displayItem.getDurability());
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(categoryName);
+        ItemMeta im = displayItem.getItemMeta();
+        if(im.hasLore())
+            im.getLore().clear();
         im.setLore(Arrays.asList("", ChatColor.AQUA + "> " + ChatColor.GRAY + "Click to open the category " + ChatColor.YELLOW + ChatColor.stripColor(getCategoryName())));
-        is.setItemMeta(im);
-        return is;
+        displayItem.setItemMeta(im);
+//        ItemStack is = new ItemStack(displayItem.getType(), displayItem.getAmount(), displayItem.getDurability());
+//        ItemMeta im = is.getItemMeta();
+//        im.setDisplayName(categoryName);
+//        im.setLore(Arrays.asList("", ChatColor.AQUA + "> " + ChatColor.GRAY + "Click to open the category " + ChatColor.YELLOW + ChatColor.stripColor(getCategoryName())));
+//        is.setItemMeta(im);
+        return displayItem;
     }
 
     public String getCategoryName(){

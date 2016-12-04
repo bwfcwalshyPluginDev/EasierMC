@@ -15,6 +15,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
 
+import java.util.Arrays;
+
 public class CraftingEvents implements Listener {
 
     private Handler handler;
@@ -32,22 +34,36 @@ public class CraftingEvents implements Listener {
             e.setCancelled(true);
 
             Category category = Category.getCategory(e.getCurrentItem());
-            System.out.println("Clicked " + category);
-
-            Inventory inv = generateInventory(category);
-            player.openInventory(inv);
+            if(category != null) {
+                Inventory inv = generateInventory(category);
+                player.openInventory(inv);
+                player.updateInventory();
+            }else{
+                if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")){
+                    player.closeInventory();
+                }
+            }
         }else if(Category.isCategory(e.getInventory().getName())){
             e.setCancelled(true);
 
-            // Code for the recipe
-            openCraftingRecipe(player, e.getCurrentItem());
+            if(handler.getItemFromEverything(e.getCurrentItem()) != null)
+                openCraftingRecipe(player, e.getCurrentItem(), e.getInventory().getName());
+            else{
+                if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back"))
+                    openCategoryInventory(player);
+            }
         }else if(e.getInventory().getName().endsWith(ChatColor.BLUE + "'s Recipe")){
             e.setCancelled(true);
             System.out.println(e.getSlot());
+
+            if(handler.getItemFromEverything(e.getCurrentItem()) != null)
+                openCraftingRecipe(player, e.getCurrentItem(), e.getInventory().getName());
+            else
+                if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Go Back")) openCategoryInventory(player);
         }
     }
 
-    private void openCraftingRecipe(Player player, ItemStack is){
+    private void openCraftingRecipe(Player player, ItemStack is, String cameFrom){
         if(is == null || is.getType() == Material.AIR) return;
         EasierMCBase base = handler.getItemFromEverything(is);
         if(base != null){
@@ -64,10 +80,15 @@ public class CraftingEvents implements Listener {
                     }
 
                     player.openInventory(craftInv);
+                    player.updateInventory();
                 }else if(base.getRecipe() instanceof ShapelessRecipe){
 
                 }else if(base.getRecipe() instanceof FurnaceRecipe){
+                    Inventory craftInv = Bukkit.createInventory(null, InventoryType.FURNACE, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
 
+                    FurnaceRecipe recipe = (FurnaceRecipe) base.getRecipe();
+
+                    player.openInventory(craftInv);
                 }
             }else if(base.getAdvancedRecipe() != null){
                 Inventory craftInv = Bukkit.createInventory(null, 36, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
@@ -85,6 +106,7 @@ public class CraftingEvents implements Listener {
                 for(int i = 27; i < 36; i++){
                     craftInv.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
                 }
+                craftInv.setItem(28, new ItemStackBuilder(Material.ARROW, ChatColor.GREEN + "Go Back", Arrays.asList(" ", ChatColor.GRAY + "Go back to: " + cameFrom)).build());
                 player.openInventory(craftInv);
             }else{
                 // Item is uncraftable.
@@ -102,6 +124,7 @@ public class CraftingEvents implements Listener {
             if(base.getCategory() == category){
                 if(i >= 45) break;
                 inv.addItem(base.getItem());
+                System.out.println(base.getItem());
                 i++;
             }
         }
@@ -110,7 +133,25 @@ public class CraftingEvents implements Listener {
         for(int ii = 45; ii < 54; ii++){
             inv.setItem(ii, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
         }
+        inv.setItem(46, new ItemStackBuilder(Material.ARROW, ChatColor.GREEN + "Go Back").build());
 
         return inv;
+    }
+
+    private Inventory recipeInventory;
+    public void openCategoryInventory(Player player){
+        if(recipeInventory == null){ //9*(Math.round(Category.getValues().length / 9))
+            recipeInventory = Bukkit.createInventory(null, 18, ChatColor.BLUE + "EasierMC Recipes");
+
+            for(Category category : Category.getValues()){
+                recipeInventory.addItem(category.getDisplayItem());
+            }
+
+            for(int i = 9; i < 18; i++){
+                recipeInventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
+            }
+            recipeInventory.setItem(10, new ItemStackBuilder(Material.ARROW, ChatColor.GREEN + "Go Back").build());
+        }
+        player.openInventory(recipeInventory);
     }
 }

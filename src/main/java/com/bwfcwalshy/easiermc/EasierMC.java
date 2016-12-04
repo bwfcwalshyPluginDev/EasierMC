@@ -16,6 +16,7 @@ public class EasierMC extends JavaPlugin {
 
     private Handler handler;
     private BukkitTask tickTask;
+    private CraftingEvents craftingEvents;
 
     @Override
     public void onEnable() {
@@ -28,8 +29,9 @@ public class EasierMC extends JavaPlugin {
 
         getCommand("easiermc").setExecutor(new EasierMCCommand());
 
+        craftingEvents = new CraftingEvents(this);
         getServer().getPluginManager().registerEvents(new Events(this), this);
-        getServer().getPluginManager().registerEvents(new CraftingEvents(this), this);
+        getServer().getPluginManager().registerEvents(craftingEvents, this);
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
 
         tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
@@ -87,6 +89,10 @@ public class EasierMC extends JavaPlugin {
         String[] split = s.split(",");
         if(split.length != 4) return null;
         return new Location(Bukkit.getWorld(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
+    }
+
+    public CraftingEvents getCraftingEvents(){
+        return this.craftingEvents;
     }
 }
 

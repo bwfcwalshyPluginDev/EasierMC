@@ -6,6 +6,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.nbt.ItemNBTUtil;
 import com.bwfcwalshy.easiermc.utils.nbt.NBTWrappers;
+import com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,6 +15,8 @@ import org.bukkit.inventory.Recipe;
 
 import java.util.Arrays;
 import java.util.UUID;
+
+import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.OBC;
 
 public class EnderSword implements ItemBase {
 
@@ -53,12 +56,15 @@ public class EnderSword implements ItemBase {
 
     @Override
     public void onInteract(PlayerInteractEvent e){
+        System.out.println("a");
         if(e.getPlayer().getInventory().getItemInMainHand().equals(getItem())){
+            System.out.println("b");
             ItemStack sword = e.getPlayer().getInventory().getItemInMainHand();
 
             // Add attackDamage crap
             NBTWrappers.NBTTagCompound tag = ItemNBTUtil.getTag(sword);
-            if(!tag.isEmpty()) return;
+
+            if(tag.hasKey("AttributeModifiers")) return;
             NBTWrappers.NBTTagList attributeModifiers = tag.hasKey("AttributeModifiers") ? (NBTWrappers.NBTTagList) tag.get("AttributeModifiers") : new NBTWrappers.NBTTagList();
 
             attributeModifiers.getRawList().clear();
@@ -67,13 +73,26 @@ public class EnderSword implements ItemBase {
 
             NBTWrappers.NBTTagCompound attackDamage = new NBTWrappers.NBTTagCompound();
             attackDamage.setInt("Operation", 0);
-            attackDamage.setInt("Amount", 10);
+            attackDamage.setInt("Amount", 24); // Default sword does 7
             attackDamage.setString("Name", "generic.attackDamage");
             attackDamage.setInt("UUIDMost", (int) randomID.getMostSignificantBits());
             attackDamage.setInt("UUIDLeast", (int) randomID.getLeastSignificantBits());
             attackDamage.setString("AttributeName", "generic.attackDamage");
+            attackDamage.setString("Slot", "mainhand");
+
+            randomID = UUID.randomUUID();
+
+            NBTWrappers.NBTTagCompound attackSpeed = new NBTWrappers.NBTTagCompound();
+            attackSpeed.setInt("Operation", 0);
+            attackSpeed.setDouble("Amount", -3);
+            attackSpeed.setString("Name", "generic.attackSpeed");
+            attackSpeed.setInt("UUIDMost", (int) randomID.getMostSignificantBits());
+            attackSpeed.setInt("UUIDLeast", (int) randomID.getLeastSignificantBits());
+            attackSpeed.setString("AttributeName", "generic.attackSpeed");
+            attackSpeed.setString("Slot", "mainhand");
 
             attributeModifiers.add(attackDamage);
+            attributeModifiers.add(attackSpeed);
 
             tag.set("AttributeModifiers", attributeModifiers);
 
