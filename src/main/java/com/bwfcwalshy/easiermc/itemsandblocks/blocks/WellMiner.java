@@ -35,7 +35,7 @@ public class WellMiner implements BlockBase {
         ItemStack is = CustomHead.getSkull("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe");
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(getName());
-        im.setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to dig straight down.", ChatColor.GRAY + "Can shear from 3 blocks away!"));
+        im.setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to dig straight down."));
         is.setItemMeta(im);
         return is;
     }
