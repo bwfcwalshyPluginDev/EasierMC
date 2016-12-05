@@ -3,6 +3,7 @@ description: This plugin is just meant to add some simple machines which makes M
 version: 1.0.3
 author: bwfcwalshy
 main: com.bwfcwalshy.easiermcnewinv.EasierMC
+depend: ["PerceiveCore"]
 commands:
   recipe:
     description: Recipe command
