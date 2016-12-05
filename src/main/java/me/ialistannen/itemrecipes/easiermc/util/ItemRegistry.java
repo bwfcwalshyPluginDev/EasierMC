@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
 import me.ialistannen.itemrecipes.easiermc.nodes.ItemRecipeNode;

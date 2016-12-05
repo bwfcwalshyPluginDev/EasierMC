@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,7 +14,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.base.AbstractPane;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
@@ -197,7 +199,7 @@ public class ItemRecipeNode extends TreePaneNode {
                 if (getParent() instanceof ItemRecipeNode) {
                     parentItem = ((ItemRecipeNode) getParent()).getResult();
                 } else {
-                    parentItem = ItemFactory.builder(Material.INK_SACK).setDurability((short) 1).build();
+                    parentItem = new ItemStackBuilder(Material.BARRIER, ChatColor.RED + ChatColor.BOLD.toString() + "Back").build();
                 }
 
                 Button backButton = new Button(parentItem, Dimension.ONE);

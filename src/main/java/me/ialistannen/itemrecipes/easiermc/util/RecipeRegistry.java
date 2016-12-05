@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.bwfcwalshy.easiermc.EasierMC;
-import com.bwfcwalshy.easiermc.Handler;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermcnewinv.EasierMC;
+import com.bwfcwalshy.easiermcnewinv.Handler;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
 /**

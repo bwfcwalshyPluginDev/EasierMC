@@ -1,9 +1,10 @@
-name: EasierMC
+name: EasierMC-NewInv
 description: This plugin is just meant to add some simple machines which makes Minecraft much easier.
 version: 1.0.3
 author: bwfcwalshy
-main: com.bwfcwalshy.easiermc.EasierMC
+main: com.bwfcwalshy.easiermcnewinv.EasierMC
 commands:
-  easiermc:
-    description: Main command for EasierMC
-    aliases: [emc]
+  recipe:
+    description: Recipe command
+  newmc:
+    description: Main command
