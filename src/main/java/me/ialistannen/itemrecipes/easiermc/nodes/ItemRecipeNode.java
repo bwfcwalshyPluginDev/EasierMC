@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.bwfcwalshy.easiermcnewinv.Handler;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
+import com.perceivedev.perceivecore.gui.components.Label;
+import com.perceivedev.perceivecore.gui.components.simple.DisplayColor;
+import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
+import com.perceivedev.perceivecore.gui.components.simple.StandardDisplayTypes;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.base.AbstractPane;
@@ -165,15 +167,36 @@ public class ItemRecipeNode extends TreePaneNode {
             // clear it
             new ArrayList<>(components).forEach(this::removeComponent);
 
+            SimpleLabel bottomLeft = new SimpleLabel(new Dimension(5, 1), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
+            if(getInventoryMap().addComponent(0, 5, bottomLeft)) {
+                components.add(bottomLeft);
+                updateComponentHierarchy(bottomLeft);
+            }
+
+            SimpleLabel bottomRight = new SimpleLabel(new Dimension(3, 1), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
+            if(getInventoryMap().addComponent(6, 5, bottomRight)) {
+                components.add(bottomRight);
+                updateComponentHierarchy(bottomRight);
+            }
+
+            SimpleLabel aboveCraftingItem = new SimpleLabel(new Dimension(1, 2), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
+            if(getInventoryMap().addComponent(5, 0, aboveCraftingItem)) {
+                components.add(aboveCraftingItem);
+                updateComponentHierarchy(aboveCraftingItem);
+            }
+
+            SimpleLabel belowCraftingItem = new SimpleLabel(new Dimension(1, 2), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
+            if(getInventoryMap().addComponent(5, 3, belowCraftingItem)) {
+                components.add(belowCraftingItem);
+                updateComponentHierarchy(belowCraftingItem);
+            }
+
+
             for (int yPos = 0; yPos < items.size(); yPos++) {
                 List<ItemStack> row = items.get(yPos);
 
                 for (int xPos = 0; xPos < row.size(); xPos++) {
                     ItemStack itemStack = row.get(xPos);
-
-                    if (itemStack == null) {
-                        continue;
-                    }
 
                     Optional<TreePane> owner = getOwner();
                     if (!owner.isPresent()) {
@@ -182,37 +205,55 @@ public class ItemRecipeNode extends TreePaneNode {
 
                     TreePane treePane = owner.get();
 
-                    RecipeButton recipeButton = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
-                    if (getInventoryMap().addComponent(xPos + 3, yPos + 1, recipeButton)) {
-                        components.add(recipeButton);
-                        updateComponentHierarchy(recipeButton);
+                    RecipeButton button = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
+                    if(getInventoryMap().addComponent(xPos + 1, yPos + 1, button)){
+                        components.add(button);
+                        updateComponentHierarchy(button);
                     }
                 }
             }
 
-            if (getParent() != null) {
-                int xPos = getWidth() / 2;
-                int yPos = getHeight() - 1;
-
-                ItemStack parentItem;
-
-                if (getParent() instanceof ItemRecipeNode) {
-                    parentItem = ((ItemRecipeNode) getParent()).getResult();
-                } else {
-                    parentItem = new ItemStackBuilder(Material.BARRIER, ChatColor.RED + ChatColor.BOLD.toString() + "Back").build();
+            if(getParent() != null){
+                ItemStack parentResult;
+                if(getParent() instanceof ItemRecipeNode){
+                    parentResult = ((ItemRecipeNode) getParent()).getResult();
+                }else{
+                    parentResult = new ItemStackBuilder(Material.BARRIER, ChatColor.RED + ChatColor.BOLD.toString() + "Back").build();
                 }
 
-                Button backButton = new Button(parentItem, Dimension.ONE);
+                Button backButton = new Button(parentResult, Dimension.ONE);
                 backButton.setAction(clickEvent -> getOwner().ifPresent(treePane -> treePane.select(getParent())));
-
-                if (getInventoryMap().addComponent(xPos, yPos, backButton)) {
+                if (getInventoryMap().addComponent(5, 5, backButton)) {
                     components.add(backButton);
                     updateComponentHierarchy(backButton);
                 }
             }
 
+            Label resultLabel = new Label(getResult(), Dimension.ONE);
+            if(getInventoryMap().addComponent(7, 2, resultLabel)){
+                components.add(resultLabel);
+                updateComponentHierarchy(resultLabel);
+            }
+
+            Label craftingItem = new Label(getCraftingItem(), Dimension.ONE);
+            if(getInventoryMap().addComponent(5, 2, craftingItem)){
+                components.add(craftingItem);
+                updateComponentHierarchy(craftingItem);
+            }
+
             super.render(inventory, player, x, y);
         }
+    }
+
+    private ItemStack getCraftingItem(){
+        if(recipe instanceof ShapedRecipe || recipe instanceof ShapelessRecipe)
+            return new ItemStack(Material.WORKBENCH);
+        else if(recipe instanceof FurnaceRecipe)
+            return new ItemStack(Material.FURNACE);
+        else if(recipe instanceof AdvancedRecipe)
+            return Handler.getInstance().getMuiltiBlock("AdvancedCraftingTable").getItem();
+        else
+            return null;
     }
 
     /**
@@ -244,6 +285,5 @@ public class ItemRecipeNode extends TreePaneNode {
                 pane.select(node);
             });
         }
-
     }
 }
