@@ -27,6 +27,9 @@ public enum ItemRegistry {
      * @param recipeNode The {@link ItemRecipeNode} to add
      */
     public void addRecipeNode(ItemRecipeNode recipeNode) {
+        if(nodeMap.containsKey(recipeNode.getResultNormalized())) {
+            return;
+        }
         nodeMap.put(recipeNode.getResultNormalized(), recipeNode);
     }
 
