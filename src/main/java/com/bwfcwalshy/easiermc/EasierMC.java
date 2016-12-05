@@ -1,27 +1,29 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
-import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
-import com.bwfcwalshy.easiermc.utils.StringUtil;
-import org.apache.commons.lang.StringUtils;
+import java.io.File;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.File;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
+import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
+import com.bwfcwalshy.easiermc.utils.StringUtil;
+
+import me.ialistannen.itemrecipes.easiermc.util.RecipeRegistry;
 
 public class EasierMC extends JavaPlugin {
 
-    private Handler handler;
-    private BukkitTask tickTask;
+    private Handler        handler;
+    private BukkitTask     tickTask;
     private CraftingEvents craftingEvents;
 
     @Override
     public void onEnable() {
-        if(!new File(getDataFolder(), "config.yml").exists())
+        if (!new File(getDataFolder(), "config.yml").exists())
             saveDefaultConfig();
 
         handler = new Handler(this);
@@ -38,14 +40,17 @@ public class EasierMC extends JavaPlugin {
         tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
 
         ConfigurationSection sec = getConfig().getConfigurationSection("Blocks");
-        if(sec != null){
-            for(String s : sec.getKeys(false)){
-                if(handler.isValidBlock(getConfig().getString("Blocks." + s + ".Block")))
+        if (sec != null) {
+            for (String s : sec.getKeys(false)) {
+                if (handler.isValidBlock(getConfig().getString("Blocks." + s + ".Block")))
                     handler.addBlock(handler.getBlock(getConfig().getString("Blocks." + s + ".Block")), getLocationFromString(s));
                 else
                     getLogger().warning("Block with the name '" + s + "' attempted to load but was not a valid block!");
             }
         }
+
+        // Load the recipes for the Gui
+        RecipeRegistry.INSTANCE.loadRecipes();
 
         getLogger().info("**********************************");
         getLogger().info("* EasierMC has finished loading! *");
@@ -63,7 +68,7 @@ public class EasierMC extends JavaPlugin {
 
         // Save data
         getConfig().set("Blocks", null);
-        for(Location loc : handler.getBlocks().keySet()){
+        for (Location loc : handler.getBlocks().keySet()) {
             BlockBase block = handler.getBlocks().get(loc);
 
             getConfig().set("Blocks." + getLocationString(loc) + ".Block", block.getSimpleName());
@@ -71,21 +76,22 @@ public class EasierMC extends JavaPlugin {
         saveConfig();
     }
 
-    public Handler getHandler(){
+    public Handler getHandler() {
         return this.handler;
     }
 
-    private String getLocationString(Location loc){
+    private String getLocationString(Location loc) {
         return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
     }
 
-    private Location getLocationFromString(String s){
+    private Location getLocationFromString(String s) {
         String[] split = s.split(",");
-        if(split.length != 4) return null;
+        if (split.length != 4)
+            return null;
         return new Location(Bukkit.getWorld(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
     }
 
-    public CraftingEvents getCraftingEvents(){
+    public CraftingEvents getCraftingEvents() {
         return this.craftingEvents;
     }
 }
