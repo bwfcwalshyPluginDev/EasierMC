@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.bwfcwalshy.easiermcnewinv.EasierMC;
-import com.bwfcwalshy.easiermcnewinv.Handler;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.EasierMC;
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;

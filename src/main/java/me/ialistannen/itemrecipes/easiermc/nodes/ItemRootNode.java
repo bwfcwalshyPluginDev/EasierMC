@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.panes.PagedPane;

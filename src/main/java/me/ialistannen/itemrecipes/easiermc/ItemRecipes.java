@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.perceivedev.perceivecore.gui.Gui;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.util.TextUtils;

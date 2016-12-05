@@ -1,9 +1,8 @@
-name: EasierMC-NewInv
+name: EasierMC
 description: This plugin is just meant to add some simple machines which makes Minecraft much easier.
-version: 1.0.3
+version: 1.0.5
 author: bwfcwalshy
-main: com.bwfcwalshy.easiermcnewinv.EasierMC
-depend: ["PerceiveCore"]
+main: com.bwfcwalshy.easiermc.EasierMC
 commands:
   recipe:
     description: Recipe command

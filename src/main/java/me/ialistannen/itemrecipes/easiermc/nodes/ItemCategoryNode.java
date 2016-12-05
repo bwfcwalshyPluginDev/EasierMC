@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
