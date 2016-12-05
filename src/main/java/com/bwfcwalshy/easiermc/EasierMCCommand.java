@@ -1,14 +1,17 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.perceivedev.perceivecore.gui.Gui;
+import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
+
+import me.ialistannen.itemrecipes.easiermc.nodes.ItemRootNode;
 
 public class EasierMCCommand implements CommandExecutor {
 
@@ -25,7 +28,15 @@ public class EasierMCCommand implements CommandExecutor {
         }else if(args.length == 1){
             if(args[0].equalsIgnoreCase("recipe")){
                 if(sender.hasPermission("easiermc.recipe")){
-                    handler.getInventories().openCategoryInventory(player);
+                    TreePane treePane = new TreePane(9, 6);
+                    Gui gui = new Gui("&3&lEasierMc &7- &lRecipes", 6, treePane);
+
+                    ItemRootNode itemRootNode = new ItemRootNode(null , treePane.getSize(), Category.values);
+                    treePane.setRoot(itemRootNode);
+                    
+                    gui.open(player);
+                    
+//                    handler.getInventories().openCategoryInventory(player);
                 }else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                 }
