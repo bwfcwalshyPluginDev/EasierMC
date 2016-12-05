@@ -2,11 +2,9 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
+import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import nl.shanelab.multiblock.MultiBlockFactory;
 import org.bukkit.Bukkit;
@@ -18,8 +16,10 @@ import java.util.*;
 public class Handler {
 
     private Map<ItemCategory, Set<? extends EasierMCBase>> registery;
-
     private Map<Location, BlockBase> blocks;
+
+    private List<AdvancedRecipe> advancedRecipes;
+
     private static Handler instance;
     private CraftingEvents crafting;
 
@@ -27,8 +27,10 @@ public class Handler {
     public Handler(EasierMC easierMC){
         this.main = easierMC;
         blocks = new HashMap<>();
-
         registery = new HashMap<>();
+
+        this.advancedRecipes = new ArrayList<>();
+
         registery.put(ItemCategory.BLOCKS, new HashSet<ItemBase>());
         registery.put(ItemCategory.ITEMS, new HashSet<ItemBase>());
         registery.put(ItemCategory.MULTIBLOCKS, new HashSet<ItemBase>());
@@ -160,6 +162,7 @@ public class Handler {
         registerItem(new MasterStar());
         registerItem(new ReinforcedStick());
         registerItem(new EnderSword());
+        registerItem(new TapeMeasure());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }
@@ -169,6 +172,7 @@ public class Handler {
         for(ItemCategory category : registery.keySet()){
             for(EasierMCBase base : registery.get(category)){
                 if(base.getRecipe() != null) Bukkit.addRecipe(base.getRecipe());
+                if(base.getAdvancedRecipe() != null) advancedRecipes.add(base.getAdvancedRecipe());
             }
         }
     }
@@ -218,5 +222,41 @@ public class Handler {
     public CraftingEvents getInventories() {
         if(crafting == null) crafting = main.getCraftingEvents();
         return crafting;
+    }
+
+    public List<AdvancedRecipe> getAdvancedRecipes() {
+        return this.advancedRecipes;
+    }
+
+    /**
+     * Check if an ItemStack equals another.
+     * @param check The ItemStack you wish to check.
+     * @param compare The ItemStack you are comparing to.
+     * @param checkAmount Make sure the checked ItemStack is the same as or greater than the compared ItemStack
+     * @return Returns if the ItemStack is equal to the other.
+     */
+    public boolean itemStackEquals(ItemStack check, ItemStack compare, boolean checkAmount){
+        System.out.println("Check: " + check);
+        System.out.println("Compare: " + compare);
+        if(compare.getType() == check.getType()){
+            System.out.println("Correct types");
+            if(compare.hasItemMeta() && check.hasItemMeta()){
+                System.out.println("Has item meta");
+                if(compare.getItemMeta().hasDisplayName() && check.getItemMeta().hasDisplayName()){
+                    System.out.println("Has display name");
+                    if(!check.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
+                    System.out.println("Display name matches");
+                }
+                if(compare.getItemMeta().hasLore() && check.getItemMeta().hasLore()){
+                    System.out.println("Has lore");
+                    if(!check.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
+                    System.out.println("Lore matches");
+                }
+                if(check.getAmount() < compare.getAmount()) return false;
+                System.out.println("Item Stack matched!");
+            }
+            return true;
+        }
+        return false;
     }
 }

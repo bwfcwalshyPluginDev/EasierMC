@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

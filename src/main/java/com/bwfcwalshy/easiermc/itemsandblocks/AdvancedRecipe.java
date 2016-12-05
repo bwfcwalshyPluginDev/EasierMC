@@ -1,4 +1,4 @@
-package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
+package com.bwfcwalshy.easiermc.itemsandblocks;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -33,5 +33,9 @@ public class AdvancedRecipe {
 
     public Map<Character, ItemStack> getIngredients(){
         return this.ingredients;
+    }
+
+    public ItemStack getResult() {
+        return output;
     }
 }

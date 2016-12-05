@@ -2,7 +2,7 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -29,6 +29,8 @@ public class CraftingEvents implements Listener {
         if(!(e.getWhoClicked() instanceof Player))
             return;
         Player player = (Player) e.getWhoClicked();
+
+        if(e.getCurrentItem() == null) return;
 
         if(e.getInventory().getName().equals(ChatColor.BLUE + "EasierMC Recipes")){
             e.setCancelled(true);
@@ -124,7 +126,6 @@ public class CraftingEvents implements Listener {
             if(base.getCategory() == category){
                 if(i >= 45) break;
                 inv.addItem(base.getItem());
-                System.out.println(base.getItem());
                 i++;
             }
         }

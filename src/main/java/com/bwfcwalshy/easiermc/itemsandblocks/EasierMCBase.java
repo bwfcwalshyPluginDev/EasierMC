@@ -1,10 +1,12 @@
 package com.bwfcwalshy.easiermc.itemsandblocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.Handler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 public interface EasierMCBase {
+
+    Handler handler = Handler.getInstance();
 
     String getName();
 
@@ -14,7 +16,9 @@ public interface EasierMCBase {
 
     ItemStack getItem();
 
-    Recipe getRecipe();
+    default Recipe getRecipe() {
+        return null;
+    }
 
     default AdvancedRecipe getAdvancedRecipe(){
         return null;

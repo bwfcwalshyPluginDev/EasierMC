@@ -44,8 +44,8 @@ public class ItemStackBuilder {
         im = is.getItemMeta();
     }
 
-    public ItemStackBuilder setData(short data){
-        is.setDurability(data);
+    public ItemStackBuilder setData(int data){
+        is.setDurability((short) data);
         return this;
     }
 

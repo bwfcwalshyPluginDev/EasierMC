@@ -3,6 +3,7 @@ package com.bwfcwalshy.easiermc;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
+import com.bwfcwalshy.easiermc.utils.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,21 +47,14 @@ public class EasierMC extends JavaPlugin {
             }
         }
 
-        getLogger().info("*********************************");
-        getLogger().info("* EasierMC has finished loading *");
-        getLogger().info("*                               *");
-        String spacing = StringUtils.repeat(" ", getSpacing("Registered " + handler.getBlockRegistery().size() + " blocks"));
-        getLogger().info("*" + spacing + "Registered " + handler.getBlockRegistery().size() + " blocks" + spacing + "*");
-        spacing = StringUtils.repeat(" ", getSpacing("Registered " + handler.getItemRegistery().size() + " items"));
-        getLogger().info("*" + spacing + "Registered " + handler.getItemRegistery().size() + " items" + spacing + "*");
-        getLogger().info("*                               *");
-        spacing = StringUtils.repeat(" ", getSpacing("Loaded " + handler.getBlocks().size() + " blocks!"));
-        getLogger().info("*" + spacing + "Loaded " + handler.getBlocks().size() + " blocks!" + spacing + "*");
-        getLogger().info("*********************************");
-    }
-
-    public int getSpacing(String s){
-        return (31 - s.length()) / 2;
+        getLogger().info("**********************************");
+        getLogger().info("* EasierMC has finished loading! *");
+        getLogger().info("*                                *");
+        getLogger().info("*" + StringUtil.padToLength("Registered " + handler.getBlockRegistery().size() + " blocks", ' ', 32) + "*");
+        getLogger().info("*" + StringUtil.padToLength("Registered " + handler.getItemRegistery().size() + " items", ' ', 32) + "*");
+        getLogger().info("*                                *");
+        getLogger().info("*" + StringUtil.padToLength("Loaded " + handler.getBlocks().size() + " blocks!", ' ', 32) + "*");
+        getLogger().info("**********************************");
     }
 
     @Override

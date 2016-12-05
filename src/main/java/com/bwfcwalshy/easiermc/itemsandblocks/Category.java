@@ -44,6 +44,7 @@ public enum Category {
 
     public ItemStack getDisplayItem(){
         ItemMeta im = displayItem.getItemMeta();
+        im.setDisplayName(categoryName);
         if(im.hasLore())
             im.getLore().clear();
         im.setLore(Arrays.asList("", ChatColor.AQUA + "> " + ChatColor.GRAY + "Click to open the category " + ChatColor.YELLOW + ChatColor.stripColor(getCategoryName())));
