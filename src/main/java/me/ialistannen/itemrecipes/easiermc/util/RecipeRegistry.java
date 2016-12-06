@@ -8,15 +8,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.bwfcwalshy.easiermc.EasierMC;
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.bwfcwalshy.easiermc.EasierMC;
-import com.bwfcwalshy.easiermc.Handler;
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
 /**
@@ -25,7 +25,7 @@ import com.perceivedev.perceivecore.gui.util.Dimension;
 public enum RecipeRegistry {
     INSTANCE;
 
-    private final Map<ItemStack, Recipe> recipeMap       = new ConcurrentHashMap<>();
+    private final Map<ItemStack, Recipe> recipeMap = new ConcurrentHashMap<>();
     private final Map<ItemStack, Recipe> bukkitRecipeMap = new ConcurrentHashMap<>();
 
     /**
@@ -44,7 +44,6 @@ public enum RecipeRegistry {
 
     /**
      * @param result The result of the recipe
-     *
      * @return The Recipe or null if none
      */
     public Recipe getRecipe(ItemStack result) {
@@ -55,18 +54,8 @@ public enum RecipeRegistry {
      * @return All recipes. Unmodifiable
      */
     public Collection<EasierMCBase> getAllRecipes() {
-        return Stream
-                  .concat(
-                            Handler.getInstance()
-                                      .getEntireRegistery()
-                                      .stream(),
-                            bukkitRecipeMap
-                                      .values()
-                                      .stream()
-                                      .map(EasierMcNormalItemBridge::new)
-                  )
-                  .filter(base -> base.getRecipe() != null)
-                  .collect(Collectors.toList());
+        return Stream.concat(Handler.getInstance().getEntireRegistery().stream(), bukkitRecipeMap.values().stream().map(EasierMcNormalItemBridge::new))
+                .filter(base -> base.getRecipe() != null).collect(Collectors.toList());
     }
 
     private static class EasierMcNormalItemBridge implements EasierMCBase {
@@ -119,22 +108,23 @@ public enum RecipeRegistry {
                 for (EasierMCBase easierMCBase : Handler.getInstance().getEntireRegistery()) {
                     Recipe recipe = easierMCBase.getRecipe();
                     if (recipe == null) {
-                        continue;
+                        if (recipe == null) {
+                            continue;
+                        }
+                        addRecipe(recipe);
                     }
-                    addRecipe(recipe);
+
+                    Iterator<Recipe> recipeIterator = Bukkit.recipeIterator();
+                    while (recipeIterator.hasNext()) {
+                        addBukkitRecipe(recipeIterator.next());
+                    }
+
+                    long duration = System.currentTimeMillis() - start;
+                    System.out.println("RecipeRegistry.run() Took: " + duration + " (" + TimeUnit.MILLISECONDS.toSeconds(duration) + ")");
+
+                    ItemRegistry.INSTANCE.build(new Dimension(9, 6));
                 }
-
-                Iterator<Recipe> recipeIterator = Bukkit.recipeIterator();
-                while (recipeIterator.hasNext()) {
-                    addBukkitRecipe(recipeIterator.next());
-                }
-
-                long duration = System.currentTimeMillis() - start;
-                System.out.println("RecipeRegistry.run() Took: " + duration + " (" + TimeUnit.MILLISECONDS.toSeconds(duration) + ")");
-
-                ItemRegistry.INSTANCE.build(new Dimension(9, 6));
             }
         }.runTaskAsynchronously(EasierMC.getPlugin(EasierMC.class));
     }
-
 }

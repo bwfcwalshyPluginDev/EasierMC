@@ -30,7 +30,7 @@ public class EasierMC extends JavaPlugin {
         handler.registerBlocks();
         handler.registerRecipes();
 
-        getCommand("easiermc").setExecutor(new EasierMCCommand());
+        getCommand("newmc").setExecutor(new EasierMCCommand());
 
         craftingEvents = new CraftingEvents(this);
         getServer().getPluginManager().registerEvents(new Events(this), this);

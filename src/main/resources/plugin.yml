@@ -1,10 +1,10 @@
 name: EasierMC
 description: This plugin is just meant to add some simple machines which makes Minecraft much easier.
-version: 1.0.3
+version: 1.0.5
 author: bwfcwalshy
-depend: ["PerceiveCore"]
 main: com.bwfcwalshy.easiermc.EasierMC
 commands:
-  easiermc:
-    description: Main command for EasierMC
-    aliases: [emc]
+  recipe:
+    description: Recipe command
+  newmc:
+    description: Main command
