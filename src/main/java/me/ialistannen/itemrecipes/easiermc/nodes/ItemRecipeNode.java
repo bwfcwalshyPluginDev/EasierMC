@@ -4,26 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.bwfcwalshy.easiermcnewinv.Handler;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
-import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
-import com.perceivedev.perceivecore.gui.components.Label;
-import com.perceivedev.perceivecore.gui.components.simple.DisplayColor;
-import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
-import com.perceivedev.perceivecore.gui.components.simple.StandardDisplayTypes;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.FurnaceRecipe;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
+import com.bwfcwalshy.easiermcnewinv.Handler;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
 import com.perceivedev.perceivecore.gui.base.AbstractPane;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
+import com.perceivedev.perceivecore.gui.components.Label;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
+import com.perceivedev.perceivecore.gui.components.simple.DisplayColor;
+import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
+import com.perceivedev.perceivecore.gui.components.simple.StandardDisplayTypes;
 import com.perceivedev.perceivecore.gui.util.Dimension;
-import com.perceivedev.perceivecore.util.ItemFactory;
 
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
@@ -197,6 +201,11 @@ public class ItemRecipeNode extends TreePaneNode {
 
                 for (int xPos = 0; xPos < row.size(); xPos++) {
                     ItemStack itemStack = row.get(xPos);
+                    
+                    // Skip null ones, as we need no button for them
+                    if(itemStack == null || itemStack.getType() == Material.AIR) {
+                        continue;
+                    }
 
                     Optional<TreePane> owner = getOwner();
                     if (!owner.isPresent()) {
