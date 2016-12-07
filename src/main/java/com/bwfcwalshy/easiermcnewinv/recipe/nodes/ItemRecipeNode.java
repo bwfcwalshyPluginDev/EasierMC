@@ -5,15 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.FurnaceRecipe;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 
 import com.bwfcwalshy.easiermcnewinv.Handler;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
@@ -318,13 +314,8 @@ public class ItemRecipeNode extends TreePaneNode {
 
             setAction(clickEvent -> {
                 ItemRecipeNode node = ItemRegistry.INSTANCE.getNode(itemStack);
-                if (node == null
-                          || (
-                          !(node.recipe instanceof ShapedRecipe)
-                                    && !(node.recipe instanceof ShapelessRecipe)
-                                    && !(node.recipe instanceof AdvancedRecipe)
-                                    && !(node.recipe instanceof FurnaceRecipe))
-                          ) {
+                if(node != null && node.recipe instanceof MerchantRecipe){
+                    Bukkit.getLogger().severe("The recipe type '" + node.recipe.getClass().getSimpleName() + "' is not supported!");
                     return;
                 }
 
