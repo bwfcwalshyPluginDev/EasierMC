@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Material;
 
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRecipeNode.RecipeButton;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
@@ -18,7 +19,6 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 
-import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRecipeNode.RecipeButton;
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 
@@ -29,7 +29,6 @@ class ItemCategoryNode extends TreePaneNode {
 
     private Category  category;
     private Dimension size;
-    private PagedPane pagedPane;
 
     /**
      * Creates a new {@link TreePaneNode} with the given parent and no children
@@ -74,7 +73,7 @@ class ItemCategoryNode extends TreePaneNode {
         }
 
         TreePane treePane = owner.get();
-        
+
         List<ItemRecipeNode> nodes = ItemRegistry.INSTANCE.getNodes(category)
                   .stream()
                   .sorted(Comparator.comparing(o -> o.getResult().getType()))
@@ -96,9 +95,15 @@ class ItemCategoryNode extends TreePaneNode {
      */
     @Override
     public Pane getPane() {
-        if (pagedPane == null) {
-            pagedPane = generatePagedPane();
-        }
-        return pagedPane;
+        return generatePagedPane();
+    }
+
+    @Override
+    public ItemCategoryNode clone() {
+        ItemCategoryNode clone = (ItemCategoryNode) super.clone();
+        clone.size = size;
+        clone.category = category;
+
+        return clone;
     }
 }
