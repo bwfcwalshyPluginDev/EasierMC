@@ -44,13 +44,18 @@ public class AdvancedCraftingTable implements MultiBlock {
 
             ItemStack[] itemStacks = dropper.getInventory().getContents();
 
+            System.out.println(itemStacks);
+
             // I will need to make this process better but for now, it works fine.
 
             outer:
             for (AdvancedRecipe recipe : handler.getAdvancedRecipes()) {
+                System.out.println("Recipe: " + recipe);
                 String shape = StringUtils.join(recipe.getShape());
                 for (int i = 0; i < 9; i++) {
-                    if (shape.charAt(i) != ' ' && !handler.itemStackEquals(recipe.getIngredients().get(shape.charAt(i)), itemStacks[i], true)) {
+                    System.out.println(i + " - '" + shape.charAt(i) + "' - " + itemStacks[i] + " - " + recipe.getIngredients().get(shape.charAt(i)));
+                    if (!handler.itemStackEquals(recipe.getIngredients().get(shape.charAt(i)), itemStacks[i], true)) {
+                        System.out.println("ze");
                         continue outer;
                     }
                 }

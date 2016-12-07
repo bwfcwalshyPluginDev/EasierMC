@@ -16,6 +16,7 @@ public class AdvancedRecipe implements Recipe {
     public AdvancedRecipe(ItemStack output, String... shape){
         this.output = output;
         this.shape = shape;
+        this.ingredients.put(' ', new ItemStack(Material.AIR));
     }
 
     public AdvancedRecipe setIngredient(char c, Material mat){

@@ -9,6 +9,7 @@ import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
 import nl.shanelab.multiblock.MultiBlockFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -236,6 +237,9 @@ public class Handler {
      * @return Returns if the ItemStack is equal to the other.
      */
     public boolean itemStackEquals(ItemStack check, ItemStack compare, boolean checkAmount){
+        if(check == null) check = new ItemStack(Material.AIR);
+        if(compare == null) compare = new ItemStack(Material.AIR);
+
         System.out.println("Check: " + check);
         System.out.println("Compare: " + compare);
         if(compare.getType() == check.getType()){
