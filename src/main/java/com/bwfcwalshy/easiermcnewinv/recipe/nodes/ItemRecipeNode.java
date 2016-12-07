@@ -1,4 +1,4 @@
-package me.ialistannen.itemrecipes.easiermc.nodes;
+package com.bwfcwalshy.easiermcnewinv.recipe.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
 import com.bwfcwalshy.easiermcnewinv.Handler;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
 import com.perceivedev.perceivecore.gui.base.AbstractPane;
@@ -117,6 +117,8 @@ public class ItemRecipeNode extends TreePaneNode {
                 items = shapedRecipeToList((ShapedRecipe) recipe);
             } else if (recipe instanceof ShapelessRecipe) {
                 items = shapelessRecipeToList((ShapelessRecipe) recipe);
+            } else if(recipe instanceof AdvancedRecipe) {
+                items = advancedRecipeToList((AdvancedRecipe) recipe);
             } else {
                 items = new ArrayList<>();
             }
@@ -157,6 +159,23 @@ public class ItemRecipeNode extends TreePaneNode {
             for (String s : shapedRecipe.getShape()) {
                 for (char c : s.toCharArray()) {
                     tmp.add(shapedRecipe.getIngredientMap().get(c));
+                }
+                items.add(tmp);
+                tmp = new ArrayList<>();
+            }
+            items.add(tmp);
+
+            return items;
+        }
+
+        private List<List<ItemStack>> advancedRecipeToList(AdvancedRecipe advancedRecipe){
+            List<List<ItemStack>> items = new ArrayList<>();
+
+            List<ItemStack> tmp = new ArrayList<>();
+
+            for(String s : advancedRecipe.getShape()){
+                for(char c : s.toCharArray()){
+                    tmp.add(advancedRecipe.getIngredients().get(c));
                 }
                 items.add(tmp);
                 tmp = new ArrayList<>();
@@ -284,7 +303,7 @@ public class ItemRecipeNode extends TreePaneNode {
 
             setAction(clickEvent -> {
                 ItemRecipeNode node = ItemRegistry.INSTANCE.getNode(itemStack);
-                if (node == null || (!(node.recipe instanceof ShapedRecipe) && !(node.recipe instanceof ShapelessRecipe))) {
+                if (node == null || (!(node.recipe instanceof ShapedRecipe) && !(node.recipe instanceof ShapelessRecipe) && !(node.recipe instanceof AdvancedRecipe))) {
                     return;
                 }
 

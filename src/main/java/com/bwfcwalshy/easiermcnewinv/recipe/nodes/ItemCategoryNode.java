@@ -1,4 +1,4 @@
-package me.ialistannen.itemrecipes.easiermc.nodes;
+package com.bwfcwalshy.easiermcnewinv.recipe.nodes;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,13 +18,12 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRecipeNode.RecipeButton;
-import me.ialistannen.itemrecipes.easiermc.util.ItemCategory;
+import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRecipeNode.RecipeButton;
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 
 /**
- * A {@link TreePaneNode}, that displays all items in an {@link ItemCategory}
+ * A {@link TreePaneNode}, that displays all items in a {@link Category}
  */
 class ItemCategoryNode extends TreePaneNode {
 

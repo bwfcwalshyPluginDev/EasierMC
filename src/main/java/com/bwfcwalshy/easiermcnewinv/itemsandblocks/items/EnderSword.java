@@ -2,7 +2,7 @@ package com.bwfcwalshy.easiermcnewinv.itemsandblocks.items;
 
 import com.bwfcwalshy.easiermcnewinv.Handler;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermcnewinv.utils.nbt.ItemNBTUtil;
 import com.bwfcwalshy.easiermcnewinv.utils.nbt.NBTWrappers;
@@ -42,14 +42,10 @@ public class EnderSword implements ItemBase {
 
     @Override
     public Recipe getRecipe() {
-        return null;
-    }
-
-    @Override
-    public AdvancedRecipe getAdvancedRecipe(){
         return new AdvancedRecipe(getItem(), "sds", "sds", "rer").setIngredient('s', handler.getItem("MasterStar").getItem()).setIngredient('d', Material.DIAMOND_BLOCK)
                 .setIngredient('r', handler.getItem("ReinforcedStick").getItem()).setIngredient('e', Material.DRAGON_EGG);
     }
+
 
     @Override
     public void onInteract(PlayerInteractEvent e){

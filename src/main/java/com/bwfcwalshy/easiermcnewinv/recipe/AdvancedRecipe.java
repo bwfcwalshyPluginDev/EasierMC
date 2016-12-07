@@ -1,12 +1,13 @@
-package com.bwfcwalshy.easiermcnewinv.itemsandblocks;
+package com.bwfcwalshy.easiermcnewinv.recipe;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdvancedRecipe {
+public class AdvancedRecipe implements Recipe {
 
     private ItemStack output;
     private String[] shape;

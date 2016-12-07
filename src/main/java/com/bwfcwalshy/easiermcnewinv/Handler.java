@@ -4,7 +4,7 @@ import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.blocks.*;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.items.*;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.AdvancedCraftingTable;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
 import nl.shanelab.multiblock.MultiBlockFactory;
 import org.bukkit.Bukkit;
@@ -171,8 +171,8 @@ public class Handler {
     public void registerRecipes(){
         for(ItemCategory category : registery.keySet()){
             for(EasierMCBase base : registery.get(category)){
-                if(base.getRecipe() != null) Bukkit.addRecipe(base.getRecipe());
-                if(base.getAdvancedRecipe() != null) advancedRecipes.add(base.getAdvancedRecipe());
+                if(base.getRecipe() != null && !(base.getRecipe() instanceof AdvancedRecipe)) Bukkit.addRecipe(base.getRecipe());
+                else if(base.getRecipe() != null && base.getRecipe() instanceof AdvancedRecipe) this.advancedRecipes.add((AdvancedRecipe) base.getRecipe());
             }
         }
     }

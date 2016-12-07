@@ -1,4 +1,4 @@
-package me.ialistannen.itemrecipes.easiermc.nodes;
+package com.bwfcwalshy.easiermcnewinv.recipe.nodes;
 
 import java.util.List;
 import java.util.stream.Collectors;

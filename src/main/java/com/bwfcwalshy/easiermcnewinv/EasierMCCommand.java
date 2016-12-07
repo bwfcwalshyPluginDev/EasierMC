@@ -11,7 +11,7 @@ import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.Gui;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRootNode;
+import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRootNode;
 
 public class EasierMCCommand implements CommandExecutor {
 

@@ -13,7 +13,7 @@ import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRecipeNode;
+import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRecipeNode;
 
 /**
  * A Registry, that maps {@link ItemStack}s to {@link ItemRecipeNode}s

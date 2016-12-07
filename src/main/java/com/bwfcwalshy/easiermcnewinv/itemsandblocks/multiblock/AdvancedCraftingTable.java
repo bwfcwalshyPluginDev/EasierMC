@@ -1,6 +1,6 @@
 package com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock;
 
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
 import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
 import nl.shanelab.multiblock.MultiBlockActivation;
