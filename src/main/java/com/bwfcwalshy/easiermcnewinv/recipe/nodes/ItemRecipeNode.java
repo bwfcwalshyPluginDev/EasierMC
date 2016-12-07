@@ -28,14 +28,14 @@ import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
+import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 
 /**
  * A {@link TreePaneNode}, that displays the recipe for an item
  */
-public class ItemRecipeNode extends TreePaneNode {
+public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
-    private Pane         pane;
     private ItemStack    result;
     private Recipe       recipe;
     private Dimension    size;
@@ -92,10 +92,18 @@ public class ItemRecipeNode extends TreePaneNode {
      */
     @Override
     public Pane getPane() {
-        if (pane == null) {
-            pane = new RecipePane(size.getWidth(), size.getHeight());
-        }
-        return pane;
+        return new RecipePane(size.getWidth(), size.getHeight());
+    }
+
+    @Override
+    public ItemRecipeNode clone() {
+        ItemRecipeNode clone = (ItemRecipeNode) super.clone();
+        clone.recipe = recipe;
+        clone.base = base;
+        clone.result = result.clone();
+        clone.size = size;
+
+        return clone;
     }
 
     private class RecipePane extends AbstractPane {
@@ -252,16 +260,23 @@ public class ItemRecipeNode extends TreePaneNode {
                 }
             }
 
-            if (getParent() != null) {
+            if (PlayerHistory.INSTANCE.hasPreviousNode(player.getUniqueId())) {
+                // see if above
+                @SuppressWarnings("OptionalGetWithoutIsPresent")
+                TreePaneNode previousNode = PlayerHistory.INSTANCE.getPreviousNode(player.getUniqueId()).get();
+
                 ItemStack parentResult;
-                if (getParent() instanceof ItemRecipeNode) {
-                    parentResult = ((ItemRecipeNode) getParent()).getResult();
+                if (previousNode instanceof ItemRecipeNode) {
+                    parentResult = ((ItemRecipeNode) previousNode).getResult();
                 } else {
                     parentResult = new ItemStackBuilder(Material.BARRIER, ChatColor.RED + ChatColor.BOLD.toString() + "Back").build();
                 }
 
                 Button backButton = new Button(parentResult, Dimension.ONE);
-                backButton.setAction(clickEvent -> getOwner().ifPresent(treePane -> treePane.select(getParent())));
+                backButton.setAction(clickEvent -> {
+                    PlayerHistory.INSTANCE.removePreviousNode(player.getUniqueId());
+                    getOwner().ifPresent(treePane -> treePane.select(previousNode));
+                });
                 if (getInventoryMap().addComponent(5, 5, backButton)) {
                     components.add(backButton);
                     updateComponentHierarchy(backButton);
@@ -274,10 +289,12 @@ public class ItemRecipeNode extends TreePaneNode {
                 updateComponentHierarchy(resultLabel);
             }
 
-            Label craftingItem = new Label(getCraftingItem(), Dimension.ONE);
-            if (getInventoryMap().addComponent(5, 2, craftingItem)) {
-                components.add(craftingItem);
-                updateComponentHierarchy(craftingItem);
+            if (getCraftingItem() != null) {
+                Label craftingItem = new Label(getCraftingItem(), Dimension.ONE);
+                if (getInventoryMap().addComponent(5, 2, craftingItem)) {
+                    components.add(craftingItem);
+                    updateComponentHierarchy(craftingItem);
+                }
             }
 
             super.render(inventory, player, x, y);
@@ -300,6 +317,8 @@ public class ItemRecipeNode extends TreePaneNode {
      */
     static class RecipeButton extends Button {
 
+        private TreePane treePane;
+
         /**
          * Constructs a button
          *
@@ -311,6 +330,8 @@ public class ItemRecipeNode extends TreePaneNode {
          */
         RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
             super(itemStack, size);
+
+            this.treePane = pane;
 
             setAction(clickEvent -> {
                 ItemRecipeNode node = ItemRegistry.INSTANCE.getNode(itemStack);
@@ -325,11 +346,22 @@ public class ItemRecipeNode extends TreePaneNode {
                     return;
                 }
 
-                node.setOwner(pane);
-                pane.getSelected().ifPresent(node::setParent);
+                ItemRecipeNode clone = node.clone();
+                clone.setOwner(treePane);
 
-                pane.select(node);
+                treePane.getSelected()
+                          .ifPresent(treePaneNode -> PlayerHistory.INSTANCE.addToPlayerHistory(clickEvent.getPlayer().getUniqueId(), treePaneNode));
+
+                treePane.select(clone);
             });
+        }
+
+        @Override
+        public RecipeButton deepClone() {
+            RecipeButton clone = (RecipeButton) super.deepClone();
+            clone.treePane = treePane;
+
+            return clone;
         }
     }
 }
