@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
 import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
@@ -67,7 +68,11 @@ public enum ItemRegistry {
     public void build(Dimension dimension) {
         long start = System.currentTimeMillis();
         for (EasierMCBase mcBase : RecipeRegistry.INSTANCE.getAllRecipes()) {
-            ItemRecipeNode itemRecipeNode = new ItemRecipeNode(null, mcBase.getRecipe(), dimension, mcBase);
+            ItemRecipeNode itemRecipeNode;
+            if(mcBase instanceof MultiBlock)
+                itemRecipeNode = new ItemRecipeNode(null, ((MultiBlock) mcBase).getMultiBlockPattern(), dimension, mcBase);
+            else
+                itemRecipeNode = new ItemRecipeNode(null, mcBase.getRecipe(), dimension, mcBase);
             addRecipeNode(itemRecipeNode);
         }
         long duration = System.currentTimeMillis() - start;

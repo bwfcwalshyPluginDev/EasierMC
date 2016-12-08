@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
+import com.bwfcwalshy.easiermcnewinv.recipe.panes.MultiBlockPane;
+import nl.shanelab.multiblock.MultiBlockPattern;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,6 +41,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
     private ItemStack    result;
     private Recipe       recipe;
+    private MultiBlockPattern pattern;
     private Dimension    size;
     private EasierMCBase base;
 
@@ -53,6 +57,21 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
         this.result = recipe.getResult();
         this.recipe = recipe;
+        this.size = size;
+        this.base = base;
+    }
+
+    /**
+     * Creates a new {@link TreePaneNode} with the given parent and no children
+     *
+     * @param parent The parent node
+     * @param pattern The {@link MultiBlockPattern}
+     * @param size The size of the pane
+     */
+    public ItemRecipeNode(TreePaneNode parent, MultiBlockPattern pattern, Dimension size, EasierMCBase base) {
+        super(parent);
+
+        this.pattern = pattern;
         this.size = size;
         this.base = base;
     }
@@ -97,8 +116,14 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
     @Override
     public ItemRecipeNode clone() {
-        ItemRecipeNode clone = (ItemRecipeNode) super.clone();
+        ItemRecipeNode clone = null;
+        try {
+            clone = (ItemRecipeNode) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         clone.recipe = recipe;
+        clone.pattern = pattern;
         clone.base = base;
         clone.result = result.clone();
         clone.size = size;
@@ -109,6 +134,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
     private class RecipePane extends AbstractPane {
 
         private List<List<ItemStack>> items;
+        private MultiBlockPattern pattern;
 
         /**
          * An empty Pane
@@ -234,28 +260,37 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                 updateComponentHierarchy(belowCraftingItem);
             }
 
-            for (int yPos = 0; yPos < items.size(); yPos++) {
-                List<ItemStack> row = items.get(yPos);
+            if(items == null){
+                // This is for the multiblock pane
+                MultiBlockPane multiBlockPane = new MultiBlockPane(pattern);
+                if(getInventoryMap().addComponent(0, 0, multiBlockPane)){
+                    components.add(multiBlockPane);
+                    updateComponentHierarchy(multiBlockPane);
+                }
+            }else {
+                for (int yPos = 0; yPos < items.size(); yPos++) {
+                    List<ItemStack> row = items.get(yPos);
 
-                for (int xPos = 0; xPos < row.size(); xPos++) {
-                    ItemStack itemStack = row.get(xPos);
+                    for (int xPos = 0; xPos < row.size(); xPos++) {
+                        ItemStack itemStack = row.get(xPos);
 
-                    // Skip null ones, as we need no button for them
-                    if (itemStack == null || itemStack.getType() == Material.AIR) {
-                        continue;
-                    }
+                        // Skip null ones, as we need no button for them
+                        if (itemStack == null || itemStack.getType() == Material.AIR) {
+                            continue;
+                        }
 
-                    Optional<TreePane> owner = getOwner();
-                    if (!owner.isPresent()) {
-                        continue;
-                    }
+                        Optional<TreePane> owner = getOwner();
+                        if (!owner.isPresent()) {
+                            continue;
+                        }
 
-                    TreePane treePane = owner.get();
+                        TreePane treePane = owner.get();
 
-                    RecipeButton button = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
-                    if (getInventoryMap().addComponent(xPos + 1, yPos + 1, button)) {
-                        components.add(button);
-                        updateComponentHierarchy(button);
+                        RecipeButton button = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
+                        if (getInventoryMap().addComponent(xPos + 1, yPos + 1, button)) {
+                            components.add(button);
+                            updateComponentHierarchy(button);
+                        }
                     }
                 }
             }
@@ -289,8 +324,12 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                 updateComponentHierarchy(resultLabel);
             }
 
+            Optional<TreePane> owner = getOwner();
+
+            TreePane treePane = owner.get();
+
             if (getCraftingItem() != null) {
-                Label craftingItem = new Label(getCraftingItem(), Dimension.ONE);
+                RecipeButton craftingItem = new RecipeButton(Util.normalize(getCraftingItem()), Dimension.ONE, treePane);
                 if (getInventoryMap().addComponent(5, 2, craftingItem)) {
                     components.add(craftingItem);
                     updateComponentHierarchy(craftingItem);

@@ -22,6 +22,8 @@ public class PatternBlock extends PatternObject {
 	
 	public PatternBlock(@Nonnull Material blockMaterial, int x, int y, int z) {
 		this(blockMaterial, new Vector(x, y, z));
+		if(x > 2 || x < -2 || y > 2 || y > -2 || z > 2 || z < -2)
+			throw new IllegalArgumentException("Multiblocks must be a max size of 3x3!!");
 	}
 	
 	public PatternBlock(@Nonnull Material blockMaterial, Vector relativeVec) {
