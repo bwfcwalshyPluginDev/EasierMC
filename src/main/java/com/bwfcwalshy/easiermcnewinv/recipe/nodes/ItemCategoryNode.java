@@ -100,12 +100,7 @@ class ItemCategoryNode extends TreePaneNode {
 
     @Override
     public ItemCategoryNode clone() {
-        ItemCategoryNode clone = null;
-        try {
-            clone = (ItemCategoryNode) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ItemCategoryNode clone = (ItemCategoryNode) super.clone();
         clone.size = size;
         clone.category = category;
 
