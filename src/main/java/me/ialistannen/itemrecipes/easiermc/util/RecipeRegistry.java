@@ -1,14 +1,15 @@
 package me.ialistannen.itemrecipes.easiermc.util;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -18,6 +19,7 @@ import com.bwfcwalshy.easiermcnewinv.EasierMC;
 import com.bwfcwalshy.easiermcnewinv.Handler;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
 import com.bwfcwalshy.easiermcnewinv.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
 /**
@@ -28,6 +30,7 @@ public enum RecipeRegistry {
 
     private final Map<ItemStack, Recipe> recipeMap       = new ConcurrentHashMap<>();
     private final Map<ItemStack, Recipe> bukkitRecipeMap = new ConcurrentHashMap<>();
+    private final Collection<MultiBlock> multiBlocks     = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     /**
      * @param recipe The {@link Recipe} to add
@@ -44,20 +47,24 @@ public enum RecipeRegistry {
     }
 
     /**
-     * @param result The result of the recipe
-     *
-     * @return The Recipe or null if none
+     * @param multiBlock The {@link MultiBlock} to add
      */
-    public Recipe getRecipe(ItemStack result) {
-        return recipeMap.get(Util.normalize(result));
+    public void addMultiBlock(MultiBlock multiBlock) {
+        multiBlocks.add(multiBlock);
     }
 
     /**
      * @return All recipes. Unmodifiable
      */
     public Collection<EasierMCBase> getAllRecipes() {
-        return Stream.concat(Handler.getInstance().getEntireRegistery().stream(), bukkitRecipeMap.values().stream().map(EasierMcNormalItemBridge::new))
-                  .filter(base -> base.getRecipe() != null).collect(Collectors.toList());
+        LinkedList<EasierMCBase> mcBases = Stream
+                  .concat(Handler.getInstance().getEntireRegistery().stream(), bukkitRecipeMap.values().stream().map(EasierMcNormalItemBridge::new))
+                  .filter(base -> base.getRecipe() != null)
+                  .collect(Collectors.toCollection(LinkedList::new));
+
+        mcBases.addAll(multiBlocks);
+
+        return mcBases;
     }
 
     private static class EasierMcNormalItemBridge implements EasierMCBase {
@@ -108,9 +115,13 @@ public enum RecipeRegistry {
                 long start = System.currentTimeMillis();
 
                 for (EasierMCBase easierMCBase : Handler.getInstance().getEntireRegistery()) {
-                    Recipe recipe = easierMCBase.getRecipe();
-                    if (recipe != null) {
-                        addRecipe(recipe);
+                    if (easierMCBase instanceof MultiBlock) {
+                        addMultiBlock((MultiBlock) easierMCBase);
+                    } else {
+                        Recipe recipe = easierMCBase.getRecipe();
+                        if (recipe != null) {
+                            addRecipe(recipe);
+                        }
                     }
                 }
 

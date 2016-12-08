@@ -82,14 +82,9 @@ public class ItemRootNode extends TreePaneNode {
 
     @Override
     public ItemRootNode clone() {
-        ItemRootNode clone = null;
-        try {
-            clone = (ItemRootNode) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        ItemRootNode clone = (ItemRootNode) super.clone();
         clone.size = size;
-        clone.pagedPane = (PagedPane) pagedPane.deepClone();
+        clone.pagedPane = pagedPane.deepClone();
 
         return clone;
     }
