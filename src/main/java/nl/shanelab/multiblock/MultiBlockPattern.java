@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The multi block pattern wrapper class, 
@@ -21,6 +22,7 @@ import org.bukkit.Material;
 public final class MultiBlockPattern {
 
 	private final IMaterial coreMaterial;
+	private final ItemStack coreItemStack;
 	
 	private final PatternObject[] objects;
 	
@@ -28,31 +30,33 @@ public final class MultiBlockPattern {
 	
 	private MultiBlockPatternFacing lastPatternFacing;
 	
-	public MultiBlockPattern(@Nonnull Material coreMaterialType, PatternObject ... objects) {
-		this(coreMaterialType, MultiBlockPatternFacing.CARDINAL, objects);
+	public MultiBlockPattern(@Nonnull Material coreMaterialType, ItemStack coreItemStack, PatternObject ... objects) {
+		this(coreMaterialType, coreItemStack, MultiBlockPatternFacing.CARDINAL, objects);
 	}
 	
-	public MultiBlockPattern(@Nonnull Material coreMaterialType, MultiBlockPatternFacing patternFacing, PatternObject ... objects) {
+	public MultiBlockPattern(@Nonnull Material coreMaterialType, ItemStack coreItemStack, MultiBlockPatternFacing patternFacing, PatternObject ... objects) {
 		if (!coreMaterialType.isBlock()) {
 			throw new IllegalArgumentException(String.format("The given coreMaterial %s is not a valid block material.", coreMaterialType.toString()));
 		}
 		
 		this.coreMaterial = new MaterialWrapper(coreMaterialType);
 		this.patternFacing = patternFacing;
+		this.coreItemStack = coreItemStack.clone();
 		this.objects = patternFacing == MultiBlockPatternFacing.CARDINAL ? objects : rotatePatterns(objects, patternFacing);
 	}
 	
-	public MultiBlockPattern(@Nonnull IMaterial coreMaterial, PatternObject ... objects) {
-		this(coreMaterial, MultiBlockPatternFacing.CARDINAL, objects);
+	public MultiBlockPattern(@Nonnull IMaterial coreMaterial, ItemStack coreItemStack, PatternObject ... objects) {
+		this(coreMaterial, coreItemStack, MultiBlockPatternFacing.CARDINAL, objects);
 	}
 	
-	public MultiBlockPattern(@Nonnull IMaterial coreMaterial, MultiBlockPatternFacing patternFacing, PatternObject ... objects) {
+	public MultiBlockPattern(@Nonnull IMaterial coreMaterial, ItemStack coreItemStack, MultiBlockPatternFacing patternFacing, PatternObject ... objects) {
 		if (!coreMaterial.getType().isBlock()) {
 			throw new IllegalArgumentException(String.format("The given coreMaterial %s is not a valid block material.", coreMaterial.toString()));
 		}
 		
 		this.coreMaterial = coreMaterial;
 		this.patternFacing = patternFacing;
+		this.coreItemStack = coreItemStack;
 		this.objects = patternFacing == MultiBlockPatternFacing.CARDINAL ? objects : rotatePatterns(objects, patternFacing);
 	}
 	
@@ -63,7 +67,11 @@ public final class MultiBlockPattern {
 	public IMaterial getCoreMaterial() {
 		return coreMaterial;
 	}
-	
+
+	public ItemStack getCoreItemStack() {
+		return coreItemStack;
+	}
+
 	public MultiBlockPatternFacing getLastPatternFacing() {
 		return patternFacing == MultiBlockPatternFacing.CARDINAL ? lastPatternFacing : patternFacing;
 	}

@@ -1,12 +1,5 @@
 package com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock;
 
-import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
-import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
-import nl.shanelab.multiblock.MultiBlockActivation;
-import nl.shanelab.multiblock.MultiBlockActivationType;
-import nl.shanelab.multiblock.MultiBlockPattern;
-import nl.shanelab.multiblock.patternobjects.PatternBlock;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +9,15 @@ import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import com.bwfcwalshy.easiermcnewinv.itemsandblocks.Category;
+import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
+
+import nl.shanelab.multiblock.MultiBlockActivation;
+import nl.shanelab.multiblock.MultiBlockActivationType;
+import nl.shanelab.multiblock.MultiBlockPattern;
+import nl.shanelab.multiblock.patternobjects.PatternBlock;
 
 public class AdvancedCraftingTable implements MultiBlock {
 
@@ -81,6 +83,14 @@ public class AdvancedCraftingTable implements MultiBlock {
 
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
-        return new MultiBlockPattern(Material.WORKBENCH, new PatternBlock(Material.DROPPER, 0, -1, 0));
+        // FIXME: 09.12.2016 Restore this!
+        // TODO: 09.12.2016 Restore this!
+        // return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH);
+        return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH),
+                  new PatternBlock(Material.DROPPER, 0, -1, 0),
+                  new PatternBlock(Material.CHEST, 1, 0, -1),
+                  new PatternBlock(Material.STONE, 1, 0, 0),
+                  new PatternBlock(Material.GLOWSTONE, 0, 1, 0)
+        );
     }
 }
