@@ -23,10 +23,10 @@ import com.bwfcwalshy.easiermcnewinv.itemsandblocks.multiblock.MultiBlock;
 import com.bwfcwalshy.easiermcnewinv.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermcnewinv.recipe.panes.MultiBlockPane;
 import com.bwfcwalshy.easiermcnewinv.utils.ItemStackBuilder;
-import com.perceivedev.perceivecore.gui.base.AbstractPane;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.Label;
+import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.components.simple.DisplayColor;
@@ -133,7 +133,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
         return clone;
     }
 
-    private class RecipePane extends AbstractPane {
+    private class RecipePane extends AnchorPane {
 
         private List<List<ItemStack>> items;
         private MultiBlockPattern     pattern;
@@ -161,6 +161,8 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
             } else {
                 items = new ArrayList<>();
             }
+
+            init();
         }
 
         /**
@@ -236,42 +238,23 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
             return lists;
         }
 
-        @Override
-        public void render(Inventory inventory, Player player, int x, int y) {
-            // clear it
-            new ArrayList<>(components).forEach(this::removeComponent);
-
+        private void init() {
             SimpleLabel bottomLeft = new SimpleLabel(new Dimension(5, 1), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
-            if (getInventoryMap().addComponent(0, 5, bottomLeft)) {
-                components.add(bottomLeft);
-                updateComponentHierarchy(bottomLeft);
-            }
+            addComponent(bottomLeft, 0, 5);
 
             SimpleLabel bottomRight = new SimpleLabel(new Dimension(3, 1), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
-            if (getInventoryMap().addComponent(6, 5, bottomRight)) {
-                components.add(bottomRight);
-                updateComponentHierarchy(bottomRight);
-            }
+            addComponent(bottomRight, 6, 5);
 
             SimpleLabel aboveCraftingItem = new SimpleLabel(new Dimension(1, 2), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
-            if (getInventoryMap().addComponent(5, 0, aboveCraftingItem)) {
-                components.add(aboveCraftingItem);
-                updateComponentHierarchy(aboveCraftingItem);
-            }
+            addComponent(aboveCraftingItem, 5, 0);
 
             SimpleLabel belowCraftingItem = new SimpleLabel(new Dimension(1, 2), StandardDisplayTypes.FLAT, DisplayColor.DARK_GRAY, "  ");
-            if (getInventoryMap().addComponent(5, 3, belowCraftingItem)) {
-                components.add(belowCraftingItem);
-                updateComponentHierarchy(belowCraftingItem);
-            }
+            addComponent(belowCraftingItem, 5, 3);
 
             if (items.isEmpty() && pattern != null) {
                 // This is for the multi block pane                
                 MultiBlockPane multiBlockPane = new MultiBlockPane(pattern);
-                if (getInventoryMap().addComponent(0, 0, multiBlockPane)) {
-                    components.add(multiBlockPane);
-                    updateComponentHierarchy(multiBlockPane);
-                }
+                addComponent(multiBlockPane, 0, 0);
             } else {
                 for (int yPos = 0; yPos < items.size(); yPos++) {
                     List<ItemStack> row = items.get(yPos);
@@ -292,14 +275,17 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                         TreePane treePane = owner.get();
 
                         RecipeButton button = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
-                        if (getInventoryMap().addComponent(xPos + 1, yPos + 1, button)) {
-                            components.add(button);
-                            updateComponentHierarchy(button);
-                        }
+                        addComponent(button, xPos + 1, yPos + 1);
                     }
                 }
             }
 
+            Label resultLabel = new Label(getResult(), Dimension.ONE);
+            addComponent(resultLabel, 7, 2);
+        }
+
+        @Override
+        public void render(Inventory inventory, Player player, int x, int y) {
             if (PlayerHistory.INSTANCE.hasPreviousNode(player.getUniqueId())) {
                 // see if above
                 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -317,16 +303,9 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                     PlayerHistory.INSTANCE.removePreviousNode(player.getUniqueId());
                     getOwner().ifPresent(treePane -> treePane.select(previousNode));
                 });
-                if (getInventoryMap().addComponent(5, 5, backButton)) {
-                    components.add(backButton);
-                    updateComponentHierarchy(backButton);
-                }
-            }
 
-            Label resultLabel = new Label(getResult(), Dimension.ONE);
-            if (getInventoryMap().addComponent(7, 2, resultLabel)) {
-                components.add(resultLabel);
-                updateComponentHierarchy(resultLabel);
+                removeComponent(5, 5);
+                addComponent(backButton, 5, 5);
             }
 
             Optional<TreePane> owner = getOwner();
@@ -334,14 +313,23 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
             owner.ifPresent(treePane -> {
                 if (getCraftingItem() != null) {
                     RecipeButton craftingItem = new RecipeButton(Util.normalize(getCraftingItem()), Dimension.ONE, treePane);
-                    if (getInventoryMap().addComponent(5, 2, craftingItem)) {
-                        components.add(craftingItem);
-                        updateComponentHierarchy(craftingItem);
-                    }
+                    removeComponent(5, 2);
+                    addComponent(craftingItem, 5, 2);
                 }
             });
 
             super.render(inventory, player, x, y);
+        }
+
+        @Override
+        public RecipePane deepClone() {
+            RecipePane clone = (RecipePane) super.deepClone();
+            clone.items = new ArrayList<>();
+            for (List<ItemStack> item : items) {
+                clone.items.add(new ArrayList<>(item));
+            }
+            clone.pattern = pattern;
+            return clone;
         }
     }
 
@@ -352,10 +340,9 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
             return new ItemStack(Material.FURNACE);
         else if (recipe instanceof AdvancedRecipe)
             return Handler.getInstance().getMuiltiBlock("AdvancedCraftingTable").getItem();
-        else if(base instanceof MultiBlock) {
+        else if (base instanceof MultiBlock) {
             return new ItemStack(Material.ARROW);
-        }
-        else
+        } else
             return null;
     }
 
