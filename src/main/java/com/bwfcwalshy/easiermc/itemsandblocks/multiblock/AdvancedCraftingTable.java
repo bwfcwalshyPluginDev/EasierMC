@@ -57,12 +57,12 @@ public class AdvancedCraftingTable implements MultiBlock {
 
             outer:
             for (AdvancedRecipe recipe : handler.getAdvancedRecipes()) {
-                System.out.println("Recipe: " + recipe);
+                System.out.println("Recipe: " + recipe.getResult().getItemMeta().getDisplayName());
                 String shape = StringUtils.join(recipe.getShape());
                 for (int i = 0; i < 9; i++) {
                     System.out.println(i + " - '" + shape.charAt(i) + "' - " + itemStacks[i] + " - " + recipe.getIngredients().get(shape.charAt(i)));
-                    if (!handler.itemStackEquals(recipe.getIngredients().get(shape.charAt(i)), itemStacks[i], true)) {
-                        System.out.println("ze");
+                    if (!handler.itemStackEquals(itemStacks[i], recipe.getIngredients().get(shape.charAt(i)), true)) {
+                        System.out.println("ItemStack does not match.");
                         continue outer;
                     }
                 }

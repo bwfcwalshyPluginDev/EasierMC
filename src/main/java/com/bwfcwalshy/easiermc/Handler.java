@@ -94,7 +94,8 @@ public class Handler {
     public BlockBase getBlock(ItemStack is){
         for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
             if(block.getItem().isSimilar(is)) return block;
-        throw new IllegalArgumentException("That block for that ItemStack does not exist or is not registered!");
+        return null;
+        //throw new IllegalArgumentException("That block for that ItemStack does not exist or is not registered!");
     }
 
     /**
@@ -139,7 +140,8 @@ public class Handler {
     public ItemBase getItem(ItemStack is) {
         for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
             if(item.getItem().equals(is)) return item;
-        throw new IllegalArgumentException("That item for that ItemStack does not exist or is not registered!");
+        return null;
+        //throw new IllegalArgumentException("That item for that ItemStack does not exist or is not registered!");
     }
 
     /**
@@ -247,25 +249,17 @@ public class Handler {
         if(check == null) check = new ItemStack(Material.AIR);
         if(compare == null) compare = new ItemStack(Material.AIR);
 
-        System.out.println("Check: " + check);
-        System.out.println("Compare: " + compare);
         if(compare.getType() == check.getType()){
-            System.out.println("Correct types");
             if(compare.hasItemMeta() && check.hasItemMeta()){
-                System.out.println("Has item meta");
                 if(compare.getItemMeta().hasDisplayName() && check.getItemMeta().hasDisplayName()){
-                    System.out.println("Has display name");
                     if(!check.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
-                    System.out.println("Display name matches");
                 }
                 if(compare.getItemMeta().hasLore() && check.getItemMeta().hasLore()){
-                    System.out.println("Has lore");
                     if(!check.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
-                    System.out.println("Lore matches");
                 }
-                if(check.getAmount() < compare.getAmount()) return false;
-                System.out.println("Item Stack matched!");
             }
+            if(checkAmount && check.getAmount() < compare.getAmount()) return false;
+            System.out.println("Item Stack matched!");
             return true;
         }
         return false;
