@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,9 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import com.bwfcwalshy.easiermc.CustomHead;
 
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.CustomHead;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class AutoShear implements BlockBase {
 
@@ -55,5 +56,10 @@ public class AutoShear implements BlockBase {
                 tryToStore(location, new ItemStack(Material.WOOL, rand.nextInt(3)+1, sheep.getColor().getData()));
             }
         });
+    }
+
+    @Override
+    public AutoShear copy() {
+        return this;
     }
 }

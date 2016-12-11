@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -9,7 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class ReinforcedStick implements ItemBase {
 
@@ -36,6 +37,11 @@ public class ReinforcedStick implements ItemBase {
     @Override
     public Recipe getRecipe() {
         return new ShapedRecipe(getItem()).shape("iii", "isi", "iii").setIngredient('i', Material.IRON_INGOT).setIngredient('s', Material.STICK);
+    }
+
+    @Override
+    public ReinforcedStick copy() {
+        return this;
     }
 
     @Override

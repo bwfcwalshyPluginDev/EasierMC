@@ -1,8 +1,9 @@
 package com.bwfcwalshy.easiermc.itemsandblocks;
 
-import com.bwfcwalshy.easiermc.Handler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+
+import com.bwfcwalshy.easiermc.Handler;
 
 public interface EasierMCBase {
 
@@ -19,4 +20,10 @@ public interface EasierMCBase {
     default Recipe getRecipe() {
         return null;
     }
+
+    /**
+     * 
+     * @return A clone of this object
+     */
+    EasierMCBase copy();
 }

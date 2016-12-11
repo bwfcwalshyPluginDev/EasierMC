@@ -1,8 +1,9 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,9 +13,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class TapeMeasure implements ItemBase {
 
@@ -47,6 +48,12 @@ public class TapeMeasure implements ItemBase {
     @Override
     public Recipe getRecipe() {
         return new AdvancedRecipe(getItem(), "iii", "iyi", "iii").setIngredient('i', Material.IRON_INGOT).setIngredient('y', new ItemStackBuilder(Material.INK_SACK).setData(11).build());
+    }
+
+    @Override
+    public TapeMeasure copy() {
+        // there is points, but that is a shared instance
+        return this;
     }
 
     @Override
