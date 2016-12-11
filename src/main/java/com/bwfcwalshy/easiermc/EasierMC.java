@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc;
 
 import java.io.File;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,6 +34,7 @@ public class EasierMC extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new Events(this), this);
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(), this);
 
         tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
 

@@ -7,7 +7,9 @@ import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 public interface ItemBase extends EasierMCBase {
 
     @Override
-    ItemBase copy();
+    default ItemBase copy(){
+        return this;
+    }
 
     default void onInteract(PlayerInteractEvent e){
         return;

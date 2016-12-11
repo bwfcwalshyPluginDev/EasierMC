@@ -23,7 +23,9 @@ public interface BlockBase extends EasierMCBase {
     Random rand = new Random();
 
     @Override
-    BlockBase copy();
+    default BlockBase copy(){
+        return this;
+    }
 
     default void tick(Location location){
         return;
