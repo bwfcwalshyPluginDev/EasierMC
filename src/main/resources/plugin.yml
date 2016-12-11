@@ -4,7 +4,6 @@ version: 1.0.5
 author: bwfcwalshy
 main: com.bwfcwalshy.easiermc.EasierMC
 commands:
-  recipe:
-    description: Recipe command
-  newmc:
-    description: Main command
+  easiermc:
+    description: Main command for EasierMC
+    aliases: [emc, easymc]

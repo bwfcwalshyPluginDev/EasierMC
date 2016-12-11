@@ -22,7 +22,6 @@ public class Handler {
     private List<AdvancedRecipe> advancedRecipes;
 
     private static Handler instance;
-    private CraftingEvents crafting;
 
     private EasierMC main;
     public Handler(EasierMC easierMC){
@@ -218,11 +217,6 @@ public class Handler {
         for(EasierMCBase base : getEntireRegistery())
             if(base.getSimpleName().equalsIgnoreCase(simpleName)) return base;
         return null;
-    }
-
-    public CraftingEvents getInventories() {
-        if(crafting == null) crafting = main.getCraftingEvents();
-        return crafting;
     }
 
     public List<AdvancedRecipe> getAdvancedRecipes() {

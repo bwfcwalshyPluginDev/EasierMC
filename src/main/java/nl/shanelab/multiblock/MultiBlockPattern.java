@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import nl.shanelab.multiblock.patternobjects.PatternBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -59,9 +60,9 @@ public final class MultiBlockPattern {
 		this.coreItemStack = coreItemStack;
 		this.objects = patternFacing == MultiBlockPatternFacing.CARDINAL ? objects : rotatePatterns(objects, patternFacing);
 	}
-	
-	public List<PatternObject> getPatternObjects() {
-		return (List<PatternObject>) Collections.unmodifiableList(Arrays.asList(objects));
+
+    public List<PatternObject> getPatternObjects() {
+		return Collections.unmodifiableList(Arrays.asList(objects));
 	}
 	
 	public IMaterial getCoreMaterial() {
