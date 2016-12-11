@@ -3,15 +3,20 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import java.util.Arrays;
 
 public class Generator implements BlockBase {
+
+    private Inventory inventory;
 
     @Override
     public String getSimpleName() {
@@ -42,5 +47,19 @@ public class Generator implements BlockBase {
     @Override
     public void tick(Location location) {
 
+    }
+
+    @Override
+    public void onInteract(PlayerInteractEvent e){
+        if(inventory == null){
+            inventory = Bukkit.createInventory(null, 27, getName());
+
+            for(int i = 0; i < 27; i++){
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData(7).build());
+            }
+            inventory.setItem(10, null);
+        }
+
+        e.getPlayer().openInventory(inventory);
     }
 }

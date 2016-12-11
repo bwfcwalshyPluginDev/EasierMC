@@ -82,14 +82,6 @@ public class AdvancedCraftingTable implements MultiBlock {
 
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
-        // FIXME: 09.12.2016 Restore this!
-        // TODO: 09.12.2016 Restore this!
-        // return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH);
-        return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH),
-                  new PatternBlock(Material.DROPPER, 0, -1, 0),
-                  new PatternBlock(Material.CHEST, 1, 0, -1),
-                  new PatternBlock(Material.STONE, 1, 0, 0),
-                  new PatternBlock(Material.GLOWSTONE, 0, 1, 0)
-        );
+        return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH), new PatternBlock(Material.DROPPER, 0, -1, 0));
     }
 }

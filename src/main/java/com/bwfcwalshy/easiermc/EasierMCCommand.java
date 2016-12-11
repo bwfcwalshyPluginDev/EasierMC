@@ -42,8 +42,6 @@ public class EasierMCCommand implements CommandExecutor {
                     treePane.setRoot(itemRootNode);
                     
                     gui.open(player);
-                    
-//                    handler.getInventories().openCategoryInventory(player);
                 }else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                 }
