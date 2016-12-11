@@ -1,4 +1,4 @@
-package me.ialistannen.itemrecipes.easiermc.nodes;
+package com.bwfcwalshy.easiermc.recipe.nodes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,5 +78,14 @@ public class ItemRootNode extends TreePaneNode {
             pagedPane = createPane();
         }
         return pagedPane;
+    }
+
+    @Override
+    public ItemRootNode clone() {
+        ItemRootNode clone = (ItemRootNode) super.clone();
+        clone.size = size;
+        clone.pagedPane = pagedPane.deepClone();
+
+        return clone;
     }
 }

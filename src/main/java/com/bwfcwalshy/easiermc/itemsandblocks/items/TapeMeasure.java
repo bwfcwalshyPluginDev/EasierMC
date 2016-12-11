@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class TapeMeasure implements ItemBase {
     }
 
     @Override
-    public AdvancedRecipe getAdvancedRecipe() {
+    public Recipe getRecipe() {
         return new AdvancedRecipe(getItem(), "iii", "iyi", "iii").setIngredient('i', Material.IRON_INGOT).setIngredient('y', new ItemStackBuilder(Material.INK_SACK).setData(11).build());
     }
 
