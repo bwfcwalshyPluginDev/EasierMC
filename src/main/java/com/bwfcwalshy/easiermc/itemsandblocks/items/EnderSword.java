@@ -1,19 +1,20 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
-import com.bwfcwalshy.easiermc.Handler;
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-import com.bwfcwalshy.easiermc.utils.nbt.ItemNBTUtil;
-import com.bwfcwalshy.easiermc.utils.nbt.NBTWrappers;
+import java.util.Arrays;
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import java.util.Arrays;
-import java.util.UUID;
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import com.bwfcwalshy.easiermc.utils.nbt.ItemNBTUtil;
+import com.bwfcwalshy.easiermc.utils.nbt.NBTWrappers;
 
 public class EnderSword implements ItemBase {
 
@@ -46,6 +47,10 @@ public class EnderSword implements ItemBase {
                 .setIngredient('r', handler.getItem("ReinforcedStick").getItem()).setIngredient('e', Material.DRAGON_EGG);
     }
 
+    @Override
+    public EnderSword copy() {
+        return this;
+    }
 
     @Override
     public void onInteract(PlayerInteractEvent e){

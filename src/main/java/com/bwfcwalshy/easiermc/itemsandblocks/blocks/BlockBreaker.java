@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,10 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import com.bwfcwalshy.easiermc.CustomHead;
 import com.bwfcwalshy.easiermc.Handler;
-
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class BlockBreaker implements BlockBase {
 
@@ -67,6 +68,11 @@ public class BlockBreaker implements BlockBase {
             tryToStore(location, new ItemStack(b2.getType(), 1, b2.getData()));
             b2.setType(Material.AIR);
         }
+    }
+
+    @Override
+    public BlockBreaker copy() {
+        return this;
     }
 
     private boolean isBreakableBlock(Material mat){

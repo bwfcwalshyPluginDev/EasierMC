@@ -1,18 +1,34 @@
 package com.bwfcwalshy.easiermc;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import nl.shanelab.multiblock.MultiBlockFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.TrashBin;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.TapeMeasure;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+
+import nl.shanelab.multiblock.MultiBlockFactory;
 
 public class Handler {
 
@@ -43,7 +59,7 @@ public class Handler {
     }
 
     public void addBlock(BlockBase block, Location loc){
-        this.blocks.put(loc, block);
+        this.blocks.put(loc, block.copy());
     }
 
     public void removeBlock(Location location) {

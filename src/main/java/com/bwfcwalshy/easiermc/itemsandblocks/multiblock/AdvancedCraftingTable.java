@@ -1,11 +1,5 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-import nl.shanelab.multiblock.MultiBlockActivation;
-import nl.shanelab.multiblock.MultiBlockActivationType;
-import nl.shanelab.multiblock.MultiBlockPattern;
-import nl.shanelab.multiblock.patternobjects.PatternBlock;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,7 +10,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+
+import nl.shanelab.multiblock.MultiBlockActivation;
+import nl.shanelab.multiblock.MultiBlockActivationType;
+import nl.shanelab.multiblock.MultiBlockPattern;
+import nl.shanelab.multiblock.patternobjects.PatternBlock;
 
 public class AdvancedCraftingTable implements MultiBlock {
 
@@ -33,6 +34,11 @@ public class AdvancedCraftingTable implements MultiBlock {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder(Material.WORKBENCH, ChatColor.YELLOW + "Advanced Crafting Table").build();
+    }
+
+    @Override
+    public AdvancedCraftingTable copy() {
+        return this;
     }
 
     @Override

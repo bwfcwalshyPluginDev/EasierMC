@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -9,7 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class MasterStar implements ItemBase {
 
@@ -38,6 +39,11 @@ public class MasterStar implements ItemBase {
         return new ShapedRecipe(getItem()).shape("xx", "xx").setIngredient('x', Material.NETHER_STAR);
     }
 
+    @Override
+    public MasterStar copy() {
+        return this;
+    }
+    
     @Override
     public void onInteract(PlayerInteractEvent e) {
 

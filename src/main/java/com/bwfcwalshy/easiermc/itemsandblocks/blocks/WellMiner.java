@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.CustomHead;
+import java.util.Collections;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +11,8 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.CustomHead;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class WellMiner implements BlockBase {
 
@@ -35,7 +36,7 @@ public class WellMiner implements BlockBase {
         ItemStack is = CustomHead.getSkull("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe");
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(getName());
-        im.setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to dig straight down."));
+        im.setLore(Collections.singletonList(ChatColor.GRAY + "You can use this item to dig straight down."));
         is.setItemMeta(im);
         return is;
     }
@@ -59,5 +60,10 @@ public class WellMiner implements BlockBase {
 //            b.setType(Material.END_ROD);
 //            if(i > 1) b.getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
         }
+    }
+
+    @Override
+    public WellMiner copy() {
+        return this;
     }
 }

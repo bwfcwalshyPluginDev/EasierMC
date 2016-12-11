@@ -1,6 +1,8 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import java.util.Random;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,11 +14,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.Random;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+
+import javax.annotation.Nullable;
 
 public interface BlockBase extends EasierMCBase {
 
     Random rand = new Random();
+
+    @Override
+    BlockBase copy();
 
     default void tick(Location location){
         return;
@@ -62,5 +69,34 @@ public interface BlockBase extends EasierMCBase {
             }
         }
         return false;
+    }
+
+    /**
+     * Clones the inventory
+     * <p>
+     * Returns null if inventory is null
+     * 
+     * @param inventory The inventory to clone
+     * @return A cloned inventory
+     */
+    @Nullable
+    default Inventory cloneInventory(@Nullable Inventory inventory) {
+        if(inventory == null) {
+            return null;
+        }
+        
+        Inventory clone = Bukkit.createInventory(inventory.getHolder(), inventory.getSize(), inventory.getTitle());
+        
+        for (int i = 0; i < inventory.getSize(); i++) {
+            ItemStack binItem = inventory.getItem(i);
+            if (binItem != null) {
+                clone.setItem(i, binItem.clone());
+            }
+            else {
+                clone.setItem(i, null);
+            }
+        }
+        
+        return clone;
     }
 }

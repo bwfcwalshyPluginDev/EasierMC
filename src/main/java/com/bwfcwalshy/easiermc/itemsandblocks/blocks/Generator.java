@@ -1,8 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,7 +11,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import java.util.Arrays;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class Generator implements BlockBase {
 
@@ -47,6 +48,13 @@ public class Generator implements BlockBase {
     @Override
     public void tick(Location location) {
 
+    }
+
+    @Override
+    public Generator copy() {
+        Generator clone = new Generator();
+        clone.inventory = cloneInventory(inventory);
+        return clone;
     }
 
     @Override
