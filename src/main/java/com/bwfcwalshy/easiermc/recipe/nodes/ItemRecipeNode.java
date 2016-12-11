@@ -5,12 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.bwfcwalshy.easiermc.Handler;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.recipe.panes.MultiBlockPane;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,6 +17,12 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.recipe.panes.MultiBlockPane;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.Label;
@@ -274,7 +274,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
                         TreePane treePane = owner.get();
 
-                        RecipeButton button = new RecipeButton(Util.normalize(itemStack), Dimension.ONE, treePane);
+                        RecipeButton button = new RecipeButton(Util.fixStrangeDurability(itemStack), Dimension.ONE, treePane);
                         addComponent(button, xPos + 1, yPos + 1);
                     }
                 }
@@ -312,7 +312,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
             owner.ifPresent(treePane -> {
                 if (getCraftingItem() != null) {
-                    RecipeButton craftingItem = new RecipeButton(Util.normalize(getCraftingItem()), Dimension.ONE, treePane);
+                    RecipeButton craftingItem = new RecipeButton(Util.fixStrangeDurability(getCraftingItem()), Dimension.ONE, treePane);
                     removeComponent(5, 2);
                     addComponent(craftingItem, 5, 2);
                 }
