@@ -1,4 +1,4 @@
-package me.ialistannen.itemrecipes.easiermc.nodes;
+package com.bwfcwalshy.easiermc.recipe.nodes;
 
 import java.util.Comparator;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import org.bukkit.Material;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
@@ -18,19 +18,16 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRecipeNode.RecipeButton;
-import me.ialistannen.itemrecipes.easiermc.util.ItemCategory;
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 
 /**
- * A {@link TreePaneNode}, that displays all items in an {@link ItemCategory}
+ * A {@link TreePaneNode}, that displays all items in a {@link Category}
  */
 class ItemCategoryNode extends TreePaneNode {
 
-    private Category  category;
+    private Category category;
     private Dimension size;
-    private PagedPane pagedPane;
 
     /**
      * Creates a new {@link TreePaneNode} with the given parent and no children
@@ -75,7 +72,7 @@ class ItemCategoryNode extends TreePaneNode {
         }
 
         TreePane treePane = owner.get();
-        
+
         List<ItemRecipeNode> nodes = ItemRegistry.INSTANCE.getNodes(category)
                   .stream()
                   .sorted(Comparator.comparing(o -> o.getResult().getType()))
@@ -83,7 +80,7 @@ class ItemCategoryNode extends TreePaneNode {
         for (ItemRecipeNode node : nodes) {
             node.setParent(this);
 
-            RecipeButton button = new RecipeButton(Util.normalize(node.getResult()), Dimension.ONE, treePane);
+            ItemRecipeNode.RecipeButton button = new ItemRecipeNode.RecipeButton(Util.normalize(node.getResult()), Dimension.ONE, treePane);
             pagedPane.addComponent(button);
         }
 
@@ -97,9 +94,15 @@ class ItemCategoryNode extends TreePaneNode {
      */
     @Override
     public Pane getPane() {
-        if (pagedPane == null) {
-            pagedPane = generatePagedPane();
-        }
-        return pagedPane;
+        return generatePagedPane();
+    }
+
+    @Override
+    public ItemCategoryNode clone() {
+        ItemCategoryNode clone = (ItemCategoryNode) super.clone();
+        clone.size = size;
+        clone.category = category;
+
+        return clone;
     }
 }

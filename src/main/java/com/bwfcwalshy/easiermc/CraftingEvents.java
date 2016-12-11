@@ -2,7 +2,7 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -91,25 +91,25 @@ public class CraftingEvents implements Listener {
                     FurnaceRecipe recipe = (FurnaceRecipe) base.getRecipe();
 
                     player.openInventory(craftInv);
-                }
-            }else if(base.getAdvancedRecipe() != null){
-                Inventory craftInv = Bukkit.createInventory(null, 36, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
+                }else if(base.getRecipe() instanceof AdvancedRecipe) {
+                    Inventory craftInv = Bukkit.createInventory(null, 36, base.getItem().getItemMeta().getDisplayName() + ChatColor.BLUE + "'s Recipe");
 
-                AdvancedRecipe recipe = base.getAdvancedRecipe();
-                String shape = StringUtils.join(recipe.getShape());
+                    AdvancedRecipe recipe = (AdvancedRecipe) base.getRecipe();
+                    String shape = StringUtils.join(recipe.getShape());
 
-                int slot = 0;
-                for(int i = 0; i < 9; i++){
-                    if(i >= 3 && i % 3 == 0)
-                        slot += 6;
-                    craftInv.setItem(slot, recipe.getIngredients().get(shape.charAt(i)));
-                    slot++;
+                    int slot = 0;
+                    for (int i = 0; i < 9; i++) {
+                        if (i >= 3 && i % 3 == 0)
+                            slot += 6;
+                        craftInv.setItem(slot, recipe.getIngredients().get(shape.charAt(i)));
+                        slot++;
+                    }
+                    for (int i = 27; i < 36; i++) {
+                        craftInv.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
+                    }
+                    craftInv.setItem(28, new ItemStackBuilder(Material.ARROW, ChatColor.GREEN + "Go Back", Arrays.asList(" ", ChatColor.GRAY + "Go back to: " + cameFrom)).build());
+                    player.openInventory(craftInv);
                 }
-                for(int i = 27; i < 36; i++){
-                    craftInv.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData((short) 7).build());
-                }
-                craftInv.setItem(28, new ItemStackBuilder(Material.ARROW, ChatColor.GREEN + "Go Back", Arrays.asList(" ", ChatColor.GRAY + "Go back to: " + cameFrom)).build());
-                player.openInventory(craftInv);
             }else{
                 // Item is uncraftable.
             }

@@ -1,6 +1,5 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import nl.shanelab.multiblock.MultiBlockActivation;
@@ -16,6 +15,8 @@ import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 
 public class AdvancedCraftingTable implements MultiBlock {
 
@@ -44,13 +45,18 @@ public class AdvancedCraftingTable implements MultiBlock {
 
             ItemStack[] itemStacks = dropper.getInventory().getContents();
 
+            System.out.println(itemStacks);
+
             // I will need to make this process better but for now, it works fine.
 
             outer:
             for (AdvancedRecipe recipe : handler.getAdvancedRecipes()) {
+                System.out.println("Recipe: " + recipe);
                 String shape = StringUtils.join(recipe.getShape());
                 for (int i = 0; i < 9; i++) {
-                    if (shape.charAt(i) != ' ' && !handler.itemStackEquals(recipe.getIngredients().get(shape.charAt(i)), itemStacks[i], true)) {
+                    System.out.println(i + " - '" + shape.charAt(i) + "' - " + itemStacks[i] + " - " + recipe.getIngredients().get(shape.charAt(i)));
+                    if (!handler.itemStackEquals(recipe.getIngredients().get(shape.charAt(i)), itemStacks[i], true)) {
+                        System.out.println("ze");
                         continue outer;
                     }
                 }
@@ -76,6 +82,14 @@ public class AdvancedCraftingTable implements MultiBlock {
 
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
-        return new MultiBlockPattern(Material.WORKBENCH, new PatternBlock(Material.DROPPER, 0, -1, 0));
+        // FIXME: 09.12.2016 Restore this!
+        // TODO: 09.12.2016 Restore this!
+        // return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH);
+        return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH),
+                  new PatternBlock(Material.DROPPER, 0, -1, 0),
+                  new PatternBlock(Material.CHEST, 1, 0, -1),
+                  new PatternBlock(Material.STONE, 1, 0, 0),
+                  new PatternBlock(Material.GLOWSTONE, 0, 1, 0)
+        );
     }
 }

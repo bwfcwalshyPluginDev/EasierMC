@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,11 +36,6 @@ public class Generator implements BlockBase {
 
     @Override
     public Recipe getRecipe() {
-        return null;
-    }
-
-    @Override
-    public AdvancedRecipe getAdvancedRecipe(){
         return new AdvancedRecipe(getItem(), " i ", "rrr", "   ").setIngredient('i', Material.IRON_BLOCK).setIngredient('r', Material.IRON_INGOT);
     }
 

@@ -4,11 +4,12 @@ import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
-import com.bwfcwalshy.easiermc.itemsandblocks.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import nl.shanelab.multiblock.MultiBlockFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -171,8 +172,8 @@ public class Handler {
     public void registerRecipes(){
         for(ItemCategory category : registery.keySet()){
             for(EasierMCBase base : registery.get(category)){
-                if(base.getRecipe() != null) Bukkit.addRecipe(base.getRecipe());
-                if(base.getAdvancedRecipe() != null) advancedRecipes.add(base.getAdvancedRecipe());
+                if(base.getRecipe() != null && !(base.getRecipe() instanceof AdvancedRecipe)) Bukkit.addRecipe(base.getRecipe());
+                else if(base.getRecipe() != null && base.getRecipe() instanceof AdvancedRecipe) this.advancedRecipes.add((AdvancedRecipe) base.getRecipe());
             }
         }
     }
@@ -236,6 +237,9 @@ public class Handler {
      * @return Returns if the ItemStack is equal to the other.
      */
     public boolean itemStackEquals(ItemStack check, ItemStack compare, boolean checkAmount){
+        if(check == null) check = new ItemStack(Material.AIR);
+        if(compare == null) compare = new ItemStack(Material.AIR);
+
         System.out.println("Check: " + check);
         System.out.println("Compare: " + compare);
         if(compare.getType() == check.getType()){

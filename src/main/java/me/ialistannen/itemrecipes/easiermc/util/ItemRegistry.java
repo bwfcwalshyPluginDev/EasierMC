@@ -7,13 +7,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRecipeNode;
+import com.bwfcwalshy.easiermc.recipe.nodes.ItemRecipeNode;
 
 /**
  * A Registry, that maps {@link ItemStack}s to {@link ItemRecipeNode}s
@@ -67,7 +68,11 @@ public enum ItemRegistry {
     public void build(Dimension dimension) {
         long start = System.currentTimeMillis();
         for (EasierMCBase mcBase : RecipeRegistry.INSTANCE.getAllRecipes()) {
-            ItemRecipeNode itemRecipeNode = new ItemRecipeNode(null, mcBase.getRecipe(), dimension, mcBase);
+            ItemRecipeNode itemRecipeNode;
+            if(mcBase instanceof MultiBlock)
+                itemRecipeNode = new ItemRecipeNode(null, ((MultiBlock) mcBase).getMultiBlockPattern(), dimension, mcBase);
+            else
+                itemRecipeNode = new ItemRecipeNode(null, mcBase.getRecipe(), dimension, mcBase);
             addRecipeNode(itemRecipeNode);
         }
         long duration = System.currentTimeMillis() - start;

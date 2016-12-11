@@ -11,7 +11,9 @@ import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.perceivedev.perceivecore.gui.Gui;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 
-import me.ialistannen.itemrecipes.easiermc.nodes.ItemRootNode;
+import com.bwfcwalshy.easiermc.recipe.nodes.ItemRootNode;
+
+import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
 
 public class EasierMCCommand implements CommandExecutor {
 
@@ -29,8 +31,13 @@ public class EasierMCCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("recipe")){
                 if(sender.hasPermission("easiermc.recipe")){
                     TreePane treePane = new TreePane(9, 6);
-                    Gui gui = new Gui("&3&lEasierMc &7- &lRecipes", 6, treePane);
-
+                    Gui gui = new Gui("&3&lEasierMc &7- &lRecipes", 6, treePane) {
+                        @Override
+                        protected void onClose() {
+                            PlayerHistory.INSTANCE.removePlayer(player.getUniqueId());
+                        }
+                    };
+                    
                     ItemRootNode itemRootNode = new ItemRootNode(null , treePane.getSize(), Category.values);
                     treePane.setRoot(itemRootNode);
                     

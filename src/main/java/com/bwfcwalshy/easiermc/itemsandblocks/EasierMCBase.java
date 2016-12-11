@@ -19,8 +19,4 @@ public interface EasierMCBase {
     default Recipe getRecipe() {
         return null;
     }
-
-    default AdvancedRecipe getAdvancedRecipe(){
-        return null;
-    }
 }
