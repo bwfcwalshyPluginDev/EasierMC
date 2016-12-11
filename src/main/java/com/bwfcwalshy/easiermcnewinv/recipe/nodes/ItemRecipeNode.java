@@ -253,7 +253,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
             if (items.isEmpty() && pattern != null) {
                 // This is for the multi block pane                
-                MultiBlockPane multiBlockPane = new MultiBlockPane(pattern);
+                MultiBlockPane multiBlockPane = new MultiBlockPane(pattern, getOwner().orElse(null));
                 addComponent(multiBlockPane, 0, 0);
             } else {
                 for (int yPos = 0; yPos < items.size(); yPos++) {
@@ -349,7 +349,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
     /**
      * A button displaying a recipe
      */
-    static class RecipeButton extends Button {
+    public static class RecipeButton extends Button {
 
         private TreePane treePane;
 
@@ -362,7 +362,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
          *
          * @throws NullPointerException if any parameter is null
          */
-        RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
+        public RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
             super(itemStack, size);
 
             this.treePane = pane;

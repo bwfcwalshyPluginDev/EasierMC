@@ -6,9 +6,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import com.bwfcwalshy.easiermcnewinv.recipe.nodes.ItemRecipeNode.RecipeButton;
+import com.perceivedev.perceivecore.gui.base.Component;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.Label;
 import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
+import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 
@@ -19,22 +22,26 @@ import nl.shanelab.multiblock.patternobjects.PatternBlock;
 public class MultiBlockPane extends AnchorPane {
 
     private MultiBlockPattern pattern;
-    private int               layers;
-    private int               lowestY;
-    private int               highestY;
+    private int layers;
+    private int lowestY;
+    private int highestY;
+    private TreePane owner;
 
     private int currentLayer = 0;
 
-    public MultiBlockPane(MultiBlockPattern pattern) {
+    public MultiBlockPane(MultiBlockPattern pattern, TreePane owner) {
         super(5, 5);
 
+        this.owner = owner;
         this.pattern = pattern;
 
         for (PatternObject patternObject : pattern.getPatternObjects()) {
-            if (lowestY > patternObject.getY())
+            if (lowestY > patternObject.getY()) {
                 lowestY = patternObject.getY();
-            if (highestY < patternObject.getY())
+            }
+            if (highestY < patternObject.getY()) {
                 highestY = patternObject.getY();
+            }
         }
 
         // core is at 0:0. Respect it.
@@ -62,12 +69,12 @@ public class MultiBlockPane extends AnchorPane {
 
         {
             Label compassRose = new Label(
-                      ItemFactory.builder(Material.COMPASS)
-                                .setName("&3&lCompass Rose")
-                                .addLore("&6Positive &3X&6: &a&l\u27a1")
-                                .addLore("&6Positive &3Z&6: &a&l\u2b07\u2b07")
-                                .build()
-                      , Dimension.ONE);
+                    ItemFactory.builder(Material.COMPASS)
+                            .setName("&3&lCompass Rose")
+                            .addLore("&6Positive &3X&6: &a&l\u27a1")
+                            .addLore("&6Positive &3Z&6: &a&l\u2b07\u2b07")
+                            .build()
+                    , Dimension.ONE);
             addComponent(compassRose, 2, 0);
         }
 
@@ -75,7 +82,13 @@ public class MultiBlockPane extends AnchorPane {
 
         for (PatternObject object : pattern.getPatternObjects()) {
             if (layer == 1) {
-                Label label = new Label(pattern.getCoreItemStack(), Dimension.ONE);
+                Component label;
+                if (owner == null) {
+                    label = new Label(pattern.getCoreItemStack(), Dimension.ONE);
+                }
+                else {
+                    label = new RecipeButton(pattern.getCoreItemStack(), Dimension.ONE, owner);
+                }
                 addComponent(label, 2, 2);
             }
             if (layer != object.getY() + 1) {
@@ -84,13 +97,20 @@ public class MultiBlockPane extends AnchorPane {
 
             if (object instanceof PatternBlock) {
                 PatternBlock patternBlock = (PatternBlock) object;
-                Label label = new Label(patternBlock.getItemStack(), Dimension.ONE);
+                Component button;
+                if (owner == null) {
+                    button = new Label(patternBlock.getItemStack(), Dimension.ONE);
+                }
+                else {
+                    button = new RecipeButton(patternBlock.getItemStack(), Dimension.ONE, owner);
+                }
 
                 int x = object.getX() + 2;
                 int y = object.getZ() + 2;
 
-                addComponent(label, x, y);
-            } else {
+                addComponent(button, x, y);
+            }
+            else {
                 // Can't process
                 System.out.println("PANIC! Can't process: " + object);
             }
@@ -101,11 +121,11 @@ public class MultiBlockPane extends AnchorPane {
         // do not display it for the last page
         if (layer < layers - 1) {
             Button nextLayerBtn = new Button(
-                      ItemFactory.builder(Material.ARROW)
-                                .setName("&7&lNext layer")
-                                .setLore("&7Layer &c" + (currentLayer + 1) + "&7/&6" + layers)
-                                .build()
-                      , Dimension.ONE);
+                    ItemFactory.builder(Material.ARROW)
+                            .setName("&7&lNext layer")
+                            .setLore("&7Layer &c" + (currentLayer + 1) + "&7/&6" + layers)
+                            .build()
+                    , Dimension.ONE);
 
             nextLayerBtn.setAction(clickEvent -> {
                 currentLayer = Math.min(currentLayer + 1, layers - 1);
@@ -116,11 +136,11 @@ public class MultiBlockPane extends AnchorPane {
 
         if (layer > 0) {
             Button prevLayerButton = new Button(
-                      ItemFactory.builder(Material.ARROW)
-                                .setName("&7&lPrevious layer")
-                                .setLore("&7Layer &c" + currentLayer + "&7/&6" + layers)
-                                .build()
-                      , Dimension.ONE);
+                    ItemFactory.builder(Material.ARROW)
+                            .setName("&7&lPrevious layer")
+                            .setLore("&7Layer &c" + currentLayer + "&7/&6" + layers)
+                            .build()
+                    , Dimension.ONE);
 
             prevLayerButton.setAction(clickEvent -> {
                 currentLayer = Math.max(currentLayer - 1, 0);
@@ -138,7 +158,7 @@ public class MultiBlockPane extends AnchorPane {
         return clone;
     }
 
-    public int getLayers() {
+    public int getLayersAmount() {
         return this.layers;
     }
 }
