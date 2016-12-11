@@ -82,7 +82,7 @@ public class Handler {
     public BlockBase getBlock(ItemStack is){
         for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
             if(block.getItem().isSimilar(is)) return block;
-        return null;
+        throw new IllegalArgumentException("That block for that ItemStack does not exist or is not registered!");
     }
 
     /**
@@ -93,7 +93,7 @@ public class Handler {
     public BlockBase getBlock(String simpleName) {
         for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
             if(block.getSimpleName().equalsIgnoreCase(simpleName)) return block;
-        return null;
+        throw new IllegalArgumentException("That block (" + simpleName + ") does not exist or is not registered!");
     }
 
     /**
@@ -115,7 +115,7 @@ public class Handler {
     public ItemBase getItem(String simpleName) {
         for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
             if(item.getSimpleName().equalsIgnoreCase(simpleName)) return item;
-        return null;
+        throw new IllegalArgumentException("That item (" + simpleName + ") does not exist or is not registered!");
     }
 
     /**
@@ -127,7 +127,7 @@ public class Handler {
     public ItemBase getItem(ItemStack is) {
         for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
             if(item.getItem().equals(is)) return item;
-        return null;
+        throw new IllegalArgumentException("That item for that ItemStack does not exist or is not registered!");
     }
 
     /**
@@ -138,7 +138,7 @@ public class Handler {
     public MultiBlock getMuiltiBlock(String simpleName) {
         for(MultiBlock multiblock : (Set<MultiBlock>) registery.get(ItemCategory.MULTIBLOCKS))
             if(multiblock.getSimpleName().equalsIgnoreCase(simpleName)) return multiblock;
-        return null;
+        throw new IllegalArgumentException("That multiblock for that ItemStack does not exist or is not registered!");
     }
 
     /**
@@ -163,6 +163,7 @@ public class Handler {
         registerItem(new ReinforcedStick());
         registerItem(new EnderSword());
         registerItem(new TapeMeasure());
+        registerItem(new LongFallBoots());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }

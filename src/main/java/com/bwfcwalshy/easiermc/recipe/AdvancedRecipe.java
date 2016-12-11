@@ -24,6 +24,11 @@ public class AdvancedRecipe implements Recipe {
         return this;
     }
 
+    public AdvancedRecipe setIngredient(char c, Material mat, int amount){
+        this.ingredients.put(c, new ItemStack(mat, amount));
+        return this;
+    }
+
     public AdvancedRecipe setIngredient(char c, ItemStack is){
         this.ingredients.put(c, is);
         return this;

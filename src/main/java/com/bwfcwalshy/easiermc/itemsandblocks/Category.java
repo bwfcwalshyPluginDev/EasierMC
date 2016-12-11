@@ -11,6 +11,7 @@ import java.util.Arrays;
 public enum Category {
 
     BLOCKS(new ItemStack(Material.WORKBENCH), ChatColor.AQUA + "Blocks"),
+    ARMOUR(getHandler().getItem("LongFallBoots"), ChatColor.GREEN + "Armour"),
     BASIC_MACHINE(getHandler().getBlock("BlockBreaker"), ChatColor.DARK_GRAY + "Basic Machines"),
     MACHINE(getHandler().getBlock("Generator"), ChatColor.GRAY + "Machines"),
     WEAPONS(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Weapons"),
