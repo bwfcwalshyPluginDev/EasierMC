@@ -178,6 +178,8 @@ public class Handler {
         registerItem(new EnderSword());
         registerItem(new TapeMeasure());
         registerItem(new LongFallBoots());
+        registerItem(new TreeTap());
+        registerItem(new Rubber());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }
