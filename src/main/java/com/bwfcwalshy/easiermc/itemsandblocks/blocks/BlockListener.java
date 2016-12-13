@@ -10,7 +10,6 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
-        System.out.println(e.getInventory().getName());
         if(e.getInventory().getName().equals(ChatColor.GRAY + "Generator")){
             if(getClickedInventory(e) != null && getClickedInventory(e) != e.getWhoClicked().getInventory() && e.getSlot() != 10){
                 e.setCancelled(true);

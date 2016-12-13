@@ -1,10 +1,13 @@
 package com.bwfcwalshy.easiermc.utils;
 
 import com.bwfcwalshy.easiermc.CustomHead;
+import com.bwfcwalshy.easiermc.EasierMC;
+import me.ialistannen.itemrecipes.easiermc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemStackBuilder {
@@ -61,6 +64,9 @@ public class ItemStackBuilder {
     }
 
     public ItemStack build(){
+        List<String> lore = im.getLore() == null ? new ArrayList<>() : im.getLore();
+        lore.add(Util.hideString("Version: " + EasierMC.VERSION));
+        im.setLore(lore);
         is.setItemMeta(im);
         return is;
     }

@@ -43,6 +43,7 @@ public class TrashBin implements BlockBase {
 
     @Override
     public void onInteract(PlayerInteractEvent e) {
+        e.setCancelled(true);
         Inventory bin = Bukkit.createInventory(null, 36, ChatColor.DARK_GRAY + "Trash Bin");
         e.getPlayer().openInventory(bin);
     }

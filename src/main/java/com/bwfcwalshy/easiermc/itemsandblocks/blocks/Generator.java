@@ -59,6 +59,7 @@ public class Generator implements BlockBase {
 
     @Override
     public void onInteract(PlayerInteractEvent e){
+        e.setCancelled(true);
         if(inventory == null){
             inventory = Bukkit.createInventory(null, 27, getName());
 

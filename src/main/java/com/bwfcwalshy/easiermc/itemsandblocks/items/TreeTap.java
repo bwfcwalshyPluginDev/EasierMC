@@ -4,7 +4,6 @@ import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,7 +33,8 @@ public class TreeTap implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.WOOD_HOE, getName(), Arrays.asList(ChatColor.GRAY + "Use this to tap some rubber from trees!")).build();
+        return new ItemStackBuilder(Material.WOOD_HOE, getName(), Arrays.asList(ChatColor.GRAY + "Use this to tap some rubber from trees!"
+                , ChatColor.GRAY + "This gives a 2% chance for rubber to be given from oak logs.")).build();
     }
 
     @Override
@@ -46,12 +46,16 @@ public class TreeTap implements ItemBase {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e){
+        System.out.println(e.getItem());
+
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            System.out.println(e.getClickedBlock().getType() + " - " + e.getClickedBlock().getData());
             if(e.getClickedBlock().getType() == Material.LOG && e.getClickedBlock().getData() == 0){
                 if(random.nextInt(100) <= 2){
                     e.getClickedBlock().getWorld().dropItemNaturally(e.getClickedBlock().getLocation(), handler.getItem("Rubber").getItem());
-                    e.getItem().setDurability((short) (e.getItem().getDurability()-1));
                 }
+                System.out.println("a");
+                e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+10));
             }
         }
     }
