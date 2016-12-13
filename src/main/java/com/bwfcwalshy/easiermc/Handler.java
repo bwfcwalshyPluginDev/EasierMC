@@ -139,7 +139,7 @@ public class Handler {
      */
     public ItemBase getItem(ItemStack is) {
         for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
-            if(item.getItem().equals(is)) return item;
+            if(itemStackEquals(is, item.getItem(), false)) return item;
         return null;
         //throw new IllegalArgumentException("That item for that ItemStack does not exist or is not registered!");
     }
@@ -248,20 +248,31 @@ public class Handler {
      * @return Returns if the ItemStack is equal to the other.
      */
     public boolean itemStackEquals(ItemStack check, ItemStack compare, boolean checkAmount){
-        if(check == null) check = new ItemStack(Material.AIR);
+        return itemStackEquals(check, compare, checkAmount, true);
+    }
+
+    /**
+     * Check if an ItemStack equals another.
+     * @param toCheck The ItemStack you wish to check.
+     * @param compare The ItemStack you are comparing to.
+     * @param checkAmount Make sure the checked ItemStack is the same as or greater than the compared ItemStack
+     * @param checkLore Check the lore of the ItemStack and see if it matches the other.
+     * @return Returns if the ItemStack is equal to the other.
+     */
+    public boolean itemStackEquals(ItemStack toCheck, ItemStack compare, boolean checkAmount, boolean checkLore){
+        if(toCheck == null) toCheck = new ItemStack(Material.AIR);
         if(compare == null) compare = new ItemStack(Material.AIR);
 
-        if(compare.getType() == check.getType()){
-            if(compare.hasItemMeta() && check.hasItemMeta()){
-                if(compare.getItemMeta().hasDisplayName() && check.getItemMeta().hasDisplayName()){
-                    if(!check.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
+        if(compare.getType() == toCheck.getType()){
+            if(compare.hasItemMeta() && toCheck.hasItemMeta()){
+                if(compare.getItemMeta().hasDisplayName() && toCheck.getItemMeta().hasDisplayName()){
+                    if(!toCheck.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
                 }
-                if(compare.getItemMeta().hasLore() && check.getItemMeta().hasLore()){
-                    if(!check.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
+                if(checkLore && compare.getItemMeta().hasLore() && toCheck.getItemMeta().hasLore()){
+                    if(!toCheck.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
                 }
             }
-            if(checkAmount && check.getAmount() < compare.getAmount()) return false;
-            System.out.println("Item Stack matched!");
+            if(checkAmount && toCheck.getAmount() < compare.getAmount()) return false;
             return true;
         }
         return false;

@@ -54,8 +54,10 @@ public class TreeTap implements ItemBase {
                 if(random.nextInt(100) <= 2){
                     e.getClickedBlock().getWorld().dropItemNaturally(e.getClickedBlock().getLocation(), handler.getItem("Rubber").getItem());
                 }
-                System.out.println("a");
-                e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+10));
+                e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+1));
+                if(e.getPlayer().getInventory().getItemInMainHand().getDurability() <= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()){
+                    e.getPlayer().getInventory().setItemInMainHand(null);
+                }
             }
         }
     }

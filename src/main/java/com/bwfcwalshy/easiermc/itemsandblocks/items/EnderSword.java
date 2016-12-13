@@ -15,6 +15,7 @@ import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.nbt.ItemNBTUtil;
 import com.bwfcwalshy.easiermc.utils.nbt.NBTWrappers;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class EnderSword implements ItemBase {
 
@@ -37,8 +38,12 @@ public class EnderSword implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.DIAMOND_SWORD, getName(), Arrays.asList(ChatColor.GRAY + "This is the most powerful sword known to man.", " "
+        ItemStack is = new ItemStackBuilder(Material.DIAMOND_SWORD, getName(), Arrays.asList(ChatColor.GRAY + "This is the most powerful sword known to man.", " "
                 , ChatColor.DARK_PURPLE + "Powered by a dragon egg, this sword will guarantee you can slay any dragon in the land.")).build();
+        ItemMeta im = is.getItemMeta();
+        im.spigot().setUnbreakable(true);
+        is.setItemMeta(im);
+        return is;
     }
 
     @Override

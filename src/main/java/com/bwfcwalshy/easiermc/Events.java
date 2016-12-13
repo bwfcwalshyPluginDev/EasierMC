@@ -66,7 +66,7 @@ public class Events implements Listener {
                         if(hiddenStr.contains("Version: ")){
                             if(isHigherVersion(EasierMC.VERSION, s)){
                                 // Update lore
-                                if(!e.getItem().getItemMeta().getLore().equals(item.getItem().getItemMeta().getLore())){
+                                if(!handler.itemStackEquals(e.getItem(), item.getItem(), false, false)){
                                     ItemStack is = e.getItem();
                                     ItemMeta im = is.getItemMeta();
                                     im.setLore(item.getItem().getItemMeta().getLore());
@@ -100,5 +100,15 @@ public class Events implements Listener {
             return true;
         else
             return false;
+    }
+
+    private String getVersion(ItemStack is){
+        if(!is.hasItemMeta() || !is.getItemMeta().hasLore()) return null;
+        for(String s : is.getItemMeta().getLore()){
+            if(s.contains("Version: ")){
+                return s.replace("Version: v", "");
+            }
+        }
+        return null;
     }
 }
