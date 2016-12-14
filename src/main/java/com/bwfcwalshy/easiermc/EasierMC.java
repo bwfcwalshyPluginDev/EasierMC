@@ -18,7 +18,7 @@ import me.ialistannen.itemrecipes.easiermc.util.RecipeRegistry;
 
 public class EasierMC extends JavaPlugin {
 
-    public static final String VERSION = "v0.0.10-2";
+    public static final String VERSION = "v0.0.10-3";
 
     private Handler        handler;
     private BukkitTask     tickTask;

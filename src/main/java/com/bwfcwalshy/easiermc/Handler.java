@@ -292,10 +292,14 @@ public class Handler {
         String[] currentVersion = currentVer.replace("Version: v", "").split("\\.");
         String[] ver = version.replace("Version: v", "").split("\\.");
 
-        int buildNumber = 0;
-        int verBuildNum = 0;
-        if(currentVersion[2].contains("-"))
-            buildNumber = Integer.parseInt(currentVersion[2].replaceFirst("[0-9]+-", ""));
+        int revision = 0;
+        int verRevision = 0;
+        if(currentVersion[2].contains("-")) {
+            revision = Integer.parseInt(currentVersion[2].replaceFirst("[0-9]+-", ""));
+            if(ver[2].contains("-")){
+                verRevision =Integer.parseInt(ver[2].replaceFirst("[0-9]+-", ""));
+            }
+        }
 
         if(Integer.parseInt(currentVersion[0]) > Integer.parseInt(ver[0]))
             return true;
@@ -303,7 +307,7 @@ public class Handler {
             return true;
         else if(Integer.parseInt(currentVersion[2].replaceAll("-[0-9]+", "")) > Integer.parseInt(ver[2].replaceAll("-[0-9]+", "")))
             return true;
-        else if(buildNumber > verBuildNum)
+        else if(revision > verRevision)
             return true;
         else
             return false;
