@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
@@ -52,13 +53,15 @@ public class WellMiner implements BlockBase {
         for(int i = 1; i < location.getBlockY(); i++){
             Block b = location.clone().subtract(0, i, 0).getBlock();
             if(b.getType() != Material.AIR && b.getType() != Material.BEDROCK){
-                tryToStore(location, new ItemStack(b.getType(), 1, b.getData()));
+                for(ItemStack is : b.getDrops()) {
+                    tryToStore(location, is);
+                }
                 b.setType(Material.AIR);
                 break;
             }
             // Now to increase the arm.
-//            b.setType(Material.END_ROD);
-//            if(i > 1) b.getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
+            b.setType(Material.END_ROD);
+            if(i > 1) b.getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
         }
     }
 

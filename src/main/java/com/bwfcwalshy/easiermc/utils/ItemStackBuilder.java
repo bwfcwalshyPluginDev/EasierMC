@@ -30,6 +30,13 @@ public class ItemStackBuilder {
         im.setDisplayName(name);
     }
 
+    public ItemStackBuilder(Material material, int amount, String name, List<String> lore){
+        is = new ItemStack(material, amount);
+        im = is.getItemMeta();
+        im.setDisplayName(name);
+        im.setLore(BetterLore.trimLoreToLength(lore, MAX_LORE_LENGTH));
+    }
+
     public ItemStackBuilder(Material material, String name){
         is = new ItemStack(material);
         im = is.getItemMeta();

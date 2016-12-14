@@ -263,17 +263,18 @@ public class Handler {
         if(compare == null) compare = new ItemStack(Material.AIR);
 
         if(compare.getType() == toCheck.getType()){
-            if(compare.hasItemMeta() && !toCheck.hasItemMeta()) return false;
-            else{
-                if(compare.getItemMeta().hasDisplayName() && !toCheck.getItemMeta().hasDisplayName()) return false;
-                else{
-                    if (!toCheck.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName()))
-                        return false;
-                }
-                if (checkLore){
-                    if(compare.getItemMeta().hasLore() && !toCheck.getItemMeta().hasLore()) return false;
-                    else
-                        if (!toCheck.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
+            if(compare.hasItemMeta()) {
+                if (!toCheck.hasItemMeta()) return false;
+                else {
+                    if (compare.getItemMeta().hasDisplayName()){
+                        if (!toCheck.getItemMeta().hasDisplayName()) return false;
+                        else
+                            if (!toCheck.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
+                    }
+                    if (checkLore && compare.getItemMeta().hasLore()) {
+                        if (!toCheck.getItemMeta().hasLore()) return false;
+                        else if (!toCheck.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
+                    }
                 }
             }
             if(checkAmount && toCheck.getAmount() < compare.getAmount()) return false;

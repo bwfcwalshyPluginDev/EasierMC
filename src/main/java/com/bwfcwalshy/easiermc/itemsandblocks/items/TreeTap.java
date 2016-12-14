@@ -51,8 +51,10 @@ public class TreeTap implements ItemBase {
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
             System.out.println(e.getClickedBlock().getType() + " - " + e.getClickedBlock().getData());
             if(e.getClickedBlock().getType() == Material.LOG && (e.getClickedBlock().getData() == 0 || e.getClickedBlock().getData() == 4 || e.getClickedBlock().getData() == 8)){
-                if(random.nextInt(100) <= 10)
-                    e.getClickedBlock().getWorld().dropItemNaturally(e.getClickedBlock().getLocation().clone().add(0, 1, 0), handler.getItem("Rubber").getItem());
+                if(random.nextInt(100) <= 10) {
+                    e.getClickedBlock().setType(Material.AIR);
+                    e.getClickedBlock().getWorld().dropItem(e.getClickedBlock().getLocation(), handler.getItem("Rubber").getItem());
+                }
                 if(random.nextInt(100) >= 75)
                     e.getClickedBlock().setType(Material.AIR);
                 e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+1));

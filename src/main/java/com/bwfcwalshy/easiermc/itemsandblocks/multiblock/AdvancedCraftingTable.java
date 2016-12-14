@@ -77,6 +77,7 @@ public class AdvancedCraftingTable implements MultiBlock {
 
                 ItemStack[] contents = dropper.getInventory().getContents();
                 dropper.getInventory().clear();
+                System.out.println(recipe.getResult());
                 dropper.getInventory().addItem(recipe.getResult());
                 dropper.drop();
                 dropper.getInventory().setContents(contents);
