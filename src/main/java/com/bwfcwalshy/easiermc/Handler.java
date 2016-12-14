@@ -7,19 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
+import me.ialistannen.itemrecipes.easiermc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.TrashBin;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
@@ -139,7 +135,7 @@ public class Handler {
      */
     public ItemBase getItem(ItemStack is) {
         for(ItemBase item : (Set<ItemBase>) registery.get(ItemCategory.ITEMS))
-            if(itemStackEquals(is, item.getItem(), false)) return item;
+            if(itemStackEquals(is, item.getItem(), false, false)) return item;
         return null;
         //throw new IllegalArgumentException("That item for that ItemStack does not exist or is not registered!");
     }
@@ -172,6 +168,9 @@ public class Handler {
         registerBlock(new WellMiner());
         registerBlock(new Generator());
         registerBlock(new TrashBin());
+        registerBlock(new IronCable());
+        registerBlock(new GoldCable());
+        registerBlock(new GlassFibreCable());
 
         registerItem(new MasterStar());
         registerItem(new ReinforcedStick());
@@ -221,7 +220,7 @@ public class Handler {
      */
     public EasierMCBase getItemFromEverything(ItemStack item) {
         for(EasierMCBase base : getEntireRegistery())
-            if(base.getItem().equals(item)) return base;
+            if(itemStackEquals(item, base.getItem(), false, false)) return base;
         return null;
     }
 
@@ -264,17 +263,63 @@ public class Handler {
         if(compare == null) compare = new ItemStack(Material.AIR);
 
         if(compare.getType() == toCheck.getType()){
-            if(compare.hasItemMeta() && toCheck.hasItemMeta()){
-                if(compare.getItemMeta().hasDisplayName() && toCheck.getItemMeta().hasDisplayName()){
-                    if(!toCheck.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName())) return false;
+            if(compare.hasItemMeta() && !toCheck.hasItemMeta()) return false;
+            else{
+                if(compare.getItemMeta().hasDisplayName() && !toCheck.getItemMeta().hasDisplayName()) return false;
+                else{
+                    if (!toCheck.getItemMeta().getDisplayName().equals(compare.getItemMeta().getDisplayName()))
+                        return false;
                 }
-                if(checkLore && compare.getItemMeta().hasLore() && toCheck.getItemMeta().hasLore()){
-                    if(!toCheck.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
+                if (checkLore){
+                    if(compare.getItemMeta().hasLore() && !toCheck.getItemMeta().hasLore()) return false;
+                    else
+                        if (!toCheck.getItemMeta().getLore().equals(compare.getItemMeta().getLore())) return false;
                 }
             }
             if(checkAmount && toCheck.getAmount() < compare.getAmount()) return false;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if a string is higher than the current one.
+     * @param currentVer Current version of the plugin.
+     * @param version The version to check.
+     * @return If version is greater than currentVar
+     */
+    public boolean isHigherVersion(String currentVer, String version){
+        String[] currentVersion = currentVer.replace("Version: v", "").split("\\.");
+        String[] ver = version.replace("Version: v", "").split("\\.");
+
+        int buildNumber = 0;
+        int verBuildNum = 0;
+        if(currentVersion[2].contains("-"))
+            buildNumber = Integer.parseInt(currentVersion[2].replaceFirst("[0-9]+-", ""));
+
+        if(Integer.parseInt(currentVersion[0]) > Integer.parseInt(ver[0]))
+            return true;
+        else if(Integer.parseInt(currentVersion[1]) > Integer.parseInt(ver[1]))
+            return true;
+        else if(Integer.parseInt(currentVersion[2].replaceAll("-[0-9]+", "")) > Integer.parseInt(ver[2].replaceAll("-[0-9]+", "")))
+            return true;
+        else if(buildNumber > verBuildNum)
+            return true;
+        else
+            return false;
+    }
+
+    public String getVersion(ItemStack is){
+        if(!is.hasItemMeta() || !is.getItemMeta().hasLore()) return null;
+        for(String s : is.getItemMeta().getLore()){
+            if(Util.isHiddenLine(s)) {
+                s = Util.showString(s);
+                if (s.contains("Version: ")) {
+                    return s.replace("Version: v", "");
+                }
+            }
+        }
+        throw new IllegalArgumentException(is.getItemMeta().getDisplayName() + " - Does not have a version!");
+        //return null;
     }
 }

@@ -34,7 +34,7 @@ public class TreeTap implements ItemBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder(Material.WOOD_HOE, getName(), Arrays.asList(ChatColor.GRAY + "Use this to tap some rubber from trees!"
-                , ChatColor.GRAY + "This gives a 2% chance for rubber to be given from oak logs.")).build();
+                , ChatColor.GRAY + "This gives a 10% chance for rubber to be given from oak logs.")).build();
     }
 
     @Override
@@ -50,15 +50,17 @@ public class TreeTap implements ItemBase {
 
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
             System.out.println(e.getClickedBlock().getType() + " - " + e.getClickedBlock().getData());
-            if(e.getClickedBlock().getType() == Material.LOG && e.getClickedBlock().getData() == 0){
-                if(random.nextInt(100) <= 2){
-                    e.getClickedBlock().getWorld().dropItemNaturally(e.getClickedBlock().getLocation(), handler.getItem("Rubber").getItem());
-                }
+            if(e.getClickedBlock().getType() == Material.LOG && (e.getClickedBlock().getData() == 0 || e.getClickedBlock().getData() == 4 || e.getClickedBlock().getData() == 8)){
+                if(random.nextInt(100) <= 10)
+                    e.getClickedBlock().getWorld().dropItemNaturally(e.getClickedBlock().getLocation().clone().add(0, 1, 0), handler.getItem("Rubber").getItem());
+                if(random.nextInt(100) >= 75)
+                    e.getClickedBlock().setType(Material.AIR);
                 e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+1));
-                if(e.getPlayer().getInventory().getItemInMainHand().getDurability() <= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()){
+                if(e.getPlayer().getInventory().getItemInMainHand().getDurability() >= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()){
                     e.getPlayer().getInventory().setItemInMainHand(null);
                 }
             }
         }
+        e.setCancelled(true);
     }
 }
