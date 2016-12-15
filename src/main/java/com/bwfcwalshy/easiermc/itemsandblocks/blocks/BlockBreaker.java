@@ -38,7 +38,7 @@ public class BlockBreaker implements BlockBase {
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/5e8057b7a7c3b14579b491f1cb3e9c809037181e3cec5e7aa37de8b95241ceb5", getName())
                 .setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to break any block that is in-front of it."
-                        , ChatColor.DARK_PURPLE + "The items will go into a chest below or above", ChatColor.DARK_PURPLE + "if neither are there the items will be spat out.")).build();
+                        , ChatColor.DARK_PURPLE + "The items will go into a chest below or above if neither are there the items will be spat out.")).build();
     }
 
     @Override
