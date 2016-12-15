@@ -20,7 +20,6 @@ public class ItemListener implements Listener {
         if(e.getHand() == EquipmentSlot.HAND){
             if(e.getItem() != null && e.getItem().getType() != Material.AIR){
                 EasierMCBase base = handler.getItemFromEverything(e.getItem());
-                System.out.println(base);
                 if(base != null){
                     if(handler.isHigherVersion(handler.getVersion(base.getItem()), handler.getVersion(e.getItem()))){
                         System.out.println("Updated " + e.getPlayer().getName() + "'s " + base.getSimpleName());

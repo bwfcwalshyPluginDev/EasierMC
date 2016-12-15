@@ -6,6 +6,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -22,29 +23,32 @@ public class EasierMC extends JavaPlugin {
 
     private Handler        handler;
     private BukkitTask     tickTask;
+    private BlockTickTask blockTickTask;
+
+    private Configuration dataConf;
 
     @Override
     public void onEnable() {
-        if (!new File(getDataFolder(), "config.yml").exists())
-            saveDefaultConfig();
+        dataConf = new Configuration("data.yml", this);
 
         handler = new Handler(this);
         handler.registerBlocks();
         handler.registerRecipes();
 
-        getCommand("easiermc").setExecutor(new EasierMCCommand());
+        getCommand("easiermc").setExecutor(new EasierMCCommand(this));
 
         getServer().getPluginManager().registerEvents(new Events(this), this);
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
 
-        tickTask = getServer().getScheduler().runTaskTimer(this, new BlockTickTask(this), 20L, 20L);
+        blockTickTask = new BlockTickTask(this);
+        tickTask = getServer().getScheduler().runTaskTimer(this, blockTickTask, 20L, 1L);
 
-        ConfigurationSection sec = getConfig().getConfigurationSection("Blocks");
+        ConfigurationSection sec = getData().getConfigurationSection("Blocks");
         if (sec != null) {
             for (String s : sec.getKeys(false)) {
-                if (handler.isValidBlock(getConfig().getString("Blocks." + s + ".Block")))
-                    handler.addBlock(handler.getBlock(getConfig().getString("Blocks." + s + ".Block")), getLocationFromString(s));
+                if (handler.isValidBlock(getData().getString("Blocks." + s + ".Block")))
+                    handler.addBlock(handler.getBlock(getData().getString("Blocks." + s + ".Block")), getLocationFromString(s));
                 else
                     getLogger().warning("Block with the name '" + s + "' attempted to load but was not a valid block!");
             }
@@ -68,11 +72,12 @@ public class EasierMC extends JavaPlugin {
         tickTask.cancel();
 
         // Save data
-        getConfig().set("Blocks", null);
+        getData().set("Blocks", null);
         for (Location loc : handler.getBlocks().keySet()) {
             BlockBase block = handler.getBlocks().get(loc);
 
-            getConfig().set("Blocks." + getLocationString(loc) + ".Block", block.getSimpleName());
+            getData().set("Blocks." + getLocationString(loc) + ".Block", block.getSimpleName());
+            block.saveData(getData(), "Blocks." + getLocationString(loc) + ".Data.");
         }
         saveConfig();
     }
@@ -90,6 +95,15 @@ public class EasierMC extends JavaPlugin {
         if (split.length != 4)
             return null;
         return new Location(Bukkit.getWorld(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
+    }
+
+    public FileConfiguration getData(){
+        return this.dataConf.getYaml();
+    }
+
+    // I do not want others accessing this!!!!
+    protected BlockTickTask getTickTask(){
+        return this.blockTickTask;
     }
 }
 

@@ -171,6 +171,7 @@ public class Handler {
         registerBlock(new IronCable());
         registerBlock(new GoldCable());
         registerBlock(new GlassFibreCable());
+        registerBlock(new Batbox());
 
         registerItem(new MasterStar());
         registerItem(new ReinforcedStick());

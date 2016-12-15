@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -27,7 +28,7 @@ public interface BlockBase extends EasierMCBase {
         return this;
     }
 
-    default void tick(Location location){
+    default void tick(Location location, int tick){
         return;
     }
 
@@ -100,5 +101,9 @@ public interface BlockBase extends EasierMCBase {
         }
         
         return clone;
+    }
+
+    default void saveData(FileConfiguration data, String path){
+        return;
     }
 }

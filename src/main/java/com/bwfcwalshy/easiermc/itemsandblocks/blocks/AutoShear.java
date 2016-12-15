@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import java.util.Arrays;
 
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,12 +35,8 @@ public class AutoShear implements BlockBase {
 
     @Override
     public ItemStack getItem() {
-        ItemStack is = CustomHead.getSkull("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe");
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(getName());
-        im.setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to shear sheep that are in-front of it.", ChatColor.GRAY + "Can shear from 3 blocks away!"));
-        is.setItemMeta(im);
-        return is;
+        return new ItemStackBuilder("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe", getName())
+                .setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to shear sheep that are in-front of it.", ChatColor.GRAY + "Can shear from 3 blocks away!")).build();
     }
 
     @Override
@@ -48,7 +45,8 @@ public class AutoShear implements BlockBase {
     }
 
     @Override
-    public void tick(Location location) {
+    public void tick(Location location, int tick) {
+        if(tick != 20) return;
         location.getWorld().getEntities().stream().filter(e -> e.getType() == EntityType.SHEEP && location.distance(e.getLocation()) <= 3).forEach(e -> {
             Sheep sheep = (Sheep) e;
             if(!sheep.isSheared()) {

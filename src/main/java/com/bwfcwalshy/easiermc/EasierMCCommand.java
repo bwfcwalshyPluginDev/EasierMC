@@ -17,7 +17,13 @@ import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
 
 public class EasierMCCommand implements CommandExecutor {
 
-    private Handler handler = Handler.getInstance();
+    private Handler handler;
+    private EasierMC easierMC;
+    public EasierMCCommand(EasierMC easierMC){
+        this.easierMC = easierMC;
+
+        this.handler = easierMC.getHandler();
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -44,6 +50,15 @@ public class EasierMCCommand implements CommandExecutor {
                     gui.open(player);
                 }else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
+                }
+            }else if(args[0].equalsIgnoreCase("debug-version")){
+                if(handler.getItemFromEverything(player.getInventory().getItemInMainHand()) != null)
+                    System.out.println("Version: " + ChatColor.YELLOW + handler.getVersion(player.getInventory().getItemInMainHand()));
+            }else if(args[0].equalsIgnoreCase("debug")){
+                if(sender.hasPermission("easiermc.debug")){
+                    sender.sendMessage(ChatColor.GRAY + "Total EasierMC blocks: " + ChatColor.YELLOW + handler.getBlocks().keySet().size());
+                    double averageTime = easierMC.getTickTask().getAverageTime();
+                    sender.sendMessage(ChatColor.GRAY + "Average tick time: " + ChatColor.YELLOW + (averageTime/1000000) + "ms (" + averageTime + ")");
                 }
             }
             // /emc give

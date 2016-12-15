@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import java.util.Arrays;
 
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,13 +36,9 @@ public class BlockBreaker implements BlockBase {
 
     @Override
     public ItemStack getItem() {
-        ItemStack is = CustomHead.getSkull("http://textures.minecraft.net/texture/5e8057b7a7c3b14579b491f1cb3e9c809037181e3cec5e7aa37de8b95241ceb5");
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(getName());
-        im.setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to break any block that is in-front of it."
-                , ChatColor.DARK_PURPLE + "The items will go into a chest below or above", ChatColor.DARK_PURPLE + "if neither are there the items will be spat out."));
-        is.setItemMeta(im);
-        return is;
+        return new ItemStackBuilder("http://textures.minecraft.net/texture/5e8057b7a7c3b14579b491f1cb3e9c809037181e3cec5e7aa37de8b95241ceb5", getName())
+                .setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to break any block that is in-front of it."
+                        , ChatColor.DARK_PURPLE + "The items will go into a chest below or above", ChatColor.DARK_PURPLE + "if neither are there the items will be spat out.")).build();
     }
 
     @Override
@@ -51,7 +48,8 @@ public class BlockBreaker implements BlockBase {
     }
 
     @Override
-    public void tick(Location location) {
+    public void tick(Location location, int tick) {
+        if(tick != 20) return;
         Block b = location.getBlock();
         if (!(b.getState() instanceof Skull)) {
             System.out.println("Block at " + location.getX() + "," + location.getY() + "," + location.getZ() + " is not a skull! BLOCK REMOVED!");

@@ -1,11 +1,16 @@
 New features:
 
-  @high
-  ☐ Recipe command
+  ✔ Recipe command @done (16-12-15 12:14)
     This will open up a inventory based on how the item is gotten.
 
-  ☐ Generator
+  ✔ Generator @done (16-12-15 12:14)
     I need the generator to generate electricity and pass that on to the blocks next to it.
+
+    ☐ Make the EU travel
+      ☐ Make it go into machines around it
+      ☐ Make it go into wires and travel to other machines
+  ✔ Make items auto update @done (16-12-15 12:16)
+    I need to make a way so that items can "update" to a newer version, this means that I can update the lore and chances and things like that and not need to give people the item again. It also allows developers to easily work on their items and blocks.
   ☐ Electric furnace
   ☐ Auto tree miner
   ☐ Auto crop machine
