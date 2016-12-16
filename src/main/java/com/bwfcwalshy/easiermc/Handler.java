@@ -1,6 +1,5 @@
 package com.bwfcwalshy.easiermc;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,20 +7,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.*;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
-import me.ialistannen.itemrecipes.easiermc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Batbox;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.TrashBin;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.GlassFibreCable;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.GoldCable;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.IronCable;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.LongFallBoots;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.Rubber;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.Scrap;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.TapeMeasure;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.TreeTap;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 
+import me.ialistannen.itemrecipes.easiermc.util.Util;
 import nl.shanelab.multiblock.MultiBlockFactory;
 
 public class Handler {
@@ -61,19 +76,23 @@ public class Handler {
             this.blocks.remove(location);
     }
 
+    @SuppressWarnings("unchecked")
     private void registerBlock(BlockBase block){
         ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.BLOCKS)).add(block);
     }
 
+    @SuppressWarnings("unchecked")
     private void registerItem(ItemBase item){
         ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.ITEMS)).add(item);
     }
 
+    @SuppressWarnings("unchecked")
     private void registerMultiBlock(MultiBlock multiblock) {
         ((Set<? super EasierMCBase>) this.registery.get(ItemCategory.MULTIBLOCKS)).add(multiblock);
         MultiBlockFactory.INSTANCE.register(main, multiblock.getClass());
     }
 
+    @SuppressWarnings("unchecked")
     public boolean isBlock(ItemStack is){
         for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS)) {
             if (itemStackEquals(is, block.getItem(), false, true)) return true;
