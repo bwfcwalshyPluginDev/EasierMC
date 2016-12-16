@@ -1,7 +1,5 @@
 package com.bwfcwalshy.easiermc;
 
-import java.io.File;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +17,7 @@ import me.ialistannen.itemrecipes.easiermc.util.RecipeRegistry;
 
 public class EasierMC extends JavaPlugin {
 
-    public static final String VERSION = "v0.0.10-6";
+    public static final String VERSION = "v0.0.10-8";
 
     private Handler        handler;
     private BukkitTask     tickTask;

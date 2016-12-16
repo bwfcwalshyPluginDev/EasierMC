@@ -180,6 +180,7 @@ public class Handler {
         registerItem(new LongFallBoots());
         registerItem(new TreeTap());
         registerItem(new Rubber());
+        registerItem(new Scrap());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }

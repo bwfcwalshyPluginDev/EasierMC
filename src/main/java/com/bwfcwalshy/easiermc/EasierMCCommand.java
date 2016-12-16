@@ -52,8 +52,10 @@ public class EasierMCCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                 }
             }else if(args[0].equalsIgnoreCase("debug-version")){
-                if(handler.getItemFromEverything(player.getInventory().getItemInMainHand()) != null)
-                    System.out.println("Version: " + ChatColor.YELLOW + handler.getVersion(player.getInventory().getItemInMainHand()));
+                if(handler.getItemFromEverything(player.getInventory().getItemInMainHand()) != null) {
+                    sender.sendMessage("Latest version: " + ChatColor.YELLOW + EasierMC.VERSION);
+                    sender.sendMessage("Version: " + ChatColor.YELLOW + handler.getVersion(player.getInventory().getItemInMainHand()));
+                }
             }else if(args[0].equalsIgnoreCase("debug")){
                 if(sender.hasPermission("easiermc.debug")){
                     sender.sendMessage(ChatColor.GRAY + "Total EasierMC blocks: " + ChatColor.YELLOW + handler.getBlocks().keySet().size());
