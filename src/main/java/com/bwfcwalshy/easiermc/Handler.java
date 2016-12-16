@@ -1,5 +1,6 @@
 package com.bwfcwalshy.easiermc;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import me.ialistannen.itemrecipes.easiermc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
@@ -73,8 +75,9 @@ public class Handler {
     }
 
     public boolean isBlock(ItemStack is){
-        for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS))
-            if(block.getItem().isSimilar(is)) return true;
+        for(BlockBase block : (Set<BlockBase>) registery.get(ItemCategory.BLOCKS)) {
+            if (itemStackEquals(is, block.getItem(), false, true)) return true;
+        }
         return false;
     }
 
@@ -197,6 +200,12 @@ public class Handler {
 
     public Map<Location, BlockBase> getBlocks() {
         return blocks;
+    }
+
+    public Map<Location, BlockBase> getBlocks(String simpleName) {
+        Map<Location, BlockBase> blockBases = new HashMap<>();
+        blocks.forEach((location, blockBase) -> { if(blockBase.getSimpleName().equalsIgnoreCase(simpleName)) blockBases.put(location, blockBase); });
+        return blockBases;
     }
 
     public Set<EasierMCBase> getEntireRegistery(){

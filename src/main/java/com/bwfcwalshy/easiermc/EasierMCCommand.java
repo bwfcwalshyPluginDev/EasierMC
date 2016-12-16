@@ -1,6 +1,8 @@
 package com.bwfcwalshy.easiermc;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,6 +64,8 @@ public class EasierMCCommand implements CommandExecutor {
                     double averageTime = easierMC.getTickTask().getAverageTime();
                     sender.sendMessage(ChatColor.GRAY + "Average tick time: " + ChatColor.YELLOW + (averageTime/1000000) + "ms (" + averageTime + ")");
                 }
+            }else if(args[0].equalsIgnoreCase("find")){
+
             }
             // /emc give
             // /emc recipe
@@ -78,6 +82,15 @@ public class EasierMCCommand implements CommandExecutor {
                     }
                 }else{
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
+                }
+            } else if (args[0].equalsIgnoreCase("find")) {
+                if(sender.hasPermission("easiermc.debug")){
+                    String machine = args[1];
+                    if(handler.isValidBlock(machine)){
+                        for(Location l : handler.getBlocks(machine).keySet()){
+                            sender.sendMessage(handler.getBlocks().get(l).getName() + ChatColor.WHITE + " - " + l.getWorld().getName() + " " + l.getX() + "," + l.getY() + "," + l.getZ());
+                        }
+                    }
                 }
             }
         }

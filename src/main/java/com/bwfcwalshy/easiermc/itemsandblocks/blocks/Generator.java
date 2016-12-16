@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -21,9 +23,14 @@ public class Generator implements MachineBase {
     private Inventory inventory;
 
     private final int STORAGE = 4000;
+    // How long the fuel will burn for
+    private final int BURN_TIME = 100;
 
     private int currentEU = 0;
-    private ItemStack currentFuel = null;
+    private int currentBurnTime = 0;
+    private ItemStack currentFuelItem = null;
+    private Fuel currentFuel;
+    private boolean burning = false;
     private String id = "12616a70e8f74ccb6f7f44e4aee5dbcbbcb80c9f23e1dccb07a5f156521215";
 
     private int instance = -1;
@@ -70,26 +77,68 @@ public class Generator implements MachineBase {
     }
 
     @Override
+    public int euCapacity() {
+        return STORAGE;
+    }
+
+    @Override
+    public int euInputOutput() {
+        return 10;
+    }
+
+    @Override
+    public void saveData(FileConfiguration data, String path){
+        data.set(path + ".EU", currentEU);
+        data.set(path + ".Fuel", currentFuel.toString());
+    }
+
+    @Override
     public void tick(Location location, int tick){
-        if(getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR){
-            System.out.println("Not air");
+        if(getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE){
             for(ItemStack is : Fuel.getAllFuels()){
-                System.out.println(is);
                 if(handler.itemStackEquals(getInventory().getItem(10), is, false)){
-                    System.out.println("Matches");
                     ItemStack fuel = getInventory().getItem(10);
                     if(fuel.getAmount() > 1)
                         fuel.setAmount(fuel.getAmount()-1);
                     else
                         getInventory().setItem(10, null);
-                    System.out.println(Fuel.getFuel(is));
-                    System.out.println(Fuel.getFuel(is).getEuValue());
-                    currentEU += Fuel.getFuel(is).getEuValue();
-                    System.out.println(currentEU);
+
+                    Fuel f = Fuel.getFuel(is);
+                    if(f != Fuel.NO_FUEL) {
+                        currentFuel = f;
+                        currentFuelItem = is;
+                        if(!burning)
+                            burning = true;
+                    }
                     break;
                 }
             }
         }
+
+        if(currentFuel == null) currentFuel = Fuel.NO_FUEL;
+
+        if(currentFuel == Fuel.NO_FUEL) return;
+
+        if(currentBurnTime == BURN_TIME){
+            currentBurnTime = 0;
+            burning = false;
+            currentFuel = Fuel.NO_FUEL;
+            currentFuelItem = null;
+        }
+
+        if(currentEU < STORAGE) {
+            if((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
+                currentEU = STORAGE;
+            else
+                currentEU += currentFuel.getEuValue() / BURN_TIME;
+            currentBurnTime++;
+        }
+
+        System.out.println(currentBurnTime);
+        System.out.println(currentFuel.toString());
+        System.out.println(currentEU);
+
+        updateInventory();
     }
 
     private Inventory getInventory(){
@@ -99,7 +148,7 @@ public class Generator implements MachineBase {
             for(int i = 0; i < 27; i++){
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData(7).build());
             }
-            inventory.setItem(10, currentFuel);
+            inventory.setItem(10, currentFuelItem);
 
             for(int i = 12; i < 15; i++){
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").setData(14).build());
@@ -112,7 +161,20 @@ public class Generator implements MachineBase {
         return inventory;
     }
 
-    public static enum Fuel {
+    private void updateInventory(){
+        for(int i = 12; i < 15; i++){
+            if(!burning)
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").build());
+            else{
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.RED + "Burning").setData(14).build());
+            }
+        }
+
+        inventory.setItem(16, new ItemStackBuilder(Material.BLAZE_POWDER, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: " + ChatColor.RED
+                + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
+    }
+
+    public enum Fuel {
         COAL_CHARCOAL(4000, new ItemStack(Material.COAL), new ItemStack(Material.COAL, (byte) 1)),
         SCRAP(870, handler.getItem("Scrap").getItem()),
         WOOD(750, new ItemStack(Material.WOOD), new ItemStack(Material.WOOD, (byte) 1), new ItemStack(Material.WOOD, (byte) 2), new ItemStack(Material.WOOD, (byte) 3)
@@ -121,7 +183,8 @@ public class Generator implements MachineBase {
                 , new ItemStack(Material.LOG_2), new ItemStack(Material.LOG_2, (byte) 1)),
         WOODEN_TOOLS(500, new ItemStack(Material.WOOD_PICKAXE), new ItemStack(Material.WOOD_SPADE), new ItemStack(Material.WOOD_AXE), new ItemStack(Material.WOOD_SWORD)
                 , new ItemStack(Material.WOOD_HOE)),
-        STICK(250, new ItemStack(Material.STICK));
+        STICK(250, new ItemStack(Material.STICK)),
+        NO_FUEL(0);
 
         private static List<ItemStack> allFuels;
 
@@ -154,17 +217,7 @@ public class Generator implements MachineBase {
                     }
                 }
             }
-            return null;
+            return Fuel.NO_FUEL;
         }
-    }
-
-    @Override
-    public int euCapacity() {
-        return STORAGE;
-    }
-
-    @Override
-    public int euInputOutput() {
-        return 10;
     }
 }

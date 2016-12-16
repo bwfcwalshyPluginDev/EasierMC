@@ -75,9 +75,9 @@ public class EasierMC extends JavaPlugin {
             BlockBase block = handler.getBlocks().get(loc);
 
             getData().set("Blocks." + getLocationString(loc) + ".Block", block.getSimpleName());
-            block.saveData(getData(), "Blocks." + getLocationString(loc) + ".Data.");
+            block.saveData(getData(), "Blocks." + getLocationString(loc) + ".Data");
         }
-        saveConfig();
+        dataConf.saveYaml();
     }
 
     public Handler getHandler() {
