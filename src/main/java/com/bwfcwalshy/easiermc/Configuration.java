@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,13 +17,13 @@ public class Configuration {
     private FileConfiguration fileConfiguration;
 
     public Configuration(String fileName, JavaPlugin plugin) {
-        if(plugin == null) {
+        if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
         } else {
             this.plugin = plugin;
             this.fileName = fileName;
             File dataFolder = plugin.getDataFolder();
-            if(dataFolder == null) {
+            if (dataFolder == null) {
                 throw new IllegalStateException();
             } else {
                 this.configFile = new File(plugin.getDataFolder(), fileName);
@@ -34,7 +35,7 @@ public class Configuration {
     public void reloadYaml() {
         this.fileConfiguration = YamlConfiguration.loadConfiguration(this.configFile);
         InputStreamReader defConfigStream = new InputStreamReader(this.plugin.getResource(this.fileName));
-        if(defConfigStream != null) {
+        if (defConfigStream != null) {
             YamlConfiguration e = YamlConfiguration.loadConfiguration(defConfigStream);
             this.fileConfiguration.setDefaults(e);
         }
@@ -48,7 +49,7 @@ public class Configuration {
     }
 
     public FileConfiguration getYaml() {
-        if(this.fileConfiguration == null) {
+        if (this.fileConfiguration == null) {
             this.reloadYaml();
         }
 
@@ -56,7 +57,7 @@ public class Configuration {
     }
 
     public void saveYaml() {
-        if(this.fileConfiguration != null && this.configFile != null) {
+        if (this.fileConfiguration != null && this.configFile != null) {
             try {
                 this.getYaml().save(this.configFile);
             } catch (IOException var2) {
@@ -67,7 +68,7 @@ public class Configuration {
     }
 
     public void saveDefaultYaml() {
-        if(!this.configFile.exists()) {
+        if (!this.configFile.exists()) {
             this.plugin.saveResource(this.fileName, false);
         }
 

@@ -28,9 +28,9 @@ import com.perceivedev.perceivecore.gui.util.Dimension;
 public enum RecipeRegistry {
     INSTANCE;
 
-    private final Map<ItemStack, Recipe> recipeMap       = new ConcurrentHashMap<>();
+    private final Map<ItemStack, Recipe> recipeMap = new ConcurrentHashMap<>();
     private final Map<ItemStack, Recipe> bukkitRecipeMap = new ConcurrentHashMap<>();
-    private final Collection<MultiBlock> multiBlocks     = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private final Collection<MultiBlock> multiBlocks = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     /**
      * @param recipe The {@link Recipe} to add
@@ -58,9 +58,9 @@ public enum RecipeRegistry {
      */
     public Collection<EasierMCBase> getAllRecipes() {
         LinkedList<EasierMCBase> mcBases = Stream
-                  .concat(Handler.getInstance().getEntireRegistery().stream(), bukkitRecipeMap.values().stream().map(EasierMcNormalItemBridge::new))
-                  .filter(base -> base.getRecipe() != null)
-                  .collect(Collectors.toCollection(LinkedList::new));
+                .concat(Handler.getInstance().getEntireRegistery().stream(), bukkitRecipeMap.values().stream().map(EasierMcNormalItemBridge::new))
+                .filter(base -> base.getRecipe() != null)
+                .collect(Collectors.toCollection(LinkedList::new));
 
         mcBases.addAll(multiBlocks);
 

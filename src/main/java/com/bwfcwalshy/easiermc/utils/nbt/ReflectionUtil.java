@@ -23,7 +23,7 @@ import org.bukkit.Bukkit;
 /**
  * Provides utility methods for reflection
  */
-@SuppressWarnings({ "WeakerAccess", "unused" })
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ReflectionUtil {
 
     private static final String SERVER_VERSION;
@@ -96,12 +96,10 @@ public class ReflectionUtil {
     /**
      * Returns the class with the given name in the given package
      *
-     * @param nameSpace The {@link NameSpace} of the class
+     * @param nameSpace     The {@link NameSpace} of the class
      * @param qualifiedName The qualified name of the class inside the
-     * {@link NameSpace}
-     *
+     *                      {@link NameSpace}
      * @return The Class, if found
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static Optional<Class<?>> getClass(NameSpace nameSpace, String qualifiedName) {
@@ -116,11 +114,9 @@ public class ReflectionUtil {
      * Returns the class with the given name in the given package
      *
      * @param nameWithIdentifier The qualified name of the class inside the
-     * {@link NameSpace}, prefixed with the {@link NameSpace}
-     * identifier.
-     *
+     *                           {@link NameSpace}, prefixed with the {@link NameSpace}
+     *                           identifier.
      * @return The Class, if found
-     *
      * @throws NullPointerException if nameWithIdentifier is null
      * @see #getClass(NameSpace, String) #getClass(NameSpace, String) with the
      * resolved NameSpace and name
@@ -140,7 +136,6 @@ public class ReflectionUtil {
      * method
      *
      * @param fullyQualifiedName The fully qualified name of a class
-     *
      * @return The class or an empty optional if there is none
      */
     private static Optional<Class<?>> classForName(String fullyQualifiedName) {
@@ -158,9 +153,8 @@ public class ReflectionUtil {
     /**
      * Checks if a given class <i>somehow</i> inherits from another class
      *
-     * @param toCheck The class to check
+     * @param toCheck        The class to check
      * @param inheritedClass The inherited class, it should have
-     *
      * @return True if {@code toCheck} somehow inherits from
      * {@code inheritedClass}
      */
@@ -184,11 +178,9 @@ public class ReflectionUtil {
     /**
      * Returns the first field matching the selector
      *
-     * @param clazz The Class to get the fields for
+     * @param clazz    The Class to get the fields for
      * @param selector The Selector function to use
-     *
      * @return The first field matching the selector
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static ReflectResponse<Field> getField(Class<?> clazz, Predicate<Field> selector) {
@@ -208,12 +200,10 @@ public class ReflectionUtil {
      * the given
      * Predicate.
      *
-     * @param clazz The Class to get the fields for
+     * @param clazz     The Class to get the fields for
      * @param predicate The Predicate to use to filter the fields
-     *
      * @return The fields of the class. No {@link ReflectResponse}, as the only
      * error that can occur is a SecurityException.
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static Stream<Field> getFields(Class<?> clazz, Predicate<Field> predicate) {
@@ -227,23 +217,20 @@ public class ReflectionUtil {
      * Returns ALL fields (public {@code ->} private) of a class
      *
      * @param clazz The Class to get the fields for
-     *
      * @return The fields of the class
      */
     private static Stream<Field> getFields(Class<?> clazz) {
         return Stream.concat(
-                  Arrays.stream(clazz.getDeclaredFields()), Arrays.stream(clazz.getFields())).distinct();
+                Arrays.stream(clazz.getDeclaredFields()), Arrays.stream(clazz.getFields())).distinct();
     }
 
     /**
      * Returns the value of a field
      *
-     * @param clazz The clazz get the Field from
-     * @param handle The handle to get it for
+     * @param clazz    The clazz get the Field from
+     * @param handle   The handle to get it for
      * @param selector The selector to match the field
-     *
      * @return The value of the field.
-     *
      * @throws NullPointerException if clazz or selector is null
      * @see #getFieldValue(Field, Object)
      */
@@ -262,12 +249,10 @@ public class ReflectionUtil {
     /**
      * Returns the value of a field
      *
-     * @param name The name of the field
-     * @param clazz The clazz get the Field from
+     * @param name   The name of the field
+     * @param clazz  The clazz get the Field from
      * @param handle The handle to get it for
-     *
      * @return The value of the field.
-     *
      * @throws NullPointerException if clazz or selector is null
      * @see #getFieldValue(Class, Object, Predicate)
      */
@@ -281,11 +266,9 @@ public class ReflectionUtil {
     /**
      * Returns the value of a field
      *
-     * @param field The field to get
+     * @param field  The field to get
      * @param handle The handle to get it for
-     *
      * @return The value of the field.
-     *
      * @throws NullPointerException if field is null
      * @throws NullPointerException If field is null
      */
@@ -306,13 +289,11 @@ public class ReflectionUtil {
     /**
      * Sets the value of a field
      *
-     * @param field The field to set the value for
+     * @param field  The field to set the value for
      * @param handle The handle to set it for
-     * @param value The value to set it to
-     *
+     * @param value  The value to set it to
      * @return The result if setting it. Will just be SUCCESSFUL but not have a
      * value.
-     *
      * @throws NullPointerException if field is null
      */
     public static ReflectResponse<Void> setFieldValue(Field field, Object handle, Object value) {
@@ -333,14 +314,12 @@ public class ReflectionUtil {
     /**
      * Sets the value of a field
      *
-     * @param clazz The clazz get the field from
+     * @param clazz    The clazz get the field from
      * @param selector The selector to match the field
-     * @param handle The handle to set it for
-     * @param value The value to set it to
-     *
+     * @param handle   The handle to set it for
+     * @param value    The value to set it to
      * @return The result if setting it. Will just be SUCCESSFUL but not have a
      * value.
-     *
      * @throws NullPointerException if clazz or selector is null
      * @see #setFieldValue(Field, Object, Object)
      */
@@ -360,13 +339,11 @@ public class ReflectionUtil {
      * Sets the value of a field
      *
      * @param selector The name of the field
-     * @param clazz The clazz get the field from
-     * @param handle The handle to set it for
-     * @param value The value to set it to
-     *
+     * @param clazz    The clazz get the field from
+     * @param handle   The handle to set it for
+     * @param value    The value to set it to
      * @return The result if setting it. Will just be SUCCESSFUL but not have a
      * value.
-     *
      * @throws NullPointerException if clazz or selector is null
      * @see #setFieldValue(Field, Object, Object)
      */
@@ -384,11 +361,9 @@ public class ReflectionUtil {
     /**
      * Returns the first method matching the selector
      *
-     * @param clazz The class to get methods from
+     * @param clazz    The class to get methods from
      * @param selector The Selector function to use
-     *
      * @return The first function matching the selector
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static ReflectResponse<Method> getMethod(Class<?> clazz, Predicate<Method> selector) {
@@ -409,9 +384,7 @@ public class ReflectionUtil {
      * @param method The method to invoke
      * @param handle The handle of the method
      * @param params The parameters of the method
-     *
      * @return The result of invoking the method.
-     *
      * @throws NullPointerException if any parameter (except handle) is null
      */
     public static ReflectResponse<Object> invokeMethod(Method method, Object handle, Object... params) {
@@ -434,13 +407,11 @@ public class ReflectionUtil {
     /**
      * Invokes a method
      *
-     * @param clazz The class to get the method from
+     * @param clazz    The class to get the method from
      * @param selector The Selector function to use
-     * @param handle The handle of the method
-     * @param params The parameters of the method
-     *
+     * @param handle   The handle of the method
+     * @param params   The parameters of the method
      * @return The result of invoking the method.
-     *
      * @throws NullPointerException if any parameter (except handle) is null
      * @see #invokeMethod(Method, Object, Object...)
      */
@@ -460,12 +431,10 @@ public class ReflectionUtil {
     /**
      * Invokes an instance method
      *
-     * @param handle The class to get the method from
+     * @param handle   The class to get the method from
      * @param selector The Selector function to use
-     * @param params The parameters of the method
-     *
+     * @param params   The parameters of the method
      * @return The result of invoking the method.
-     *
      * @throws NullPointerException if any parameter is null
      * @see #invokeMethod(Class, Predicate, Object, Object...)
      */
@@ -479,14 +448,12 @@ public class ReflectionUtil {
     /**
      * Invokes an instance method
      *
-     * @param handle The class to get the method from
-     * @param name The name of the method.
+     * @param handle           The class to get the method from
+     * @param name             The name of the method.
      * @param parameterClasses The classes of the parameters. Empty array for
-     * none, {@code null} is <b>NOT</b> permitted.
-     * @param params The parameters of the method
-     *
+     *                         none, {@code null} is <b>NOT</b> permitted.
+     * @param params           The parameters of the method
      * @return The result of invoking the method.
-     *
      * @throws NullPointerException if any parameter is null
      * @see #invokeMethod(Class, Predicate, Object, Object...)
      */
@@ -504,12 +471,10 @@ public class ReflectionUtil {
      * by the
      * given predicate
      *
-     * @param clazz The Class to get the methods from
+     * @param clazz     The Class to get the methods from
      * @param predicate The predicate to use to filter
-     *
      * @return All the methods in the class. No {@link ReflectResponse}, as the
      * only error that can occur is a SecurityException.
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static Stream<Method> getMethods(Class<?> clazz, Predicate<Method> predicate) {
@@ -523,7 +488,6 @@ public class ReflectionUtil {
      * Returns all methods (public {@code ->} private) from the class
      *
      * @param clazz The Class to get the methods from
-     *
      * @return All the methods in the class.
      */
     private static Stream<Method> getMethods(Class<?> clazz) {
@@ -537,11 +501,9 @@ public class ReflectionUtil {
     /**
      * Returns the first constructor matching the selector
      *
-     * @param clazz The class to get the constructors from
+     * @param clazz    The class to get the constructors from
      * @param selector The Selector function to use
-     *
      * @return The first function matching the selector
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static ReflectResponse<Constructor<?>> getConstructor(Class<?> clazz, Predicate<Constructor<?>> selector) {
@@ -560,11 +522,9 @@ public class ReflectionUtil {
     /**
      * Returns the first constructor matching the parameters
      *
-     * @param clazz The class to get the constructors from
+     * @param clazz  The class to get the constructors from
      * @param params The parameter of the constructor
-     *
      * @return The first constructor with the given params
-     *
      * @throws NullPointerException if any parameter is null
      * @see #getConstructor(Class, Predicate)
      */
@@ -578,11 +538,9 @@ public class ReflectionUtil {
      * Instantiates the constructor
      *
      * @param constructor The constructor
-     * @param params The parameters to pass
-     * @param <T> The type of the class to instantiate
-     *
+     * @param params      The parameters to pass
+     * @param <T>         The type of the class to instantiate
      * @return The instantiated Object
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static <T> ReflectResponse<T> instantiate(Constructor<T> constructor, Object... params) {
@@ -603,12 +561,10 @@ public class ReflectionUtil {
     /**
      * Instantiates the constructor
      *
-     * @param clazz The class to get the constructors from
+     * @param clazz    The class to get the constructors from
      * @param selector The Selector function to use
-     * @param params The parameters to pass
-     *
+     * @param params   The parameters to pass
      * @return The instantiated Object
-     *
      * @throws NullPointerException if any parameter is null
      * @see #instantiate(Constructor, Object...)
      */
@@ -631,12 +587,10 @@ public class ReflectionUtil {
      * filtered by
      * the given predicate
      *
-     * @param clazz The class to get the constructors from
+     * @param clazz     The class to get the constructors from
      * @param predicate The predicate to use to filter
-     *
      * @return All the constructors in the class. No {@link ReflectResponse}, as
      * the only error that can occur is a SecurityException.
-     *
      * @throws NullPointerException if any parameter is null
      */
     public static Stream<Constructor<?>> getAllConstructors(Class<?> clazz, Predicate<Constructor<?>> predicate) {
@@ -650,7 +604,6 @@ public class ReflectionUtil {
      * Returns all (public {@code ->} private) constructors of a class.
      *
      * @param clazz The Class to get the constructors for
-     *
      * @return All the {@link Constructor}s of that class
      */
     private static Stream<Constructor<?>> getAllConstructors(Class<?> clazz) {
@@ -664,12 +617,10 @@ public class ReflectionUtil {
     /**
      * Tries to find an enum constant.
      *
-     * @param clazz The class to get it from
+     * @param clazz     The class to get it from
      * @param predicate The predicate to filter with
-     *
      * @return The found constant.
-     *
-     * @throws NullPointerException if any parameter is null
+     * @throws NullPointerException     if any parameter is null
      * @throws IllegalArgumentException if <code>clazz</code> is not an enum
      */
     public static ReflectResponse<Enum<?>> getEnumConstant(Class<?> clazz, Predicate<Enum<?>> predicate) {
@@ -693,11 +644,9 @@ public class ReflectionUtil {
      * Tries to find an enum constant.
      *
      * @param clazz The class to get it from
-     * @param name The name it should match. Case sensitive.
-     *
+     * @param name  The name it should match. Case sensitive.
      * @return The found constant.
-     *
-     * @throws NullPointerException if any parameter is null
+     * @throws NullPointerException     if any parameter is null
      * @throws IllegalArgumentException if 'clazz' is not an enum
      */
     public static ReflectResponse<Enum<?>> getEnumConstant(Class<?> clazz, String name) {
@@ -723,7 +672,7 @@ public class ReflectionUtil {
          */
         OBC(Pattern.compile("\\{obc\\}\\.", Pattern.CASE_INSENSITIVE), string -> "org.bukkit.craftbukkit." + SERVER_VERSION + "." + string);
 
-        private Pattern                  detectionPattern;
+        private Pattern detectionPattern;
         private Function<String, String> resolverFunction;
 
         /**
@@ -739,7 +688,6 @@ public class ReflectionUtil {
          * Checks if the input is this pattern
          *
          * @param input The input to check
-         *
          * @return True if the pattern matches
          */
         private boolean matchesPattern(String input) {
@@ -750,7 +698,6 @@ public class ReflectionUtil {
          * Removes the pattern from the String
          *
          * @param string The String to remove the pattern from
-         *
          * @return The String without the pattern
          */
         private String removePattern(String string) {
@@ -768,7 +715,6 @@ public class ReflectionUtil {
          * {@literal <relative class name>}
          *
          * @param className The class name to resolve.
-         *
          * @return The resolved className
          */
         public String resolve(String className) {
@@ -779,8 +725,7 @@ public class ReflectionUtil {
          * Returns the {@link NameSpace} which contains the identifier
          *
          * @param input The input string, containing the identifier (and what
-         * else it wants)
-         *
+         *              else it wants)
          * @return The NameSpace which has this identifier
          */
         public static Optional<NameSpace> getFromIdentifier(String input) {
@@ -802,9 +747,9 @@ public class ReflectionUtil {
      * @param <T> The class that is wrapped
      */
     public static class ReflectResponse<T> {
-        private T          value;
+        private T value;
         private ResultType resultType;
-        private Throwable  exception;
+        private Throwable exception;
 
         private ReflectResponse(T value, ResultType resultType, Throwable exception) {
             this.value = value;
@@ -933,15 +878,15 @@ public class ReflectionUtil {
     public static class MemberPredicate<T extends Member> implements Predicate<T> {
 
         private String name;
-        private Collection<Modifier> modifiers       = Collections.emptyList();
+        private Collection<Modifier> modifiers = Collections.emptyList();
         private Collection<Modifier> withoutModifier = Collections.emptyList();
 
         /**
-         * @param name The name of the method. Null for don't check. Is a
-         * <b>RegEx</b>
-         * @param modifiers The modifiers. Empty list for don't check
+         * @param name            The name of the method. Null for don't check. Is a
+         *                        <b>RegEx</b>
+         * @param modifiers       The modifiers. Empty list for don't check
          * @param withoutModifier The modifiers it must not have. Empty list for
-         * don't check
+         *                        don't check
          */
         public MemberPredicate(String name, Collection<Modifier> modifiers, Collection<Modifier> withoutModifier) {
             this.name = name;
@@ -960,7 +905,6 @@ public class ReflectionUtil {
          * Sets the modifiers
          *
          * @param modifiers The modifiers. An empty list for don't check.
-         *
          * @return This predicate
          */
         public MemberPredicate<T> withModifiers(Collection<Modifier> modifiers) {
@@ -972,9 +916,7 @@ public class ReflectionUtil {
          * Sets the modifiers
          *
          * @param modifiers The modifiers. An empty list for don't check.
-         *
          * @return This predicate
-         *
          * @see #withModifiers(Collection)
          */
         public MemberPredicate<T> withModifiers(Modifier... modifiers) {
@@ -985,7 +927,6 @@ public class ReflectionUtil {
          * Sets the modifiers it <b>must not</b> have
          *
          * @param modifiers The modifiers. An empty list for don't check.
-         *
          * @return This predicate
          */
         public MemberPredicate<T> withoutModifiers(Collection<Modifier> modifiers) {
@@ -997,9 +938,7 @@ public class ReflectionUtil {
          * Sets the modifiers it <b>must not</b> have
          *
          * @param modifiers The modifiers. An empty list for don't check.
-         *
          * @return This predicate
-         *
          * @see #withoutModifiers(Collection)
          */
         public MemberPredicate<T> withoutModifiers(Modifier... modifiers) {
@@ -1010,8 +949,7 @@ public class ReflectionUtil {
          * Sets the name of the method
          *
          * @param name The name of the method. Null for don't check. Is a
-         * <b>RegEx</b>
-         *
+         *             <b>RegEx</b>
          * @return This predicate
          */
         public MemberPredicate<T> withName(String name) {
@@ -1049,12 +987,12 @@ public class ReflectionUtil {
         private Class<?> type;
 
         /**
-         * @param name The name of the method. Null for don't check. Is a
-         * <b>RegEx</b>
-         * @param modifiers The modifiers. Empty list for don't check
+         * @param name            The name of the method. Null for don't check. Is a
+         *                        <b>RegEx</b>
+         * @param modifiers       The modifiers. Empty list for don't check
          * @param withoutModifier The modifiers it must not have. Empty list for
-         * don't check
-         * @param type The type of the Field. Null for don't check
+         *                        don't check
+         * @param type            The type of the Field. Null for don't check
          */
         public FieldPredicate(String name, Collection<Modifier> modifiers, Collection<Modifier> withoutModifier, Class<?> type) {
             super(name, modifiers, withoutModifier);
@@ -1134,12 +1072,12 @@ public class ReflectionUtil {
         private Class<?>[] parameters;
 
         /**
-         * @param name The name of the method. Null for don't check. Is a
-         * <b>RegEx</b>
-         * @param modifiers The modifiers. Empty list for don't check
+         * @param name            The name of the method. Null for don't check. Is a
+         *                        <b>RegEx</b>
+         * @param modifiers       The modifiers. Empty list for don't check
          * @param withoutModifier The modifiers it must not have. Empty list for
-         * don't check
-         * @param parameters The parameters. Null for don't check
+         *                        don't check
+         * @param parameters      The parameters. Null for don't check
          */
         public ExecutablePredicate(String name, Collection<Modifier> modifiers, Collection<Modifier> withoutModifier, Class<?>[] parameters) {
             super(name, modifiers, withoutModifier);
@@ -1157,7 +1095,6 @@ public class ReflectionUtil {
          * Sets the required parameters
          *
          * @param parameters The parameters. Null for don't check.
-         *
          * @return This predicate
          */
         public ExecutablePredicate<T> withParameters(Class<?>... parameters) {
@@ -1220,13 +1157,13 @@ public class ReflectionUtil {
         private Class<?> returnType;
 
         /**
-         * @param name The name of the method. Null for don't check. Is a
-         * <b>RegEx</b>
-         * @param modifiers The modifiers. Empty list for don't check
+         * @param name            The name of the method. Null for don't check. Is a
+         *                        <b>RegEx</b>
+         * @param modifiers       The modifiers. Empty list for don't check
          * @param withoutModifier The modifiers it must not have. Empty list for
-         * don't check
-         * @param parameters The parameters. Null for don't check
-         * @param returnType The return type. Null for don't check
+         *                        don't check
+         * @param parameters      The parameters. Null for don't check
+         * @param returnType      The return type. Null for don't check
          */
         public MethodPredicate(String name, Collection<Modifier> modifiers, Collection<Modifier> withoutModifier, Class<?>[] parameters, Class<?> returnType) {
             super(name, modifiers, withoutModifier, parameters);
@@ -1244,7 +1181,6 @@ public class ReflectionUtil {
          * Sets the required return type
          *
          * @param returnType The return type. Null for don't check
-         *
          * @return This predicate
          */
         public MethodPredicate withReturnType(Class<?> returnType) {
@@ -1329,7 +1265,6 @@ public class ReflectionUtil {
          * Checks if the this modifier is set
          *
          * @param modifiers The modifiers
-         *
          * @return True if the method has this modifier
          */
         public boolean isSet(int modifiers) {

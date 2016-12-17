@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 
 public interface IMaterial {
 
-	Material getType();
-	
-	boolean isValidBlock(Block block);
+    Material getType();
+
+    boolean isValidBlock(Block block);
 }

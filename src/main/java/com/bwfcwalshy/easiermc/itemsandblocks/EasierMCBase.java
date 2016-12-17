@@ -22,7 +22,6 @@ public interface EasierMCBase {
     }
 
     /**
-     * 
      * @return A clone of this object
      */
     EasierMCBase copy();

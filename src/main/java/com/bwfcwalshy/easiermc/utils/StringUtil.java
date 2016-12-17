@@ -7,10 +7,9 @@ public class StringUtil {
     /**
      * Pads a String to a given length
      *
-     * @param string The string to pad
+     * @param string      The string to pad
      * @param paddingChar The padding character
-     * @param length The desired length of the string
-     *
+     * @param length      The desired length of the string
      * @return The padded String, or the original string if it was {@code >= length}
      */
     public static String padToLength(String string, char paddingChar, int length) {

@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import java.util.Arrays;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,9 +12,7 @@ import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import com.bwfcwalshy.easiermc.CustomHead;
 import com.bwfcwalshy.easiermc.Handler;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
@@ -49,7 +48,7 @@ public class BlockBreaker implements BlockBase {
 
     @Override
     public void tick(Location location, int tick) {
-        if(tick != 20) return;
+        if (tick != 20) return;
         Block b = location.getBlock();
         if (!(b.getState() instanceof Skull)) {
             System.out.println("Block at " + location.getX() + "," + location.getY() + "," + location.getZ() + " is not a skull! BLOCK REMOVED!");
@@ -62,7 +61,7 @@ public class BlockBreaker implements BlockBase {
             return;
 
         Block b2 = b.getRelative(skull.getRotation());
-        if (isBreakableBlock(b2.getType())){
+        if (isBreakableBlock(b2.getType())) {
             tryToStore(location, new ItemStack(b2.getType(), 1, b2.getData()));
             b2.setType(Material.AIR);
         }
@@ -73,8 +72,8 @@ public class BlockBreaker implements BlockBase {
         return this;
     }
 
-    private boolean isBreakableBlock(Material mat){
-        switch(mat){
+    private boolean isBreakableBlock(Material mat) {
+        switch (mat) {
             case WATER:
             case STATIONARY_WATER:
             case LAVA:

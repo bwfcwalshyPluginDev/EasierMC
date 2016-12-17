@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
 import java.util.Arrays;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;

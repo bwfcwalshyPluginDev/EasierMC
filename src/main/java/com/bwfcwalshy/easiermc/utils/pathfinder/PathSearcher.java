@@ -13,14 +13,14 @@ import java.util.function.Predicate;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.Cable;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.Cable;
 
 /**
  * A Path finder. It doesn't find the best path between two nodes, but it finds all end nodes connected with the start
  *
  * @param <T> The type of the nodes
  */
-public class PathSearcher <T> {
+public class PathSearcher<T> {
 
     /**
      * Just to prevent {@link StackOverflowError}s due to too long cable lines
@@ -41,8 +41,8 @@ public class PathSearcher <T> {
 
     /**
      * @param nodeExpandFunction The function to get adjacent nodes
-     * @param gCostFunction The function to calculate the g-cost between two nodes
-     * @param endNodePredicate The predicate for an end node
+     * @param gCostFunction      The function to calculate the g-cost between two nodes
+     * @param endNodePredicate   The predicate for an end node
      */
     public PathSearcher(Function<Node<T>, Collection<Node<T>>> nodeExpandFunction,
                         BiFunction<Node<T>, Node<T>, Double> gCostFunction,
@@ -63,7 +63,6 @@ public class PathSearcher <T> {
 
     /**
      * @param start The start node
-     *
      * @return The found nodes. Unordered
      */
     public Collection<Node<T>> start(Node<T> start) {

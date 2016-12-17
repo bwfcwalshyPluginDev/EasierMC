@@ -85,8 +85,7 @@ public class MultiBlockPane extends AnchorPane {
                 Component label;
                 if (owner == null) {
                     label = new Label(pattern.getCoreItemStack(), Dimension.ONE);
-                }
-                else {
+                } else {
                     label = new ItemRecipeNode.RecipeButton(pattern.getCoreItemStack(), Dimension.ONE, owner);
                 }
                 addComponent(label, 2, 2);
@@ -100,8 +99,7 @@ public class MultiBlockPane extends AnchorPane {
                 Component button;
                 if (owner == null) {
                     button = new Label(patternBlock.getItemStack(), Dimension.ONE);
-                }
-                else {
+                } else {
                     button = new ItemRecipeNode.RecipeButton(patternBlock.getItemStack(), Dimension.ONE, owner);
                 }
 
@@ -109,8 +107,7 @@ public class MultiBlockPane extends AnchorPane {
                 int y = object.getZ() + 2;
 
                 addComponent(button, x, y);
-            }
-            else {
+            } else {
                 // Can't process
                 System.out.println("PANIC! Can't process: " + object);
             }

@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import java.util.Arrays;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,9 +12,7 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import com.bwfcwalshy.easiermc.CustomHead;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class AutoShear implements BlockBase {
@@ -46,12 +45,12 @@ public class AutoShear implements BlockBase {
 
     @Override
     public void tick(Location location, int tick) {
-        if(tick != 20) return;
+        if (tick != 20) return;
         location.getWorld().getEntities().stream().filter(e -> e.getType() == EntityType.SHEEP && location.distance(e.getLocation()) <= 3).forEach(e -> {
             Sheep sheep = (Sheep) e;
-            if(!sheep.isSheared()) {
+            if (!sheep.isSheared()) {
                 sheep.setSheared(true);
-                tryToStore(location, new ItemStack(Material.WOOL, rand.nextInt(3)+1, sheep.getColor().getData()));
+                tryToStore(location, new ItemStack(Material.WOOL, rand.nextInt(3) + 1, sheep.getColor().getData()));
             }
         });
     }

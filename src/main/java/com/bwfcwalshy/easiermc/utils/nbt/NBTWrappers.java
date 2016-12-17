@@ -21,7 +21,7 @@ import java.util.Set;
  * Provides wrapper objects to abstract the NBT versions. Probably way too
  * complicated...
  */
-@SuppressWarnings({ "WeakerAccess", "unused", "OptionalGetWithoutIsPresent" })
+@SuppressWarnings({"WeakerAccess", "unused", "OptionalGetWithoutIsPresent"})
 public class NBTWrappers {
 
     /**
@@ -35,45 +35,44 @@ public class NBTWrappers {
 
         /**
          * @param nbtObject The NBT object
-         *
          * @return The correct {@link INBTBase} or null if the tag is not
          * supported
          */
         public static INBTBase fromNBT(Object nbtObject) {
             switch (nbtObject.getClass().getSimpleName()) {
-            case "NBTTagByte": {
-                return NBTTagByte.fromNBT(nbtObject);
-            }
-            case "NBTTagShort": {
-                return NBTTagShort.fromNBT(nbtObject);
-            }
-            case "NBTTagInt": {
-                return NBTTagInt.fromNBT(nbtObject);
-            }
-            case "NBTTagLong": {
-                return NBTTagLong.fromNBT(nbtObject);
-            }
-            case "NBTTagFloat": {
-                return NBTTagFloat.fromNBT(nbtObject);
-            }
-            case "NBTTagDouble": {
-                return NBTTagDouble.fromNBT(nbtObject);
-            }
-            case "NBTTagByteArray": {
-                return NBTTagByteArray.fromNBT(nbtObject);
-            }
-            case "NBTTagIntArray": {
-                return NBTTagIntArray.fromNBT(nbtObject);
-            }
-            case "NBTTagString": {
-                return NBTTagString.fromNBT(nbtObject);
-            }
-            case "NBTTagCompound": {
-                return NBTTagCompound.fromNBT(nbtObject);
-            }
-            case "NBTTagList": {
-                return NBTTagList.fromNBT(nbtObject);
-            }
+                case "NBTTagByte": {
+                    return NBTTagByte.fromNBT(nbtObject);
+                }
+                case "NBTTagShort": {
+                    return NBTTagShort.fromNBT(nbtObject);
+                }
+                case "NBTTagInt": {
+                    return NBTTagInt.fromNBT(nbtObject);
+                }
+                case "NBTTagLong": {
+                    return NBTTagLong.fromNBT(nbtObject);
+                }
+                case "NBTTagFloat": {
+                    return NBTTagFloat.fromNBT(nbtObject);
+                }
+                case "NBTTagDouble": {
+                    return NBTTagDouble.fromNBT(nbtObject);
+                }
+                case "NBTTagByteArray": {
+                    return NBTTagByteArray.fromNBT(nbtObject);
+                }
+                case "NBTTagIntArray": {
+                    return NBTTagIntArray.fromNBT(nbtObject);
+                }
+                case "NBTTagString": {
+                    return NBTTagString.fromNBT(nbtObject);
+                }
+                case "NBTTagCompound": {
+                    return NBTTagCompound.fromNBT(nbtObject);
+                }
+                case "NBTTagList": {
+                    return NBTTagList.fromNBT(nbtObject);
+                }
             }
             return null;
         }
@@ -84,9 +83,9 @@ public class NBTWrappers {
      */
     public static class NBTTagString extends INBTBase {
         private static final Constructor<?> NBT_TAG_STRING_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagString").get(), String.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagString").get(), String.class)
+                .getValue();
 
         private String string;
 
@@ -128,8 +127,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagString{" +
-                      "string='" + string + '\'' +
-                      '}';
+                    "string='" + string + '\'' +
+                    '}';
         }
 
         @Override
@@ -155,9 +154,9 @@ public class NBTWrappers {
      */
     public static class NBTTagCompound extends INBTBase {
         private static final Constructor<?> NBT_TAG_COMPOUND_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagCompound").get())
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagCompound").get())
+                .getValue();
 
         private Map<String, INBTBase> map = new HashMap<>();
 
@@ -219,7 +218,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The assigned {@link INBTBase} or null if none
          */
         public INBTBase get(String key) {
@@ -228,7 +226,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public byte getByte(String key) {
@@ -240,7 +237,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public short getShort(String key) {
@@ -252,7 +248,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public int getInt(String key) {
@@ -264,7 +259,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public long getLong(String key) {
@@ -276,7 +270,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public float getFloat(String key) {
@@ -288,7 +281,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The number or 0 if not found.
          */
         public double getDouble(String key) {
@@ -300,7 +292,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The String or null if not found.
          */
         public String getString(String key) {
@@ -312,7 +303,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The byte array or null if not found or wrong type.
          */
         public byte[] getByteArray(String key) {
@@ -324,7 +314,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The byte int or null if not found or wrong type.
          */
         public int[] getIntArray(String key) {
@@ -336,7 +325,6 @@ public class NBTWrappers {
 
         /**
          * @param key The key
-         *
          * @return The boolean
          */
         public boolean getBoolean(String key) {
@@ -372,8 +360,8 @@ public class NBTWrappers {
             }
 
             ReflectionUtil.ReflectResponse<Method> setMethod = ReflectionUtil.getMethod(compound.getClass(), new ReflectionUtil.MethodPredicate()
-                      .withName("set")
-                      .withParameters(String.class, nbtBase.get()));
+                    .withName("set")
+                    .withParameters(String.class, nbtBase.get()));
             for (Map.Entry<String, INBTBase> entry : map.entrySet()) {
                 ReflectionUtil.invokeMethod(setMethod.getValue(), compound, entry.getKey(), entry.getValue().toNBT());
             }
@@ -395,8 +383,8 @@ public class NBTWrappers {
             NBTTagCompound compound = new NBTTagCompound();
 
             ReflectionUtil.ReflectResponse<Method> getMethod = ReflectionUtil.getMethod(nbtObject.getClass(), new ReflectionUtil.MethodPredicate()
-                      .withName("get")
-                      .withParameters(String.class));
+                    .withName("get")
+                    .withParameters(String.class));
 
             if (!getMethod.isSuccessful()) {
                 System.out.println("Didn't find get method in NBTTagCompound class fromNBT");
@@ -417,8 +405,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagCompound{" +
-                      "map=" + map +
-                      '}';
+                    "map=" + map +
+                    '}';
         }
 
         @Override
@@ -444,9 +432,9 @@ public class NBTWrappers {
      */
     public static class NBTTagList extends INBTBase {
         private static final Constructor<?> NBT_TAG_LIST_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagList").get())
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagList").get())
+                .getValue();
 
         private List<INBTBase> list = new ArrayList<>();
 
@@ -455,7 +443,6 @@ public class NBTWrappers {
          * list is empty
          *
          * @param base The {@link INBTBase} to add
-         *
          * @return True if it was added.
          */
         public boolean add(INBTBase base) {
@@ -466,7 +453,6 @@ public class NBTWrappers {
          * Removes an {@link INBTBase} from the list
          *
          * @param base The {@link INBTBase} to remove
-         *
          * @return {@code true} if this list contained the specified element
          */
         public boolean remove(INBTBase base) {
@@ -477,7 +463,6 @@ public class NBTWrappers {
          * Returns the item
          *
          * @param index The index of the item
-         *
          * @return The item
          */
         public INBTBase get(int index) {
@@ -495,7 +480,6 @@ public class NBTWrappers {
 
         /**
          * @param type The type to check for
-         *
          * @return True if the list is empty or this type
          */
         public boolean isType(Class<? extends INBTBase> type) {
@@ -532,10 +516,10 @@ public class NBTWrappers {
 
             for (INBTBase inbtBase : list) {
                 ReflectionUtil.invokeMethod(nbtList.getClass(),
-                          new ReflectionUtil.MethodPredicate()
-                                    .withName("add")
-                                    .withParameters(nbtBase.get()),
-                          nbtList, inbtBase.toNBT());
+                        new ReflectionUtil.MethodPredicate()
+                                .withName("add")
+                                .withParameters(nbtBase.get()),
+                        nbtList, inbtBase.toNBT());
             }
             return nbtList;
         }
@@ -561,8 +545,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagList{" +
-                      "list=" + list +
-                      '}';
+                    "list=" + list +
+                    '}';
         }
 
         @Override
@@ -640,9 +624,9 @@ public class NBTWrappers {
      */
     public static class NBTTagDouble extends INBTNumber {
         private static final Constructor<?> NBT_TAG_DOUBLE_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagDouble").get(), double.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagDouble").get(), double.class)
+                .getValue();
 
         private double value;
 
@@ -684,7 +668,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagDouble! The value was null. Response object: "
-                          + response);
+                        + response);
             }
 
             Double value = (Double) response.getValue();
@@ -694,8 +678,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagDouble{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -721,9 +705,9 @@ public class NBTWrappers {
      */
     public static class NBTTagInt extends INBTNumber {
         private static final Constructor<?> NBT_TAG_INT_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagInt").get(), int.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagInt").get(), int.class)
+                .getValue();
 
         private int value;
 
@@ -770,7 +754,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagInt! The value was null. Response object: "
-                          + response);
+                        + response);
             }
 
             Integer value = (Integer) response.getValue();
@@ -781,8 +765,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagInt{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -808,9 +792,9 @@ public class NBTWrappers {
      */
     public static class NBTTagIntArray extends INBTBase {
         private static final Constructor<?> NBT_TAG_INT_ARRAY_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagIntArray").get(), int[].class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagIntArray").get(), int[].class)
+                .getValue();
 
         private int[] value;
 
@@ -838,7 +822,7 @@ public class NBTWrappers {
 
         public static INBTBase fromNBT(Object nbtObject) {
             ReflectionUtil.ReflectResponse<Method> methodResponse = ReflectionUtil.getMethod(nbtObject.getClass(),
-                      new ReflectionUtil.MethodPredicate().withReturnType(int[].class));
+                    new ReflectionUtil.MethodPredicate().withReturnType(int[].class));
 
             if (!methodResponse.isValuePresent()) {
                 System.out.println("No getter found for NBTTagIntArray");
@@ -856,8 +840,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagIntArray{" +
-                      "value=" + Arrays.toString(value) +
-                      '}';
+                    "value=" + Arrays.toString(value) +
+                    '}';
         }
 
         @Override
@@ -883,9 +867,9 @@ public class NBTWrappers {
      */
     public static class NBTTagByte extends INBTNumber {
         private static final Constructor<?> NBT_TAG_BYTE_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagByte").get(), byte.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagByte").get(), byte.class)
+                .getValue();
 
         private byte value;
 
@@ -927,7 +911,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagByte! The value was null. Response object: "
-                          + response);
+                        + response);
             }
             Byte value = (Byte) response.getValue();
             return new NBTTagByte(value == null ? 0 : value);
@@ -936,8 +920,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagByte{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -963,9 +947,9 @@ public class NBTWrappers {
      */
     public static class NBTTagByteArray extends INBTBase {
         private static final Constructor<?> NBT_TAG_BYTE_ARRAY_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagByteArray").get(), byte[].class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagByteArray").get(), byte[].class)
+                .getValue();
 
         private byte[] value;
 
@@ -993,7 +977,7 @@ public class NBTWrappers {
 
         public static INBTBase fromNBT(Object nbtObject) {
             ReflectionUtil.ReflectResponse<Method> methodResponse = ReflectionUtil.getMethod(nbtObject.getClass(),
-                      new ReflectionUtil.MethodPredicate().withReturnType(byte[].class));
+                    new ReflectionUtil.MethodPredicate().withReturnType(byte[].class));
 
             if (!methodResponse.isValuePresent()) {
                 System.out.println("No getter found for NBTTagByteArray!");
@@ -1011,8 +995,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagByteArray{" +
-                      "value=" + Arrays.toString(value) +
-                      '}';
+                    "value=" + Arrays.toString(value) +
+                    '}';
         }
 
         @Override
@@ -1038,9 +1022,9 @@ public class NBTWrappers {
      */
     public static class NBTTagShort extends INBTNumber {
         private static final Constructor<?> NBT_TAG_SHORT_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagShort").get(), short.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagShort").get(), short.class)
+                .getValue();
 
         private short value;
 
@@ -1082,7 +1066,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagShort! The value was null. Response object: "
-                          + response);
+                        + response);
             }
             Short value = (Short) response.getValue();
             return new NBTTagShort(value == null ? 0 : value);
@@ -1091,8 +1075,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagShort{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -1118,9 +1102,9 @@ public class NBTWrappers {
      */
     public static class NBTTagLong extends INBTNumber {
         private static final Constructor<?> NBT_TAG_LONG_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagLong").get(), long.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagLong").get(), long.class)
+                .getValue();
 
         private long value;
 
@@ -1167,7 +1151,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagLong! The value was null. Response object: "
-                          + response);
+                        + response);
             }
 
             Long value = (Long) response.getValue();
@@ -1177,8 +1161,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagLong{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -1204,9 +1188,9 @@ public class NBTWrappers {
      */
     public static class NBTTagFloat extends INBTNumber {
         private static final Constructor<?> NBT_TAG_LONG_CONSTRUCTOR = ReflectionUtil
-                  .getConstructor(
-                            ReflectionUtil.getClass(NMS, "NBTTagFloat").get(), float.class)
-                  .getValue();
+                .getConstructor(
+                        ReflectionUtil.getClass(NMS, "NBTTagFloat").get(), float.class)
+                .getValue();
 
         private float value;
 
@@ -1248,7 +1232,7 @@ public class NBTWrappers {
             ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
             if (!response.isValuePresent()) {
                 System.out.println("An error occurred reading from an NBTTagFloat! The value was null. Response object: "
-                          + response);
+                        + response);
             }
 
             Float value = (Float) response.getValue();
@@ -1258,8 +1242,8 @@ public class NBTWrappers {
         @Override
         public String toString() {
             return "NBTTagFloat{" +
-                      "value=" + value +
-                      '}';
+                    "value=" + value +
+                    '}';
         }
 
         @Override
@@ -1283,9 +1267,8 @@ public class NBTWrappers {
     /**
      * Returns the method also existing in the Superclass
      *
-     * @param clazz The Class to invoke it on
+     * @param clazz       The Class to invoke it on
      * @param returnClass The Return class it should have
-     *
      * @return The found Method
      */
     private static Method findNBTNumberGetMethod(Class<?> clazz, Class<?> returnClass) {

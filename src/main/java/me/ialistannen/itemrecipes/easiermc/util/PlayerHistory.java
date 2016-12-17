@@ -36,7 +36,6 @@ public enum PlayerHistory {
 
     /**
      * @param uuid The {@link UUID} of the Player
-     *
      * @return The History for the Player
      */
     public Optional<HistoryObject> getPlayerHistory(UUID uuid) {
@@ -45,7 +44,6 @@ public enum PlayerHistory {
 
     /**
      * @param uuid The {@link UUID} of the Player
-     *
      * @return True if there is a history Object saved for the Player
      */
     public boolean containsPlayerHistory(UUID uuid) {
@@ -54,24 +52,22 @@ public enum PlayerHistory {
 
     /**
      * @param uuid The {@link UUID} of the Player
-     *
      * @return True if the Player has a previous Node
      */
     public boolean hasPreviousNode(UUID uuid) {
         return getPlayerHistory(uuid)
-                  .map(historyObject -> historyObject.getLast().isPresent())
-                  .orElse(false);
+                .map(historyObject -> historyObject.getLast().isPresent())
+                .orElse(false);
     }
 
     /**
      * @param uuid The {@link UUID} of the Player
-     *
      * @return The last {@link TreePaneNode} he was at
      */
     public Optional<TreePaneNode> getPreviousNode(UUID uuid) {
         return getPlayerHistory(uuid)
-                  .map(HistoryObject::getLast)
-                  .orElse(Optional.empty());
+                .map(HistoryObject::getLast)
+                .orElse(Optional.empty());
     }
 
     /**
@@ -95,7 +91,7 @@ public enum PlayerHistory {
         }
 
         getPlayerHistory(uuid)
-                  .ifPresent(historyObject -> historyObject.addNode(node));
+                .ifPresent(historyObject -> historyObject.addNode(node));
     }
 
     public static class HistoryObject {

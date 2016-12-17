@@ -1,7 +1,7 @@
-package com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable;
+package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 
 /**
  * A base class for cables
@@ -16,5 +16,5 @@ public interface Cable extends BlockBase {
     /**
      * @return The maximum EU/Tick this cable can handle
      */
-    int getMaxThroughput();
+    int getMaxOutput();
 }

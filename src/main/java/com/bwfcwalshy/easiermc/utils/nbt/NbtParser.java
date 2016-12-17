@@ -21,19 +21,19 @@ public class NbtParser {
 
         if (!mojangsonParserClass.isPresent()) {
             System.out.println("Can't find the class MojangsonParser: "
-                      + Bukkit.getServer().getClass().getName());
+                    + Bukkit.getServer().getClass().getName());
             error = true;
             PARSE_METHOD = null;
         } else {
             ReflectionUtil.ReflectResponse<Method> parseMethod = ReflectionUtil.getMethod(mojangsonParserClass.get(), new ReflectionUtil.MethodPredicate()
-                      .withName("parse")
-                      .withParameters(String.class));
+                    .withName("parse")
+                    .withParameters(String.class));
 
             if (parseMethod.isValuePresent()) {
                 PARSE_METHOD = parseMethod.getValue();
             } else {
                 System.out.println("Can't find MojangsonParser's parse method: "
-                          + mojangsonParserClass.get().getName());
+                        + mojangsonParserClass.get().getName());
                 error = true;
                 PARSE_METHOD = null;
             }
@@ -53,11 +53,9 @@ public class NbtParser {
      * Parses a String to an {@link NBTWrappers.NBTTagCompound}
      *
      * @param nbt The nbt to parse
-     *
      * @return The parsed NBTTagCompound
-     *
      * @throws NbtParseException if an error occurred while parsing the NBT
-     * tag
+     *                           tag
      */
     public static NBTWrappers.NBTTagCompound parse(String nbt) throws NbtParseException {
         ensureNoError();
@@ -95,12 +93,11 @@ public class NbtParser {
          * message.
          *
          * @param message the detail message (which is saved for later retrieval
-         * by the {@link #getMessage()} method).
-         * @param cause the cause (which is saved for later retrieval by the
-         * {@link #getCause()} method). (A <tt>null</tt> value is
-         * permitted, and indicates that the cause is nonexistent or
-         * unknown.)
-         *
+         *                by the {@link #getMessage()} method).
+         * @param cause   the cause (which is saved for later retrieval by the
+         *                {@link #getCause()} method). (A <tt>null</tt> value is
+         *                permitted, and indicates that the cause is nonexistent or
+         *                unknown.)
          * @since 1.4
          */
         private NbtParseException(String message, Throwable cause) {

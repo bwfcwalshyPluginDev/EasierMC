@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
 import com.bwfcwalshy.easiermc.recipe.nodes.ItemRootNode;
 import com.bwfcwalshy.easiermc.utils.pathfinder.Node;
@@ -51,8 +51,7 @@ public class EasierMCCommand implements CommandExecutor {
         Player player = (Player) sender;
         if (args.length == 0) {
 
-        }
-        else if (args.length == 1) {
+        } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("recipe")) {
                 if (sender.hasPermission("easiermc.recipe")) {
                     TreePane treePane = new TreePane(9, 6);
@@ -67,18 +66,15 @@ public class EasierMCCommand implements CommandExecutor {
                     treePane.setRoot(itemRootNode);
 
                     gui.open(player);
-                }
-                else {
+                } else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                 }
-            }
-            else if (args[0].equalsIgnoreCase("debug-version")) {
+            } else if (args[0].equalsIgnoreCase("debug-version")) {
                 if (handler.getItemFromEverything(player.getInventory().getItemInMainHand()) != null) {
                     System.out.println("Version: " + ChatColor.YELLOW + handler.getVersion(player.getInventory()
                             .getItemInMainHand()));
                 }
-            }
-            else if (args[0].equalsIgnoreCase("debug")) {
+            } else if (args[0].equalsIgnoreCase("debug")) {
                 if (sender.hasPermission("easiermc.debug")) {
                     sender.sendMessage(ChatColor.GRAY + "Total EasierMC blocks: " + ChatColor.YELLOW + handler
                             .getBlocks()
@@ -88,8 +84,7 @@ public class EasierMCCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.GRAY + "Average tick time: " + ChatColor.YELLOW + (averageTime /
                             1000000) + "ms (" + averageTime + ")");
                 }
-            }
-            else if (args[0].equalsIgnoreCase("debug-cable")) {
+            } else if (args[0].equalsIgnoreCase("debug-cable")) {
                 Block targetBlock = player.getTargetBlock((Set<Material>) null, 100);
                 Handler handler = Handler.getInstance();
                 PathSearcher<BlockBase> pathSearcher = new PathSearcher<>(cableNode -> {
@@ -153,20 +148,17 @@ public class EasierMCCommand implements CommandExecutor {
             // /emc give
             // /emc recipe
             // /emc debug
-        }
-        else if (args.length == 2) {
+        } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("give")) {
                 if (sender.hasPermission("easiermc.give")) {
                     String item = args[1];
                     EasierMCBase base = handler.getItemFromEverything(item);
                     if (base != null) {
                         player.getInventory().addItem(base.getItem());
-                    }
-                    else {
+                    } else {
                         sender.sendMessage(ChatColor.RED + "Invalid item!");
                     }
-                }
-                else {
+                } else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission for this command.");
                 }
             }

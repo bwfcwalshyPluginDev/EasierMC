@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -45,20 +46,20 @@ public class TreeTap implements ItemBase {
     private Random random = new Random();
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         System.out.println(e.getItem());
 
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             System.out.println(e.getClickedBlock().getType() + " - " + e.getClickedBlock().getData());
-            if(e.getClickedBlock().getType() == Material.LOG && (e.getClickedBlock().getData() == 0 || e.getClickedBlock().getData() == 4 || e.getClickedBlock().getData() == 8)){
-                if(random.nextInt(100) <= 10) {
+            if (e.getClickedBlock().getType() == Material.LOG && (e.getClickedBlock().getData() == 0 || e.getClickedBlock().getData() == 4 || e.getClickedBlock().getData() == 8)) {
+                if (random.nextInt(100) <= 10) {
                     e.getClickedBlock().setType(Material.AIR);
                     e.getClickedBlock().getWorld().dropItem(e.getClickedBlock().getLocation(), handler.getItem("Rubber").getItem());
                 }
-                if(random.nextInt(100) >= 75)
+                if (random.nextInt(100) >= 75)
                     e.getClickedBlock().setType(Material.AIR);
-                e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability()+1));
-                if(e.getPlayer().getInventory().getItemInMainHand().getDurability() >= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()){
+                e.getPlayer().getInventory().getItemInMainHand().setDurability((short) (e.getItem().getDurability() + 1));
+                if (e.getPlayer().getInventory().getItemInMainHand().getDurability() >= e.getPlayer().getInventory().getItemInMainHand().getType().getMaxDurability()) {
                     e.getPlayer().getInventory().setItemInMainHand(null);
                 }
             }

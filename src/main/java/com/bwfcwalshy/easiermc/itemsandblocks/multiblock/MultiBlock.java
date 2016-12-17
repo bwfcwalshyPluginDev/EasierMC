@@ -14,12 +14,13 @@ public interface MultiBlock extends IMultiBlock, EasierMCBase {
 
     Category getCategory();
 
-    default String getName(){
+    default String getName() {
         return null;
     }
 
     /**
      * This is used for the display item.
+     *
      * @return An ItemStack for the display item of this multiblock.
      */
     ItemStack getItem();
@@ -27,7 +28,7 @@ public interface MultiBlock extends IMultiBlock, EasierMCBase {
     @Override
     MultiBlock copy();
 
-    default Recipe getRecipe(){
+    default Recipe getRecipe() {
         return null;
     }
 }

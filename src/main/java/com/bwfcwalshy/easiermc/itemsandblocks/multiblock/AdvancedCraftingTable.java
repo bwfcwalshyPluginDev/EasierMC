@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -18,6 +19,9 @@ import nl.shanelab.multiblock.MultiBlockActivation;
 import nl.shanelab.multiblock.MultiBlockActivationType;
 import nl.shanelab.multiblock.MultiBlockPattern;
 import nl.shanelab.multiblock.patternobjects.PatternBlock;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class AdvancedCraftingTable implements MultiBlock {
 
@@ -66,9 +70,9 @@ public class AdvancedCraftingTable implements MultiBlock {
                         continue outer;
                     }
                 }
-                for(int i = 0; i < 9; i++){
-                    if(shape.charAt(i) != ' '){
-                        if(itemStacks[i].getAmount() > recipe.getIngredients().get(shape.charAt(i)).getAmount())
+                for (int i = 0; i < 9; i++) {
+                    if (shape.charAt(i) != ' ') {
+                        if (itemStacks[i].getAmount() > recipe.getIngredients().get(shape.charAt(i)).getAmount())
                             itemStacks[i].setAmount(itemStacks[i].getAmount() - recipe.getIngredients().get(shape.charAt(i)).getAmount());
                         else
                             dropper.getInventory().setItem(i, null);
@@ -77,14 +81,23 @@ public class AdvancedCraftingTable implements MultiBlock {
 
                 ItemStack[] contents = dropper.getInventory().getContents();
                 dropper.getInventory().clear();
-                System.out.println(recipe.getResult());
                 dropper.getInventory().addItem(recipe.getResult());
-                dropper.drop();
+                int totalSum = Arrays.stream(dropper.getInventory().getContents()).filter(Objects::nonNull).mapToInt(ItemStack::getAmount).sum();
+                for(int i = 0; i < totalSum; i++)
+                    dropper.drop();
                 dropper.getInventory().setContents(contents);
 
                 return;
             }
         }
+    }
+
+    private boolean isEmpty(Inventory inv){
+        for(ItemStack is : inv.getContents()){
+            if(is != null && is.getType() != Material.AIR)
+                return false;
+        }
+        return true;
     }
 
     @Override

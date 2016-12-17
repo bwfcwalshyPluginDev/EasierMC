@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
@@ -19,8 +19,8 @@ public class EasierMC extends JavaPlugin {
 
     public static final String VERSION = "v0.0.10-8";
 
-    private Handler        handler;
-    private BukkitTask     tickTask;
+    private Handler handler;
+    private BukkitTask tickTask;
     private BlockTickTask blockTickTask;
 
     private Configuration dataConf;
@@ -95,12 +95,12 @@ public class EasierMC extends JavaPlugin {
         return new Location(Bukkit.getWorld(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]));
     }
 
-    public FileConfiguration getData(){
+    public FileConfiguration getData() {
         return this.dataConf.getYaml();
     }
 
     // I do not want others accessing this!!!!
-    protected BlockTickTask getTickTask(){
+    protected BlockTickTask getTickTask() {
         return this.blockTickTask;
     }
 }

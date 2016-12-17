@@ -4,5 +4,5 @@ import org.bukkit.block.Block;
 
 public interface IMaterialValidator {
 
-	boolean validateBlock(Block block);
+    boolean validateBlock(Block block);
 }

@@ -2,6 +2,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
 import java.util.Collections;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,9 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import com.bwfcwalshy.easiermc.CustomHead;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class WellMiner implements BlockBase {
@@ -47,11 +46,11 @@ public class WellMiner implements BlockBase {
 
     @Override
     public void tick(Location location, int tick) {
-        if(tick != 20) return;
-        for(int i = 1; i < location.getBlockY(); i++){
+        if (tick != 20) return;
+        for (int i = 1; i < location.getBlockY(); i++) {
             Block b = location.clone().subtract(0, i, 0).getBlock();
-            if(b.getType() != Material.AIR && b.getType() != Material.BEDROCK){
-                for(ItemStack is : b.getDrops()) {
+            if (b.getType() != Material.AIR && b.getType() != Material.BEDROCK) {
+                for (ItemStack is : b.getDrops()) {
                     tryToStore(location, is);
                 }
                 b.setType(Material.AIR);
@@ -59,7 +58,7 @@ public class WellMiner implements BlockBase {
             }
             // Now to increase the arm.
             b.setType(Material.END_ROD);
-            if(i > 1) b.getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
+            if (i > 1) b.getRelative(BlockFace.UP).setType(Material.COBBLE_WALL);
         }
     }
 

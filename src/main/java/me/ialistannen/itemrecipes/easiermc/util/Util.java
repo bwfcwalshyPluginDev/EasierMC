@@ -19,7 +19,6 @@ public class Util {
 
     /**
      * @param item The item to normalize
-     *
      * @return The normalized item
      */
     public static ItemStack normalize(ItemStack item) {
@@ -33,7 +32,6 @@ public class Util {
      * Will return a clone of the inout item, if it has a normal durability.
      *
      * @param item The {@link ItemStack} to fix
-     *
      * @return A clone of the original item with a correct durability.
      */
     public static ItemStack fixStrangeDurability(ItemStack item) {
@@ -71,8 +69,8 @@ public class Util {
      * Reveals the text hidden in color codes
      *
      * @param text The hidden text
-     * @throws IllegalArgumentException if an error occurred while decoding.
      * @return The revealed text
+     * @throws IllegalArgumentException if an error occurred while decoding.
      */
     @Nonnull
     public static String showString(@Nonnull String text) {

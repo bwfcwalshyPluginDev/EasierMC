@@ -9,9 +9,8 @@ public class BetterLore {
     /**
      * Trims the lore to a given length
      *
-     * @param lore The lore to trim
+     * @param lore      The lore to trim
      * @param maxLength The max length of the lore
-     *
      * @return The trimmed lore
      */
     public static List<String> trimLoreToLength(List<String> lore, int maxLength) {

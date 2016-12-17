@@ -28,7 +28,7 @@ public enum ItemRegistry {
      * @param recipeNode The {@link ItemRecipeNode} to add
      */
     public void addRecipeNode(ItemRecipeNode recipeNode) {
-        if(nodeMap.containsKey(recipeNode.getResultNormalized())) {
+        if (nodeMap.containsKey(recipeNode.getResultNormalized())) {
             return;
         }
         nodeMap.put(recipeNode.getResultNormalized(), recipeNode);
@@ -36,7 +36,6 @@ public enum ItemRegistry {
 
     /**
      * @param itemStack The {@link ItemStack} you want the node for
-     *
      * @return The {@link ItemRecipeNode}, if any
      */
     public ItemRecipeNode getNode(ItemStack itemStack) {
@@ -47,7 +46,6 @@ public enum ItemRegistry {
      * Returns all nodes for the given Category
      *
      * @param itemCategory The {@link Category} of the nodes
-     *
      * @return All nodes with that category
      */
     public List<ItemRecipeNode> getNodes(Category itemCategory) {
@@ -69,7 +67,7 @@ public enum ItemRegistry {
         long start = System.currentTimeMillis();
         for (EasierMCBase mcBase : RecipeRegistry.INSTANCE.getAllRecipes()) {
             ItemRecipeNode itemRecipeNode;
-            if(mcBase instanceof MultiBlock)
+            if (mcBase instanceof MultiBlock)
                 itemRecipeNode = new ItemRecipeNode(null, ((MultiBlock) mcBase).getMultiBlockPattern(), dimension, mcBase);
             else
                 itemRecipeNode = new ItemRecipeNode(null, mcBase.getRecipe(), dimension, mcBase);

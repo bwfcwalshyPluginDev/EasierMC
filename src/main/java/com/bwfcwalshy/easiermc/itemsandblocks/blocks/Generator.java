@@ -3,12 +3,12 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -71,7 +71,7 @@ public class Generator implements MachineBase {
     }
 
     @Override
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         e.setCancelled(true);
         e.getPlayer().openInventory(getInventory());
     }
@@ -87,27 +87,27 @@ public class Generator implements MachineBase {
     }
 
     @Override
-    public void saveData(FileConfiguration data, String path){
+    public void saveData(FileConfiguration data, String path) {
         data.set(path + ".EU", currentEU);
         data.set(path + ".Fuel", currentFuel.toString());
     }
 
     @Override
-    public void tick(Location location, int tick){
-        if(getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE){
-            for(ItemStack is : Fuel.getAllFuels()){
-                if(handler.itemStackEquals(getInventory().getItem(10), is, false)){
+    public void tick(Location location, int tick) {
+        if (getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE) {
+            for (ItemStack is : Fuel.getAllFuels()) {
+                if (handler.itemStackEquals(getInventory().getItem(10), is, false)) {
                     ItemStack fuel = getInventory().getItem(10);
-                    if(fuel.getAmount() > 1)
-                        fuel.setAmount(fuel.getAmount()-1);
+                    if (fuel.getAmount() > 1)
+                        fuel.setAmount(fuel.getAmount() - 1);
                     else
                         getInventory().setItem(10, null);
 
                     Fuel f = Fuel.getFuel(is);
-                    if(f != Fuel.NO_FUEL) {
+                    if (f != Fuel.NO_FUEL) {
                         currentFuel = f;
                         currentFuelItem = is;
-                        if(!burning)
+                        if (!burning)
                             burning = true;
                     }
                     break;
@@ -115,19 +115,19 @@ public class Generator implements MachineBase {
             }
         }
 
-        if(currentFuel == null) currentFuel = Fuel.NO_FUEL;
+        if (currentFuel == null) currentFuel = Fuel.NO_FUEL;
 
-        if(currentFuel == Fuel.NO_FUEL) return;
+        if (currentFuel == Fuel.NO_FUEL) return;
 
-        if(currentBurnTime == BURN_TIME){
+        if (currentBurnTime == BURN_TIME) {
             currentBurnTime = 0;
             burning = false;
             currentFuel = Fuel.NO_FUEL;
             currentFuelItem = null;
         }
 
-        if(currentEU < STORAGE) {
-            if((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
+        if (currentEU < STORAGE) {
+            if ((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
                 currentEU = STORAGE;
             else
                 currentEU += currentFuel.getEuValue() / BURN_TIME;
@@ -141,16 +141,16 @@ public class Generator implements MachineBase {
         updateInventory();
     }
 
-    private Inventory getInventory(){
-        if(inventory == null){
+    private Inventory getInventory() {
+        if (inventory == null) {
             inventory = Bukkit.createInventory(null, 27, getName());
 
-            for(int i = 0; i < 27; i++){
+            for (int i = 0; i < 27; i++) {
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData(7).build());
             }
             inventory.setItem(10, currentFuelItem);
 
-            for(int i = 12; i < 15; i++){
+            for (int i = 12; i < 15; i++) {
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").setData(14).build());
             }
 
@@ -161,11 +161,11 @@ public class Generator implements MachineBase {
         return inventory;
     }
 
-    private void updateInventory(){
-        for(int i = 12; i < 15; i++){
-            if(!burning)
+    private void updateInventory() {
+        for (int i = 12; i < 15; i++) {
+            if (!burning)
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").build());
-            else{
+            else {
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.RED + "Burning").setData(14).build());
             }
         }
@@ -190,29 +190,30 @@ public class Generator implements MachineBase {
 
         private int euValue;
         private ItemStack[] fuels;
-        Fuel(int euValue, ItemStack... items){
+
+        Fuel(int euValue, ItemStack... items) {
             this.euValue = euValue;
             this.fuels = items;
         }
 
-        public ItemStack[] getFuels(){
+        public ItemStack[] getFuels() {
             return this.fuels;
         }
 
-        public int getEuValue(){
+        public int getEuValue() {
             return this.euValue;
         }
 
-        public static List<ItemStack> getAllFuels(){
-            if(allFuels == null)
+        public static List<ItemStack> getAllFuels() {
+            if (allFuels == null)
                 allFuels = Arrays.stream(values()).flatMap(fuel -> Arrays.stream(fuel.getFuels())).collect(Collectors.toList());
             return allFuels;
         }
 
         public static Fuel getFuel(ItemStack is) {
-            for(Fuel fuel : values()){
-                for(ItemStack fuelIs : fuel.getFuels()){
-                    if(is.equals(fuelIs)){
+            for (Fuel fuel : values()) {
+                for (ItemStack fuelIs : fuel.getFuels()) {
+                    if (is.equals(fuelIs)) {
                         return fuel;
                     }
                 }

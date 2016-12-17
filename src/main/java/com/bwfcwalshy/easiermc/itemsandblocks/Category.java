@@ -24,18 +24,18 @@ public enum Category {
 
     public static final Category[] values = values();
 
-    Category(EasierMCBase displayItem, String name){
+    Category(EasierMCBase displayItem, String name) {
         this.displayItem = displayItem.getItem();
         this.categoryName = name;
     }
 
-    Category(ItemStack displayItem, String name){
+    Category(ItemStack displayItem, String name) {
         this.displayItem = displayItem;
         this.categoryName = name;
     }
 
-    private static Handler getHandler(){
-        if(handler == null) handler = Handler.getInstance();
+    private static Handler getHandler() {
+        if (handler == null) handler = Handler.getInstance();
         return handler;
     }
 
@@ -43,10 +43,10 @@ public enum Category {
         return values;
     }
 
-    public ItemStack getDisplayItem(){
+    public ItemStack getDisplayItem() {
         ItemMeta im = displayItem.getItemMeta();
         im.setDisplayName(categoryName);
-        if(im.hasLore())
+        if (im.hasLore())
             im.getLore().clear();
         im.setLore(Arrays.asList("", ChatColor.AQUA + "> " + ChatColor.GRAY + "Click to open the category " + ChatColor.YELLOW + ChatColor.stripColor(getCategoryName())));
         displayItem.setItemMeta(im);
@@ -58,19 +58,19 @@ public enum Category {
         return displayItem;
     }
 
-    public String getCategoryName(){
+    public String getCategoryName() {
         return this.categoryName;
     }
 
     public static Category getCategory(ItemStack currentItem) {
-        for(Category c : values)
-            if(c.getDisplayItem().equals(currentItem)) return c;
+        for (Category c : values)
+            if (c.getDisplayItem().equals(currentItem)) return c;
         return null;
     }
 
     public static boolean isCategory(String name) {
-        for(Category c : values)
-            if(c.getCategoryName().equals(name)) return true;
+        for (Category c : values)
+            if (c.getCategoryName().equals(name)) return true;
         return false;
     }
 }

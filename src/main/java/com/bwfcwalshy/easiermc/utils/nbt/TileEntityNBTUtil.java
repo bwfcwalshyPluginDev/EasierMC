@@ -38,16 +38,16 @@ public class TileEntityNBTUtil {
 
         if (CRAFT_BLOCK_STATE_CLASS == null) {
             System.out.println("CraftBlockState not found. Version: "
-                      + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                    + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
             error = true;
         }
 
         ReflectionUtil.ReflectResponse<Method> tileEntityMethod = ReflectionUtil.getMethod(CRAFT_BLOCK_STATE_CLASS, new ReflectionUtil.MethodPredicate()
-                  .withName("getTileEntity").withParameters());
+                .withName("getTileEntity").withParameters());
 
         if (!tileEntityMethod.isValuePresent()) {
             System.out.println("getTileEntity not found. Version: "
-                      + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                    + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
             error = true;
         } else {
             getTileEntity = tileEntityMethod.getValue();
@@ -59,9 +59,7 @@ public class TileEntityNBTUtil {
      * Gets the NMS handle of a bukkit entity
      *
      * @param blockState The Bukkit {@link BlockState}
-     *
      * @return The NMS tile entity
-     *
      * @throws IllegalStateException if {@link #ensureNoError()} throws it
      */
     private static Object toTileEntity(BlockState blockState) {
@@ -73,8 +71,7 @@ public class TileEntityNBTUtil {
      * Returns the {@link NBTWrappers.NBTTagCompound} of a {@link BlockState}
      *
      * @param blockState The Bukkit {@link BlockState} to get an
-     * {@link NBTWrappers.NBTTagCompound} for.
-     *
+     *                   {@link NBTWrappers.NBTTagCompound} for.
      * @return The {@link NBTWrappers.NBTTagCompound} of the {@link BlockState}
      */
     @SuppressWarnings("WeakerAccess")   // others may want to call that...
@@ -99,14 +96,13 @@ public class TileEntityNBTUtil {
      * Changes will appear.
      *
      * @param blockState The Bukkit {@link BlockState} to get an
-     * {@link NBTWrappers.NBTTagCompound} for.
-     * @param compound The {@link NBTWrappers.NBTTagCompound} to set it to
-     *
-     * @throws NullPointerException If blockState or compound is null
+     *                   {@link NBTWrappers.NBTTagCompound} for.
+     * @param compound   The {@link NBTWrappers.NBTTagCompound} to set it to
+     * @throws NullPointerException     If blockState or compound is null
      * @throws IllegalArgumentException If {@link #isValidClass(BlockState)}
-     * returns false
-     * @throws IllegalStateException If an unrepairable error occurred earlier
-     * (probably version incompatibility).
+     *                                  returns false
+     * @throws IllegalStateException    If an unrepairable error occurred earlier
+     *                                  (probably version incompatibility).
      */
     @SuppressWarnings("WeakerAccess")   // others may want to call that...
     public static void setNbtTag(BlockState blockState, NBTWrappers.NBTTagCompound compound) {
@@ -131,14 +127,13 @@ public class TileEntityNBTUtil {
      * Changes will appear.
      *
      * @param blockState The Bukkit {@link BlockState} to get an
-     * {@link NBTWrappers.NBTTagCompound} for.
-     * @param compound The {@link NBTWrappers.NBTTagCompound} to set it to
-     *
-     * @throws NullPointerException If blockState or compound is null
+     *                   {@link NBTWrappers.NBTTagCompound} for.
+     * @param compound   The {@link NBTWrappers.NBTTagCompound} to set it to
+     * @throws NullPointerException     If blockState or compound is null
      * @throws IllegalArgumentException If {@link #isValidClass(BlockState)}
-     * returns false
-     * @throws IllegalStateException If an unrepairable error occurred earlier
-     * (probably version incompatibility).
+     *                                  returns false
+     * @throws IllegalStateException    If an unrepairable error occurred earlier
+     *                                  (probably version incompatibility).
      */
     public static void appendNbtTag(BlockState blockState, NBTWrappers.NBTTagCompound compound) {
         Objects.requireNonNull(blockState, "blockState can not be null");
@@ -164,11 +159,9 @@ public class TileEntityNBTUtil {
      * {@link #getNbtTag(BlockState)} methods
      *
      * @param blockState The Bukkit {@link BlockState} to check
-     *
      * @return True if the {@link BlockState} has a TileEntity
-     *
      * @throws IllegalStateException If an unrepairable error occurred earlier
-     * (probably version incompatibility).
+     *                               (probably version incompatibility).
      */
     @SuppressWarnings("WeakerAccess")   // others may want to call that...
     public static boolean isValidClass(BlockState blockState) {
@@ -179,9 +172,8 @@ public class TileEntityNBTUtil {
 
     /**
      * @param state The {@link BlockState} to check. Non null.
-     *
      * @throws IllegalArgumentException If the state doesn't have a
-     * TileEntity
+     *                                  TileEntity
      */
     private static void ensureCorrectClass(BlockState state) {
         if (!isValidClass(state)) {
@@ -218,9 +210,9 @@ public class TileEntityNBTUtil {
 
         if (loadFromNBT == null || saveToNBT == null) {
             System.out.println("Null: "
-                      + " load " + (loadFromNBT == null)
-                      + " save " + (saveToNBT == null)
-                      + ". Version: " + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                    + " load " + (loadFromNBT == null)
+                    + " save " + (saveToNBT == null)
+                    + ". Version: " + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
             error = true;
         }
 
@@ -230,7 +222,7 @@ public class TileEntityNBTUtil {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     private static void initializeMethodsAfter1_9(Class<?> tileEntityClass, BlockState blockState,
-              Object tileEntity) {
+                                                  Object tileEntity) {
 
         // the load method is the same
         initializeMethodsBefore1_9(tileEntityClass, blockState, tileEntity);
@@ -238,10 +230,10 @@ public class TileEntityNBTUtil {
         // search the save method
         for (Method method : tileEntityClass.getMethods()) {
             if (method.getReturnType().equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && method.getParameterTypes().length == 1
-                      && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && Modifier.isPublic(method.getModifiers())
-                      && !Modifier.isStatic(method.getModifiers())) {
+                    && method.getParameterTypes().length == 1
+                    && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
+                    && Modifier.isPublic(method.getModifiers())
+                    && !Modifier.isStatic(method.getModifiers())) {
 
                 Object testCompound = new NBTWrappers.NBTTagCompound().toNBT();
                 ReflectionUtil.invokeMethod(method, tileEntity, testCompound);
@@ -253,7 +245,7 @@ public class TileEntityNBTUtil {
 
                 if (saveToNBT != null) {
                     System.out.println("Found more than one save method. Version: "
-                              + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                            + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
                     error = true;
                     return;
                 }
@@ -264,13 +256,13 @@ public class TileEntityNBTUtil {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     private static void initializeMethodsBefore1_9(Class<?> tileEntityClass, BlockState blockState,
-              Object tileEntity) {
+                                                   Object tileEntity) {
         for (Method method : tileEntityClass.getMethods()) {
             if (method.getReturnType().equals(Void.TYPE)
-                      && method.getParameterTypes().length == 1
-                      && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && Modifier.isPublic(method.getModifiers())
-                      && !Modifier.isStatic(method.getModifiers())) {
+                    && method.getParameterTypes().length == 1
+                    && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
+                    && Modifier.isPublic(method.getModifiers())
+                    && !Modifier.isStatic(method.getModifiers())) {
 
                 Object testCompound = new NBTWrappers.NBTTagCompound().toNBT();
                 ReflectionUtil.invokeMethod(method, tileEntity, testCompound);
@@ -284,7 +276,7 @@ public class TileEntityNBTUtil {
                     // load method
                     if (loadFromNBT != null) {
                         System.out.println("Found more than one load method. Version: "
-                                  + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                                + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
                         error = true;
                         return;
                     }
@@ -293,7 +285,7 @@ public class TileEntityNBTUtil {
                     // save method
                     if (saveToNBT != null) {
                         System.out.println("Found more than one save method. Version: "
-                                  + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
+                                + Bukkit.getBukkitVersion() + " " + Bukkit.getVersion());
                         error = true;
                         return;
                     }

@@ -1,7 +1,7 @@
 package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,41 +21,43 @@ public class Events implements Listener {
     private List<UUID> checkedPlayers = new ArrayList<>();
 
     private Handler handler;
-    public Events(EasierMC pl){
+
+    public Events(EasierMC pl) {
         this.handler = pl.getHandler();
     }
 
     @EventHandler
-    public void onPlace(BlockPlaceEvent e){
-        if(handler.isBlock(e.getItemInHand())) {
+    public void onPlace(BlockPlaceEvent e) {
+        if (handler.isBlock(e.getItemInHand())) {
             handler.addBlock(handler.getBlock(e.getItemInHand()), e.getBlockPlaced().getLocation());
         }
     }
 
     @EventHandler
-    public void onRemove(BlockBreakEvent e){
-        if(handler.isBlock(e.getBlock().getLocation())){
+    public void onRemove(BlockBreakEvent e) {
+        if (handler.isBlock(e.getBlock().getLocation())) {
             BlockBase block = handler.getBlock(e.getBlock().getLocation());
             handler.removeBlock(e.getBlock().getLocation());
             e.getBlock().setType(Material.AIR);
             e.getBlock().getDrops().clear();
-            if(e.getPlayer().getGameMode() != GameMode.CREATIVE) e.getBlock().getLocation().getWorld().dropItemNaturally(e.getBlock().getLocation(), block.getItem());
+            if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
+                e.getBlock().getLocation().getWorld().dropItemNaturally(e.getBlock().getLocation(), block.getItem());
         }
     }
 
     @EventHandler
-    public void onBurn(BlockBurnEvent e){
-        if(handler.isBlock(e.getBlock().getLocation())){
+    public void onBurn(BlockBurnEvent e) {
+        if (handler.isBlock(e.getBlock().getLocation())) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         // Make sure I don't keep doing full inventory checks.
-        if(checkedPlayers.contains(e.getPlayer().getUniqueId())) return;
+        if (checkedPlayers.contains(e.getPlayer().getUniqueId())) return;
         System.out.println("Noobtubes fired");
-        for(int i = 0; i < e.getPlayer().getInventory().getContents().length; i++) {
+        for (int i = 0; i < e.getPlayer().getInventory().getContents().length; i++) {
             ItemStack is = e.getPlayer().getInventory().getContents()[i];
             if (is != null && handler.getItemFromEverything(is) != null) {
                 EasierMCBase base = handler.getItemFromEverything(is);
@@ -70,9 +72,9 @@ public class Events implements Listener {
     }
 
     @EventHandler
-    public void onBlockClick(PlayerInteractEvent e){
-        if(e.getHand() == EquipmentSlot.HAND){
-            if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+    public void onBlockClick(PlayerInteractEvent e) {
+        if (e.getHand() == EquipmentSlot.HAND) {
+            if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (handler.isBlock(e.getClickedBlock().getLocation())) {
                     handler.getBlock(e.getClickedBlock().getLocation()).onInteract(e);
                 }

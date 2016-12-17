@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  *
  * @param <T> The type of the node
  */
-public class Node <T> implements Comparable<Node<T>> {
+public class Node<T> implements Comparable<Node<T>> {
 
     private final Location location;
     private T value;
@@ -22,7 +22,7 @@ public class Node <T> implements Comparable<Node<T>> {
 
     /**
      * @param location The location of the node
-     * @param value The value of the node
+     * @param value    The value of the node
      */
     public Node(Location location, T value) {
         this.location = location.clone();
@@ -44,9 +44,8 @@ public class Node <T> implements Comparable<Node<T>> {
     }
 
     /**
-     * @param parent The parent node
+     * @param parent            The parent node
      * @param nodeGCostFunction The function to calculate the g cost between two nodes
-     *
      * @return The calculated g cost
      */
     double calculateGCost(Node<T> parent, BiFunction<Node<T>, Node<T>, Double> nodeGCostFunction) {
@@ -71,7 +70,7 @@ public class Node <T> implements Comparable<Node<T>> {
     }
 
     /**
-     * @param parent The new parent
+     * @param parent            The new parent
      * @param nodeGCostFunction The function to calculate the g cost between two nodes
      */
     void setParent(Node<T> parent, BiFunction<Node<T>, Node<T>, Double> nodeGCostFunction) {

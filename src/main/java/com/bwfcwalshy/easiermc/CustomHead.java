@@ -13,10 +13,10 @@ import java.util.UUID;
 
 public class CustomHead {
 
-    public static ItemStack getSkull(String url){
+    public static ItemStack getSkull(String url) {
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         PropertyMap map = profile.getProperties();
-        if(map == null)
+        if (map == null)
             throw new IllegalStateException("Profile does not have a property map!");
         String data = Base64.encodeBase64String(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
         map.put("textures", new Property("textures", data));
@@ -28,26 +28,26 @@ public class CustomHead {
         return is;
     }
 
-    public static FieldAccessor getField(Class<?> targetClass, String name, Class<?> fieldType){
-        for(final Field field : targetClass.getDeclaredFields()){
-            if(name == null || field.getName().equals(name)){
+    public static FieldAccessor getField(Class<?> targetClass, String name, Class<?> fieldType) {
+        for (final Field field : targetClass.getDeclaredFields()) {
+            if (name == null || field.getName().equals(name)) {
                 field.setAccessible(true);
 
                 return new FieldAccessor() {
                     @Override
                     public Object get(Object o) throws IllegalArgumentException {
-                        try{
+                        try {
                             return field.get(o);
-                        }catch(IllegalAccessException e){
+                        } catch (IllegalAccessException e) {
                             throw new RuntimeException("Cannot access field!");
                         }
                     }
 
                     @Override
                     public void set(Object o, Object o1) throws IllegalArgumentException {
-                        try{
+                        try {
                             field.set(o, o1);
-                        }catch(IllegalAccessException e){
+                        } catch (IllegalAccessException e) {
                             throw new RuntimeException("Cannot access field!");
                         }
                     }
@@ -55,7 +55,7 @@ public class CustomHead {
             }
         }
 
-        if(targetClass.getSuperclass() != null)
+        if (targetClass.getSuperclass() != null)
             return getField(targetClass.getSuperclass(), name, fieldType);
         throw new IllegalArgumentException("Cannot find field '" + name + "' with type " + fieldType.getSimpleName());
     }

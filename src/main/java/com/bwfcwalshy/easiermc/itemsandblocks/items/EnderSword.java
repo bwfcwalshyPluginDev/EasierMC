@@ -3,6 +3,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.items;
 import java.util.Arrays;
 import java.util.UUID;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -58,14 +59,14 @@ public class EnderSword implements ItemBase {
     }
 
     @Override
-    public void onInteract(PlayerInteractEvent e){
-        if(e.getPlayer().getInventory().getItemInMainHand().equals(getItem())){
+    public void onInteract(PlayerInteractEvent e) {
+        if (e.getPlayer().getInventory().getItemInMainHand().equals(getItem())) {
             ItemStack sword = e.getPlayer().getInventory().getItemInMainHand();
 
             // Add attackDamage crap
             NBTWrappers.NBTTagCompound tag = ItemNBTUtil.getTag(sword);
 
-            if(tag.hasKey("AttributeModifiers")) return;
+            if (tag.hasKey("AttributeModifiers")) return;
             NBTWrappers.NBTTagList attributeModifiers = tag.hasKey("AttributeModifiers") ? (NBTWrappers.NBTTagList) tag.get("AttributeModifiers") : new NBTWrappers.NBTTagList();
 
             attributeModifiers.getRawList().clear();

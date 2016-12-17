@@ -56,7 +56,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
      *
      * @param parent The parent node
      * @param recipe The {@link Recipe}
-     * @param size The size of the pane
+     * @param size   The size of the pane
      */
     public ItemRecipeNode(TreePaneNode parent, Recipe recipe, Dimension size, EasierMCBase base) {
         super(parent);
@@ -70,9 +70,9 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
     /**
      * Creates a new {@link TreePaneNode} with the given parent and no children
      *
-     * @param parent The parent node
+     * @param parent  The parent node
      * @param pattern The {@link MultiBlockPattern}
-     * @param size The size of the pane
+     * @param size    The size of the pane
      */
     public ItemRecipeNode(TreePaneNode parent, MultiBlockPattern pattern, Dimension size, EasierMCBase base) {
         super(parent);
@@ -136,13 +136,13 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
     private class RecipePane extends AnchorPane {
 
         private List<List<ItemStack>> items;
-        private MultiBlockPattern     pattern;
+        private MultiBlockPattern pattern;
 
         /**
          * An empty Pane
          *
-         * @param width The width of this pane
-         * @param height The height of this pane
+         * @param width   The width of this pane
+         * @param height  The height of this pane
          * @param pattern The {@link MultiBlockPattern}. May be null.
          */
         private RecipePane(int width, int height, MultiBlockPattern pattern) {
@@ -167,7 +167,6 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
         /**
          * @param shapelessRecipe The {@link ShapelessRecipe} to convert
-         *
          * @return The converted {@link ShapedRecipe}
          */
         private List<List<ItemStack>> shapelessRecipeToList(ShapelessRecipe shapelessRecipe) {
@@ -190,7 +189,6 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
 
         /**
          * @param shapedRecipe The {@link ShapedRecipe} to convert
-         *
          * @return The converted {@link ShapedRecipe}
          */
         private List<List<ItemStack>> shapedRecipeToList(ShapedRecipe shapedRecipe) {
@@ -357,9 +355,8 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
          * Constructs a button
          *
          * @param itemStack The ItemStack to display
-         * @param size The size of the button
-         * @param pane The pane this button is in
-         *
+         * @param size      The size of the button
+         * @param pane      The pane this button is in
          * @throws NullPointerException if any parameter is null
          */
         public RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
@@ -388,7 +385,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                 clone.setOwner(treePane);
 
                 treePane.getSelected()
-                          .ifPresent(treePaneNode -> PlayerHistory.INSTANCE.addToPlayerHistory(clickEvent.getPlayer().getUniqueId(), treePaneNode));
+                        .ifPresent(treePaneNode -> PlayerHistory.INSTANCE.addToPlayerHistory(clickEvent.getPlayer().getUniqueId(), treePaneNode));
 
                 treePane.select(clone);
             });

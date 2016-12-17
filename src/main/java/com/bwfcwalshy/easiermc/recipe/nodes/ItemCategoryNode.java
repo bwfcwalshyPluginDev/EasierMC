@@ -32,9 +32,9 @@ class ItemCategoryNode extends TreePaneNode {
     /**
      * Creates a new {@link TreePaneNode} with the given parent and no children
      *
-     * @param parent The parent node
+     * @param parent   The parent node
      * @param category The {@link Category}
-     * @param size The size of the Pane
+     * @param size     The size of the Pane
      */
     ItemCategoryNode(TreePaneNode parent, Category category, Dimension size) {
         super(parent);
@@ -74,9 +74,9 @@ class ItemCategoryNode extends TreePaneNode {
         TreePane treePane = owner.get();
 
         List<ItemRecipeNode> nodes = ItemRegistry.INSTANCE.getNodes(category)
-                  .stream()
-                  .sorted(Comparator.comparing(o -> o.getResult().getType()))
-                  .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(o -> o.getResult().getType()))
+                .collect(Collectors.toList());
         for (ItemRecipeNode node : nodes) {
             node.setParent(this);
 

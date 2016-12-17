@@ -39,13 +39,13 @@ public class EntityNBTUtil {
             System.out.println("Can't find CraftEntity class! @EntityNBTUtil static block");
         } else {
             ReflectionUtil.ReflectResponse<Method> getHandleMethod = ReflectionUtil
-                      .getMethod(craftEntityClass.get(), new ReflectionUtil.MethodPredicate().withName("getHandle"));
+                    .getMethod(craftEntityClass.get(), new ReflectionUtil.MethodPredicate().withName("getHandle"));
 
             if (getHandleMethod.isValuePresent()) {
                 getHandle = getHandleMethod.getValue();
             } else {
                 System.out.println("getHandle not found: "
-                          + Bukkit.getServer().getClass().getName());
+                        + Bukkit.getServer().getClass().getName());
                 error = true;
             }
         }
@@ -56,9 +56,7 @@ public class EntityNBTUtil {
      * Gets the NMS handle of a bukkit entity
      *
      * @param entity The Bukkit entity
-     *
      * @return The NMS entity
-     *
      * @throws IllegalStateException if {@link #ensureNoError()} throws it
      */
     private static Object toNMSEntity(Entity entity) {
@@ -79,12 +77,10 @@ public class EntityNBTUtil {
      * Gets the NBT-Tag of an entity
      *
      * @param entity The entity to get the nbt tag for
-     *
      * @return The NBTTag of the entity
-     *
-     * @throws NullPointerException if {@code entity} is null
+     * @throws NullPointerException  if {@code entity} is null
      * @throws IllegalStateException if a critical, non recoverable error
-     * occurred earlier (loading methods).
+     *                               occurred earlier (loading methods).
      */
     @SuppressWarnings("WeakerAccess") // util,...
     public static NBTWrappers.NBTTagCompound getNbtTag(Entity entity) {
@@ -100,7 +96,7 @@ public class EntityNBTUtil {
             ReflectionUtil.invokeMethod(saveToNbtMethod, nmsEntity, nbtNMS);
             if (nbtNMS == null) {
                 throw new NullPointerException("SaveToNBT method set Nbt tag to null. Version incompatible?"
-                          + nmsEntity.getClass());
+                        + nmsEntity.getClass());
             }
             entityNBT = (NBTWrappers.NBTTagCompound) NBTWrappers.INBTBase.fromNBT(nbtNMS);
         }
@@ -111,13 +107,12 @@ public class EntityNBTUtil {
     /**
      * Applies the {@link NBTWrappers.NBTTagCompound} tp the passed {@link Entity}
      *
-     * @param entity The entity to modify the nbt tag
+     * @param entity   The entity to modify the nbt tag
      * @param compound The {@link NBTWrappers.NBTTagCompound} to set it to
-     *
-     * @throws NullPointerException if {@code entity} or {@code compound} is
-     * null
+     * @throws NullPointerException  if {@code entity} or {@code compound} is
+     *                               null
      * @throws IllegalStateException if a critical, non recoverable error
-     * occurred earlier (loading methods).
+     *                               occurred earlier (loading methods).
      */
     @SuppressWarnings("WeakerAccess") // util...
     public static void setNbtTag(Entity entity, NBTWrappers.NBTTagCompound compound) {
@@ -135,13 +130,12 @@ public class EntityNBTUtil {
      * Appends the {@link NBTWrappers.NBTTagCompound} to the entities NBT tag, overwriting
      * already set values
      *
-     * @param entity The entity whose NbtTag to change
+     * @param entity   The entity whose NbtTag to change
      * @param compound The {@link NBTWrappers.NBTTagCompound} whose values you want to add
-     *
-     * @throws NullPointerException if {@code entity} or {@code compound} is
-     * null
+     * @throws NullPointerException  if {@code entity} or {@code compound} is
+     *                               null
      * @throws IllegalStateException if a critical, non recoverable error
-     * occurred earlier (loading methods).
+     *                               occurred earlier (loading methods).
      */
     public static void appendNbtTag(Entity entity, NBTWrappers.NBTTagCompound compound) {
         // yes, getNbtTag would throw them as well.
@@ -165,7 +159,7 @@ public class EntityNBTUtil {
             throw new IllegalStateException("Called me before at least one world was loaded...");
         }
         Entity sample = Bukkit.getWorlds().get(0)
-                  .spawnEntity(Bukkit.getWorlds().get(0).getSpawnLocation(), EntityType.ARMOR_STAND);
+                .spawnEntity(Bukkit.getWorlds().get(0).getSpawnLocation(), EntityType.ARMOR_STAND);
 
         Object nmsSample = ReflectionUtil.invokeMethod(getHandle, sample).getValue();
 
@@ -185,9 +179,9 @@ public class EntityNBTUtil {
 
         if (saveToNbtMethod == null || loadFromNbtMethod == null) {
             System.out.println("Couldn't find the methods. This could help: "
-                      + entityClass.get().getName()
-                      + " save " + (saveToNbtMethod == null)
-                      + " load " + (loadFromNbtMethod == null));
+                    + entityClass.get().getName()
+                    + " save " + (saveToNbtMethod == null)
+                    + " load " + (loadFromNbtMethod == null));
             error = true;
         }
         sample.remove();
@@ -202,10 +196,10 @@ public class EntityNBTUtil {
             // the save method : "public NBTWrappers.NBTTagCompound(final NBTWrappers.NBTTagCompound
             // compound)"
             if (method.getReturnType().equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && method.getParameterTypes().length == 1
-                      && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && Modifier.isPublic(method.getModifiers())
-                      && !Modifier.isStatic(method.getModifiers())) {
+                    && method.getParameterTypes().length == 1
+                    && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
+                    && Modifier.isPublic(method.getModifiers())
+                    && !Modifier.isStatic(method.getModifiers())) {
 
                 Object testCompound = new NBTWrappers.NBTTagCompound().toNBT();
                 ReflectionUtil.invokeMethod(method, nmsSample, testCompound);
@@ -220,7 +214,7 @@ public class EntityNBTUtil {
                     if (saveToNbtMethod != null) {
                         saveToNbtMethod = null;
                         System.out.println("Couldn't find the saving method for an entity. This should help: "
-                                  + entityClass.getName());
+                                + entityClass.getName());
                         error = true;
                         return;
                     }
@@ -235,10 +229,10 @@ public class EntityNBTUtil {
 
         for (Method method : entityClass.getMethods()) {
             if (method.getReturnType().equals(Void.TYPE)
-                      && method.getParameterTypes().length == 1
-                      && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
-                      && Modifier.isPublic(method.getModifiers())
-                      && !Modifier.isStatic(method.getModifiers())) {
+                    && method.getParameterTypes().length == 1
+                    && method.getParameterTypes()[0].equals(ReflectionUtil.getClass(NMS, "NBTWrappers.NBTTagCompound").get())
+                    && Modifier.isPublic(method.getModifiers())
+                    && !Modifier.isStatic(method.getModifiers())) {
 
                 Object testCompound = new NBTWrappers.NBTTagCompound().toNBT();
                 ReflectionUtil.invokeMethod(method, nmsSample, testCompound);
@@ -251,8 +245,8 @@ public class EntityNBTUtil {
                 if (compound.isEmpty()) {
                     if (loadFromNbtMethod != null) {
                         System.out.println("Couldn't find the loading method for an entity. This should help: "
-                                  + entityClass.getName()
-                                  + " found methods: " + loadFromNbtMethod + " " + method);
+                                + entityClass.getName()
+                                + " found methods: " + loadFromNbtMethod + " " + method);
                         loadFromNbtMethod = null;
                         error = true;
                         return;
@@ -261,8 +255,8 @@ public class EntityNBTUtil {
                 } else {
                     if (saveToNbtMethod != null) {
                         System.out.println("Couldn't find the saving method for an entity. This should help: "
-                                  + entityClass.getName()
-                                  + " found methods: " + saveToNbtMethod + " " + method);
+                                + entityClass.getName()
+                                + " found methods: " + saveToNbtMethod + " " + method);
                         error = true;
                         saveToNbtMethod = null;
                         return;

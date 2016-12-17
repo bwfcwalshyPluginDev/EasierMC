@@ -43,8 +43,8 @@ public class ItemRootNode extends TreePaneNode {
 
         for (ItemCategoryNode node : getItemCategoryChildren()) {
             ItemStack icon = ItemFactory.builder(node.getCategory().getDisplayItem())
-                      .setName("&c&l" + TextUtils.enumFormat(node.getCategory().name(), true))
-                      .build();
+                    .setName("&c&l" + TextUtils.enumFormat(node.getCategory().name(), true))
+                    .build();
             Button button = new Button(icon, Dimension.ONE);
             button.setAction(clickEvent -> getOwner().ifPresent(treePane -> treePane.select(node)));
 
@@ -61,9 +61,9 @@ public class ItemRootNode extends TreePaneNode {
      */
     private List<ItemCategoryNode> getItemCategoryChildren() {
         return getChildren().stream()
-                  .filter(treePaneNode -> treePaneNode instanceof ItemCategoryNode)
-                  .map(treePaneNode -> (ItemCategoryNode) treePaneNode)
-                  .collect(Collectors.toList());
+                .filter(treePaneNode -> treePaneNode instanceof ItemCategoryNode)
+                .map(treePaneNode -> (ItemCategoryNode) treePaneNode)
+                .collect(Collectors.toList());
 
     }
 
