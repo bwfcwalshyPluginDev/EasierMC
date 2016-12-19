@@ -1,26 +1,20 @@
 package me.ialistannen.itemrecipes.easiermc.util;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import com.bwfcwalshy.easiermc.EasierMC;
 import com.bwfcwalshy.easiermc.Handler;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.perceivedev.perceivecore.gui.util.Dimension;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * A registry for Recipes

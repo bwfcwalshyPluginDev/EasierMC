@@ -1,22 +1,5 @@
 package com.bwfcwalshy.easiermc.recipe.nodes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.FurnaceRecipe;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
-
 import com.bwfcwalshy.easiermc.Handler;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
@@ -34,11 +17,19 @@ import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
 import com.perceivedev.perceivecore.gui.components.simple.StandardDisplayTypes;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 import nl.shanelab.multiblock.MultiBlockPattern;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.*;
 
 /**
  * A {@link TreePaneNode}, that displays the recipe for an item

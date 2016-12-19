@@ -1,10 +1,14 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,10 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class Generator implements MachineBase {
 
@@ -114,7 +114,7 @@ public class Generator implements MachineBase {
     public void loadData(FileConfiguration data, String path) {
         this.currentEU = data.getInt(path + ".EU");
         this.currentFuel = Fuel.valueOf(data.getString(path + ".Fuel"));
-        this.currentFuelItem = data.getItemStack(data +  ".Current-Fuel-Item");
+        this.currentFuelItem = data.getItemStack(data + ".Current-Fuel-Item");
         this.currentBurnTime = data.getInt(path + ".Current-Burn-Time");
         this.burning = currentBurnTime > 0;
     }

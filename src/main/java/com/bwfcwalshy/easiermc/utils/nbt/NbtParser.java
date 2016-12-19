@@ -1,11 +1,10 @@
 package com.bwfcwalshy.easiermc.utils.nbt;
 
-import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
-
 import java.lang.reflect.Method;
 import java.util.Optional;
-
 import org.bukkit.Bukkit;
+
+import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 
 /**
  * A wrapper for the MojangsonParser used for parsing NBT

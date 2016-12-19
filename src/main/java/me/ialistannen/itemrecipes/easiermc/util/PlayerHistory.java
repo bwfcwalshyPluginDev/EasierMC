@@ -1,12 +1,7 @@
 package me.ialistannen.itemrecipes.easiermc.util;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
+import java.util.*;
 
 /**
  * A History with nodes the player visited

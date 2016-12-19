@@ -1,14 +1,6 @@
 package com.bwfcwalshy.easiermc.recipe.nodes;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import org.bukkit.Material;
-
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
 import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
@@ -17,9 +9,14 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
-
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
+import org.bukkit.Material;
 
 /**
  * A {@link TreePaneNode}, that displays all items in a {@link Category}

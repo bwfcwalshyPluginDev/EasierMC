@@ -1,17 +1,11 @@
 package nl.shanelab.multiblock;
 
+import nl.shanelab.multiblock.validators.*;
 import org.bukkit.DyeColor;
 import org.bukkit.GrassSpecies;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 import org.bukkit.block.Block;
-
-import nl.shanelab.multiblock.validators.CauldronValidator;
-import nl.shanelab.multiblock.validators.DyeColorValidator;
-import nl.shanelab.multiblock.validators.GrassSpeciesValidator;
-import nl.shanelab.multiblock.validators.SlabValidator;
-import nl.shanelab.multiblock.validators.TreeSpeciesValidator;
-import nl.shanelab.multiblock.validators.WoodSlabValidator;
 
 public enum SpecificMaterial implements IMaterial {
 

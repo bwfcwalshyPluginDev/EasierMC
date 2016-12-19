@@ -4,6 +4,8 @@ import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
+import java.util.Arrays;
+import java.util.Collections;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,9 +14,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Batbox implements MachineBase {
 
@@ -70,7 +69,7 @@ public class Batbox implements MachineBase {
     }
 
     @Override
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         e.setCancelled(true);
         e.getPlayer().openInventory(getInventory());
     }
@@ -93,7 +92,7 @@ public class Batbox implements MachineBase {
     }
 
     private void updateInventory() {
-        if(inventory == null) inventory = getInventory();
+        if (inventory == null) inventory = getInventory();
         for (int i = 10; i < 17; i++) {
             inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: "
                     + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).setData(14).build());
@@ -107,12 +106,12 @@ public class Batbox implements MachineBase {
     }
 
     @Override
-    public void saveData(FileConfiguration data, String path){
+    public void saveData(FileConfiguration data, String path) {
         data.set(path + ".EU", currentEU);
     }
 
     @Override
-    public void loadData(FileConfiguration data, String path){
+    public void loadData(FileConfiguration data, String path) {
         this.currentEU = data.getInt(path + ".EU");
     }
 }

@@ -3,10 +3,7 @@ package nl.shanelab.multiblock;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
-import nl.shanelab.multiblock.patternobjects.PatternBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

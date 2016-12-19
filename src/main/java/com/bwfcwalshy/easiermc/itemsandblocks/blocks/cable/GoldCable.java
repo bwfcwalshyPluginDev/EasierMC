@@ -1,15 +1,13 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable;
 
-import java.util.Collections;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.Cable;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Collections;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class GoldCable implements Cable {
 

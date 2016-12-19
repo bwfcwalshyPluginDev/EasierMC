@@ -1,7 +1,6 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 
 /**
  * A base class for cables

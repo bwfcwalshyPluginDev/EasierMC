@@ -1,16 +1,14 @@
 package me.ialistannen.itemrecipes.easiermc.util;
 
+import com.perceivedev.perceivecore.util.ItemFactory;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import java.util.stream.IntStream;
+import javax.annotation.Nonnull;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
-
-import com.perceivedev.perceivecore.util.ItemFactory;
-
-import javax.annotation.Nonnull;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
 /**
  * Some utility functions

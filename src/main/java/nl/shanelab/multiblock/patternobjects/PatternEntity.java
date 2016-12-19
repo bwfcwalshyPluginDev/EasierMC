@@ -1,15 +1,12 @@
 package nl.shanelab.multiblock.patternobjects;
 
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
+import nl.shanelab.multiblock.PatternObject;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.util.Vector;
-
-import nl.shanelab.multiblock.PatternObject;
 
 /**
  * Entity pattern for the multiblock structure

@@ -1,9 +1,10 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
-import java.util.Arrays;
-
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,9 +13,6 @@ import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
-
-import com.bwfcwalshy.easiermc.Handler;
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 
 public class BlockBreaker implements BlockBase {
 

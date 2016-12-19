@@ -1,10 +1,9 @@
 package nl.shanelab.multiblock.validators;
 
+import nl.shanelab.multiblock.IMaterialValidator;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.material.Step;
-
-import nl.shanelab.multiblock.IMaterialValidator;
 
 public class SlabValidator implements IMaterialValidator {
 

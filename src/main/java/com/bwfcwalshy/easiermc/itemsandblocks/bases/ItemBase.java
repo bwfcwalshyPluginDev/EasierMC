@@ -1,8 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
-import org.bukkit.event.player.PlayerInteractEvent;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public interface ItemBase extends EasierMCBase {
 

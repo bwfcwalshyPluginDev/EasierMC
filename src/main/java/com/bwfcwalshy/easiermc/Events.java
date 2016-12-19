@@ -2,7 +2,11 @@ package com.bwfcwalshy.easiermc;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
-import org.bukkit.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -10,11 +14,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 public class Events implements Listener {
 

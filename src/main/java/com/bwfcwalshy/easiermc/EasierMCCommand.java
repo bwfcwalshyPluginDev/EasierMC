@@ -1,21 +1,5 @@
 package com.bwfcwalshy.easiermc;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
@@ -25,10 +9,19 @@ import com.bwfcwalshy.easiermc.utils.pathfinder.Node;
 import com.bwfcwalshy.easiermc.utils.pathfinder.PathSearcher;
 import com.perceivedev.perceivecore.gui.Gui;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
-import com.perceivedev.perceivecore.util.JSONMessage;
-import com.perceivedev.perceivecore.util.TextUtils;
-
+import com.perceivedev.perceivecore.util.text.JSONMessage;
+import com.perceivedev.perceivecore.util.text.TextUtils;
+import java.util.*;
+import java.util.stream.Collectors;
 import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class EasierMCCommand implements CommandExecutor {
 

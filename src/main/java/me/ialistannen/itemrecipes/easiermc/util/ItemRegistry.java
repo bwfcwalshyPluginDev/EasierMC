@@ -1,20 +1,17 @@
 package me.ialistannen.itemrecipes.easiermc.util;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
+import com.bwfcwalshy.easiermc.recipe.nodes.ItemRecipeNode;
+import com.perceivedev.perceivecore.gui.util.Dimension;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import org.bukkit.inventory.ItemStack;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.perceivedev.perceivecore.gui.util.Dimension;
-
-import com.bwfcwalshy.easiermc.recipe.nodes.ItemRecipeNode;
 
 /**
  * A Registry, that maps {@link ItemStack}s to {@link ItemRecipeNode}s

@@ -2,7 +2,6 @@ package com.bwfcwalshy.easiermc.tasks;
 
 import com.bwfcwalshy.easiermc.EasierMC;
 import com.bwfcwalshy.easiermc.Handler;
-
 import java.util.ArrayList;
 import java.util.List;
 

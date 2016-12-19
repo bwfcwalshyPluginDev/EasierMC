@@ -5,7 +5,6 @@ import java.lang.reflect.Modifier;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;

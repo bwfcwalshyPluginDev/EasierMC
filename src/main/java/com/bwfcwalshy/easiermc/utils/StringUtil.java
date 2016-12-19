@@ -29,17 +29,17 @@ public class StringUtil {
         return result;
     }
 
-    public static ChatColor getColorFromEnergy(int currentEU, int maxEU){
+    public static ChatColor getColorFromEnergy(int currentEU, int maxEU) {
         int quater = maxEU / 5;
-        if(currentEU <= quater){
+        if (currentEU <= quater) {
             return ChatColor.RED;
-        } else if(currentEU <= (quater*2)) {
+        } else if (currentEU <= (quater * 2)) {
             return ChatColor.GOLD;
-        } else if(currentEU <= (quater*3)) {
+        } else if (currentEU <= (quater * 3)) {
             return ChatColor.YELLOW;
-        } else if(currentEU <= (quater*4)) {
+        } else if (currentEU <= (quater * 4)) {
             return ChatColor.GREEN;
-        }else{
+        } else {
             return ChatColor.DARK_GREEN;
         }
     }

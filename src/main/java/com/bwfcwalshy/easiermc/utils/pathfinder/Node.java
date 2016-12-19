@@ -2,10 +2,8 @@ package com.bwfcwalshy.easiermc.utils.pathfinder;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-
-import org.bukkit.Location;
-
 import javax.annotation.Nonnull;
+import org.bukkit.Location;
 
 /**
  * A node in the found graph

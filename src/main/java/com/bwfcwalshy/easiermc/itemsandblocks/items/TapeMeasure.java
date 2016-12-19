@@ -1,10 +1,12 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.items;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,10 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 
 public class TapeMeasure implements ItemBase {
 

@@ -1,5 +1,14 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
 
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import java.util.Arrays;
+import java.util.Objects;
+import nl.shanelab.multiblock.MultiBlockActivation;
+import nl.shanelab.multiblock.MultiBlockActivationType;
+import nl.shanelab.multiblock.MultiBlockPattern;
+import nl.shanelab.multiblock.patternobjects.PatternBlock;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -7,21 +16,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-
-import nl.shanelab.multiblock.MultiBlockActivation;
-import nl.shanelab.multiblock.MultiBlockActivationType;
-import nl.shanelab.multiblock.MultiBlockPattern;
-import nl.shanelab.multiblock.patternobjects.PatternBlock;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 public class AdvancedCraftingTable implements MultiBlock {
 
@@ -83,7 +79,7 @@ public class AdvancedCraftingTable implements MultiBlock {
                 dropper.getInventory().clear();
                 dropper.getInventory().addItem(recipe.getResult());
                 int totalSum = Arrays.stream(dropper.getInventory().getContents()).filter(Objects::nonNull).mapToInt(ItemStack::getAmount).sum();
-                for(int i = 0; i < totalSum; i++)
+                for (int i = 0; i < totalSum; i++)
                     dropper.drop();
                 dropper.getInventory().setContents(contents);
 

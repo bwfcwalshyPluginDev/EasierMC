@@ -1,10 +1,5 @@
 package com.bwfcwalshy.easiermc.recipe.nodes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.inventory.ItemStack;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.perceivedev.perceivecore.gui.base.Pane;
 import com.perceivedev.perceivecore.gui.components.Button;
@@ -13,6 +8,9 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.perceivecore.util.TextUtils;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * The tree pane root node

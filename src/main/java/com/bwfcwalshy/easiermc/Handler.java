@@ -1,43 +1,28 @@
 package com.bwfcwalshy.easiermc;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Batbox;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.TrashBin;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.GlassFibreCable;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.GoldCable;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.IronCable;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
-import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.LongFallBoots;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.ReinforcedStick;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.Rubber;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.Scrap;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.TapeMeasure;
-import com.bwfcwalshy.easiermc.itemsandblocks.items.TreeTap;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Batbox;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.*;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.AdvancedCraftingTable;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-
+import java.util.*;
 import me.ialistannen.itemrecipes.easiermc.util.Util;
 import nl.shanelab.multiblock.MultiBlockFactory;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class Handler {
 
