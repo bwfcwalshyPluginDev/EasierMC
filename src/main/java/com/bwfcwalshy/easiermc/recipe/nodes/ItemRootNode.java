@@ -7,7 +7,7 @@ import com.perceivedev.perceivecore.gui.components.panes.PagedPane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
-import com.perceivedev.perceivecore.util.TextUtils;
+import com.perceivedev.perceivecore.util.text.TextUtils;
 
 import org.bukkit.inventory.ItemStack;
 

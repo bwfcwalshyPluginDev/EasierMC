@@ -70,6 +70,14 @@ public class Batbox implements MachineBase {
     }
 
     @Override
+    public Batbox copy() {
+        Batbox clone = new Batbox();
+        clone.inventory = cloneInventory(inventory);
+        clone.currentEU = currentEU;
+        return clone;
+    }
+
+    @Override
     public void onInteract(PlayerInteractEvent e) {
         e.setCancelled(true);
         e.getPlayer().openInventory(getInventory());

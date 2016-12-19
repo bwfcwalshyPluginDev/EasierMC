@@ -121,6 +121,11 @@ public class Generator implements MachineBase {
 
     @Override
     public void tick(Location location, int tick) {
+        System.out.println(getInventory().getItem(10));
+        if(getInventory().getItem(10) != null)
+            System.out.println(getInventory().getItem(10).getType());
+        System.out.println(currentEU + " - " + STORAGE + " (" + (currentEU < STORAGE) + ")");
+        System.out.println(currentFuel + " - " + (currentFuel == Fuel.NO_FUEL));
         if (getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE && currentFuel == Fuel.NO_FUEL) {
             for (ItemStack is : Fuel.getAllFuels()) {
                 if (handler.itemStackEquals(getInventory().getItem(10), is, false)) {
@@ -134,6 +139,7 @@ public class Generator implements MachineBase {
                     if (f != Fuel.NO_FUEL) {
                         currentFuel = f;
                         currentFuelItem = is;
+                        currentBurnTime = 0;
                         if (!burning)
                             burning = true;
                     }
@@ -146,19 +152,27 @@ public class Generator implements MachineBase {
 
         if (currentFuel == Fuel.NO_FUEL && currentEU == 0) return;
 
+        System.out.println("Burn time: " + currentBurnTime);
+
         if (currentBurnTime == BURN_TIME) {
+            System.out.println("Stopping");
             currentBurnTime = 0;
             burning = false;
             currentFuel = Fuel.NO_FUEL;
             currentFuelItem = null;
+
+            updateInventory();
+            return;
         }
 
-        if (currentEU < STORAGE) {
-            if ((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
-                currentEU = STORAGE;
-            else
-                currentEU += currentFuel.getEuValue() / BURN_TIME;
-            currentBurnTime++;
+        if(burning) {
+            if (currentEU < STORAGE) {
+                if ((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
+                    currentEU = STORAGE;
+                else
+                    currentEU += currentFuel.getEuValue() / BURN_TIME;
+                currentBurnTime++;
+            }
         }
 
         handleOutput(location);
