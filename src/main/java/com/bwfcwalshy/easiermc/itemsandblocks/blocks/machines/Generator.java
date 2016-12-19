@@ -1,4 +1,4 @@
-package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
+package com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,24 +77,54 @@ public class Generator implements MachineBase {
     }
 
     @Override
-    public int euCapacity() {
+    public int getEuCapacity() {
         return STORAGE;
     }
 
     @Override
-    public int euInputOutput() {
+    public int getEuOutput() {
         return 10;
+    }
+
+    @Override
+    public int getEuInput() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentEu() {
+        return this.currentEU;
+    }
+
+    @Override
+    public void setCurrentEu(int currentEU) {
+        this.currentEU = currentEU;
     }
 
     @Override
     public void saveData(FileConfiguration data, String path) {
         data.set(path + ".EU", currentEU);
         data.set(path + ".Fuel", currentFuel.toString());
+        data.set(path + ".Current-Fuel-Item", currentFuelItem);
+        data.set(path + ".Current-Burn-Time", currentBurnTime);
+    }
+
+    @Override
+    public void loadData(FileConfiguration data, String path) {
+        System.out.println("Loading generator data");
+        this.currentEU = data.getInt(path + ".EU");
+        System.out.println("Current EU: " + currentEU);
+        this.currentFuel = Fuel.valueOf(data.getString(path + ".Fuel"));
+        this.currentFuelItem = data.getItemStack(data +  ".Current-Fuel-Item");
+        this.currentBurnTime = data.getInt(path + ".Current-Burn-Time");
+        this.burning = currentBurnTime > 0;
+
+        System.out.println("Loaded Generator-" + instance);
     }
 
     @Override
     public void tick(Location location, int tick) {
-        if (getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE) {
+        if (getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE && currentFuel == Fuel.NO_FUEL) {
             for (ItemStack is : Fuel.getAllFuels()) {
                 if (handler.itemStackEquals(getInventory().getItem(10), is, false)) {
                     ItemStack fuel = getInventory().getItem(10);
@@ -134,9 +164,7 @@ public class Generator implements MachineBase {
             currentBurnTime++;
         }
 
-        System.out.println(currentBurnTime);
-        System.out.println(currentFuel.toString());
-        System.out.println(currentEU);
+        handleOutput(location);
 
         updateInventory();
     }
@@ -151,9 +179,11 @@ public class Generator implements MachineBase {
             inventory.setItem(10, currentFuelItem);
 
             for (int i = 12; i < 15; i++) {
-                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").setData(14).build());
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").build());
             }
 
+            System.out.println("Inv EU: " + currentEU);
+            System.out.println("Generator-" + instance);
             inventory.setItem(16, new ItemStackBuilder(Material.BLAZE_POWDER, ChatColor.AQUA + "Status",
                     Collections.singletonList(ChatColor.GRAY + "Storage: " + ChatColor.RED + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
         }

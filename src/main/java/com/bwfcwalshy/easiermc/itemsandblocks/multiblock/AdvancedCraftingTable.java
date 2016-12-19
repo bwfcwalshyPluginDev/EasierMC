@@ -92,14 +92,6 @@ public class AdvancedCraftingTable implements MultiBlock {
         }
     }
 
-    private boolean isEmpty(Inventory inv){
-        for(ItemStack is : inv.getContents()){
-            if(is != null && is.getType() != Material.AIR)
-                return false;
-        }
-        return true;
-    }
-
     @Override
     public MultiBlockPattern getMultiBlockPattern() {
         return new MultiBlockPattern(Material.WORKBENCH, new ItemStack(Material.WORKBENCH), new PatternBlock(Material.DROPPER, 0, -1, 0));

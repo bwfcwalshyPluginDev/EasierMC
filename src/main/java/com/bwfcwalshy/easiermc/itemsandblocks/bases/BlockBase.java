@@ -103,5 +103,10 @@ public interface BlockBase extends EasierMCBase {
     }
 
     default void saveData(FileConfiguration data, String path) {
+        return;
+    }
+
+    default void loadData(FileConfiguration data, String path) {
+        return;
     }
 }

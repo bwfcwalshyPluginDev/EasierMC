@@ -14,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.AutoShear;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Batbox;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Batbox;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockBreaker;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.TrashBin;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.WellMiner;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.GlassFibreCable;
@@ -68,8 +68,10 @@ public class Handler {
         return instance;
     }
 
-    public void addBlock(BlockBase block, Location loc) {
-        this.blocks.put(loc, block.copy());
+    public BlockBase addBlock(BlockBase block, Location loc) {
+        BlockBase base = block.copy();
+        this.blocks.put(loc, base);
+        return base;
     }
 
     public void removeBlock(Location location) {

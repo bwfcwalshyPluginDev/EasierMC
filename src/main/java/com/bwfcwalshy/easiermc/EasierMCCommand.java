@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
-import com.bwfcwalshy.easiermc.itemsandblocks.blocks.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
 import com.bwfcwalshy.easiermc.recipe.nodes.ItemRootNode;
 import com.bwfcwalshy.easiermc.utils.pathfinder.Node;
 import com.bwfcwalshy.easiermc.utils.pathfinder.PathSearcher;

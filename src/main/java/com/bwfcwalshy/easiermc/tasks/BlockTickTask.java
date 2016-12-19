@@ -26,12 +26,11 @@ public class BlockTickTask implements Runnable {
         if (tick == 20) tick = 1;
         long end = System.nanoTime();
         long time = end - start;
-//        System.out.println("Tick completed in " + ((end - start)/1000000) + " ms (" + (end - start) + ")");
-//        System.out.println("Total machines ticking: " + handler.getBlocks().keySet().size());
+
         if (latestReadings.size() < 100) latestReadings.add(time);
         else {
             latestReadings.add(time);
-            latestReadings.remove(100);
+            latestReadings.remove(latestReadings.get(0));
         }
     }
 

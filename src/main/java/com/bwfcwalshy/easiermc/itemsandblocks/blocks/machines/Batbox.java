@@ -1,4 +1,4 @@
-package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
+package com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 public class Batbox implements MachineBase {
+
+    private int currentEU = 0;
 
     @Override
     public String getName() {
@@ -32,12 +34,27 @@ public class Batbox implements MachineBase {
     }
 
     @Override
-    public int euCapacity() {
-        return 0;
+    public int getEuCapacity() {
+        return 40000;
     }
 
     @Override
-    public int euInputOutput() {
-        return 0;
+    public int getEuOutput() {
+        return 32;
+    }
+
+    @Override
+    public int getEuInput() {
+        return 32;
+    }
+
+    @Override
+    public int getCurrentEu() {
+        return currentEU;
+    }
+
+    @Override
+    public void setCurrentEu(int currentEU) {
+        this.currentEU = currentEU;
     }
 }
