@@ -4,8 +4,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
-import java.util.Arrays;
-import java.util.Collections;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,11 +14,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Batbox implements MachineBase {
 
-    private int currentEU = 0;
     private final int STORAGE = 40000;
-
+    private int currentEU = 0;
     private Inventory inventory;
 
     @Override

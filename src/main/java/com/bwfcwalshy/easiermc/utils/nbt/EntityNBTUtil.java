@@ -1,13 +1,14 @@
 package com.bwfcwalshy.easiermc.utils.nbt;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.OBC;

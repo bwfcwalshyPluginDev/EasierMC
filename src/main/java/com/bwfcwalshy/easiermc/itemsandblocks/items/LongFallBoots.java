@@ -4,12 +4,14 @@ import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 public class LongFallBoots implements ItemBase {
 

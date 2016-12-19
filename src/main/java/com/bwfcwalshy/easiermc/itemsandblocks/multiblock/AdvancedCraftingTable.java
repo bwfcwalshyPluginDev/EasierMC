@@ -1,14 +1,14 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.multiblock;
 
-import com.bwfcwalshy.easiermc.itemsandblocks.Category;
-import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
-import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-import java.util.Arrays;
-import java.util.Objects;
 import nl.shanelab.multiblock.MultiBlockActivation;
 import nl.shanelab.multiblock.MultiBlockActivationType;
 import nl.shanelab.multiblock.MultiBlockPattern;
 import nl.shanelab.multiblock.patternobjects.PatternBlock;
+
+import com.bwfcwalshy.easiermc.itemsandblocks.Category;
+import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
+import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -18,6 +18,9 @@ import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class AdvancedCraftingTable implements MultiBlock {
 

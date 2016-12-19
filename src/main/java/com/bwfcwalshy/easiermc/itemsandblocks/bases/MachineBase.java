@@ -1,13 +1,16 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
+import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 
 public interface MachineBase extends BlockBase {
+
+    Set<BlockFace> checkedFaces = EnumSet.of(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
     /**
      * The maximum EU a machine can hold
@@ -43,8 +46,6 @@ public interface MachineBase extends BlockBase {
      * @param currentEU The new current EU value of the machine.
      */
     void setCurrentEu(int currentEU);
-
-    Set<BlockFace> checkedFaces = EnumSet.of(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
     /**
      * This method is used to handle output of EU to other machines and cables around it.

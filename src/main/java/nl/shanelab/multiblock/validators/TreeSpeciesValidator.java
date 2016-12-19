@@ -1,6 +1,7 @@
 package nl.shanelab.multiblock.validators;
 
 import nl.shanelab.multiblock.IMaterialValidator;
+
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 import org.bukkit.block.Block;

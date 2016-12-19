@@ -1,7 +1,12 @@
 package com.bwfcwalshy.easiermc.utils;
 
-import java.util.*;
 import org.bukkit.ChatColor;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Queue;
 
 public class BetterLore {
 

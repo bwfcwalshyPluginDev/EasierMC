@@ -1,13 +1,19 @@
 package com.bwfcwalshy.easiermc.utils.pathfinder;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.Cable;
-import java.util.*;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 
 /**
  * A Path finder. It doesn't find the best path between two nodes, but it finds all end nodes connected with the start

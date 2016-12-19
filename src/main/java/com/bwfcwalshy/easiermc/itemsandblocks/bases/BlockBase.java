@@ -1,8 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
-import java.util.Random;
-import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +14,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public interface BlockBase extends EasierMCBase {
 

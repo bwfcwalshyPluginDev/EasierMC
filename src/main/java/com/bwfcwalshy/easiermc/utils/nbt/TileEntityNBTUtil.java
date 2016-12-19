@@ -1,13 +1,14 @@
 package com.bwfcwalshy.easiermc.utils.nbt;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Map;
-import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.OBC;
@@ -27,10 +28,9 @@ import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.OBC;
 @SuppressWarnings("unused")
 public class TileEntityNBTUtil {
 
+    private static final Class<?> CRAFT_BLOCK_STATE_CLASS;
     private static Method loadFromNBT, saveToNBT, getTileEntity;
     private static boolean error = false;
-
-    private static final Class<?> CRAFT_BLOCK_STATE_CLASS;
 
     static {
         CRAFT_BLOCK_STATE_CLASS = ReflectionUtil.getClass(OBC, "block.CraftBlockState").orElse(null);

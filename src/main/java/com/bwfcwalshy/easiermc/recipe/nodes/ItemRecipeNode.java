@@ -1,5 +1,10 @@
 package com.bwfcwalshy.easiermc.recipe.nodes;
 
+import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
+import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
+import me.ialistannen.itemrecipes.easiermc.util.Util;
+import nl.shanelab.multiblock.MultiBlockPattern;
+
 import com.bwfcwalshy.easiermc.Handler;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
@@ -17,19 +22,23 @@ import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
 import com.perceivedev.perceivecore.gui.components.simple.StandardDisplayTypes;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import me.ialistannen.itemrecipes.easiermc.util.ItemRegistry;
-import me.ialistannen.itemrecipes.easiermc.util.PlayerHistory;
-import me.ialistannen.itemrecipes.easiermc.util.Util;
-import nl.shanelab.multiblock.MultiBlockPattern;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.FurnaceRecipe;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MerchantRecipe;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A {@link TreePaneNode}, that displays the recipe for an item
@@ -122,6 +131,75 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
         clone.size = size;
 
         return clone;
+    }
+
+    private ItemStack getCraftingItem() {
+        if (recipe instanceof ShapedRecipe || recipe instanceof ShapelessRecipe)
+            return new ItemStack(Material.WORKBENCH);
+        else if (recipe instanceof FurnaceRecipe)
+            return new ItemStack(Material.FURNACE);
+        else if (recipe instanceof AdvancedRecipe)
+            return Handler.getInstance().getMuiltiBlock("AdvancedCraftingTable").getItem();
+        else if (base instanceof MultiBlock) {
+            return new ItemStack(Material.ARROW);
+        } else
+            return null;
+    }
+
+    /**
+     * A button displaying a recipe
+     */
+    public static class RecipeButton extends Button {
+
+        private TreePane treePane;
+
+        /**
+         * Constructs a button
+         *
+         * @param itemStack The ItemStack to display
+         * @param size      The size of the button
+         * @param pane      The pane this button is in
+         * @throws NullPointerException if any parameter is null
+         */
+        public RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
+            super(itemStack, size);
+
+            this.treePane = pane;
+
+            setAction(clickEvent -> {
+                ItemRecipeNode node = ItemRegistry.INSTANCE.getNode(itemStack);
+                if (node != null && node.recipe instanceof MerchantRecipe) {
+                    Bukkit.getLogger().severe("The recipe type '" + node.recipe.getClass().getSimpleName() + "' is not supported!");
+                    return;
+                }
+
+                if (node == null) {
+                    return;
+                }
+
+                // You try to select the currently selected node. This would set the parent of the node to itself
+                // ==> You are trapped in the node and can't go back
+                if (pane.getSelected().isPresent() && pane.getSelected().get().equals(node)) {
+                    return;
+                }
+
+                ItemRecipeNode clone = node.clone();
+                clone.setOwner(treePane);
+
+                treePane.getSelected()
+                        .ifPresent(treePaneNode -> PlayerHistory.INSTANCE.addToPlayerHistory(clickEvent.getPlayer().getUniqueId(), treePaneNode));
+
+                treePane.select(clone);
+            });
+        }
+
+        @Override
+        public RecipeButton deepClone() {
+            RecipeButton clone = (RecipeButton) super.deepClone();
+            clone.treePane = treePane;
+
+            return clone;
+        }
     }
 
     private class RecipePane extends AnchorPane {
@@ -241,7 +319,7 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
             addComponent(belowCraftingItem, 5, 3);
 
             if (items.isEmpty() && pattern != null) {
-                // This is for the multi block pane                
+                // This is for the multi block pane
                 MultiBlockPane multiBlockPane = new MultiBlockPane(pattern, getOwner().orElse(null));
                 addComponent(multiBlockPane, 0, 0);
             } else {
@@ -318,75 +396,6 @@ public class ItemRecipeNode extends TreePaneNode implements Cloneable {
                 clone.items.add(new ArrayList<>(item));
             }
             clone.pattern = pattern;
-            return clone;
-        }
-    }
-
-    private ItemStack getCraftingItem() {
-        if (recipe instanceof ShapedRecipe || recipe instanceof ShapelessRecipe)
-            return new ItemStack(Material.WORKBENCH);
-        else if (recipe instanceof FurnaceRecipe)
-            return new ItemStack(Material.FURNACE);
-        else if (recipe instanceof AdvancedRecipe)
-            return Handler.getInstance().getMuiltiBlock("AdvancedCraftingTable").getItem();
-        else if (base instanceof MultiBlock) {
-            return new ItemStack(Material.ARROW);
-        } else
-            return null;
-    }
-
-    /**
-     * A button displaying a recipe
-     */
-    public static class RecipeButton extends Button {
-
-        private TreePane treePane;
-
-        /**
-         * Constructs a button
-         *
-         * @param itemStack The ItemStack to display
-         * @param size      The size of the button
-         * @param pane      The pane this button is in
-         * @throws NullPointerException if any parameter is null
-         */
-        public RecipeButton(ItemStack itemStack, Dimension size, TreePane pane) {
-            super(itemStack, size);
-
-            this.treePane = pane;
-
-            setAction(clickEvent -> {
-                ItemRecipeNode node = ItemRegistry.INSTANCE.getNode(itemStack);
-                if (node != null && node.recipe instanceof MerchantRecipe) {
-                    Bukkit.getLogger().severe("The recipe type '" + node.recipe.getClass().getSimpleName() + "' is not supported!");
-                    return;
-                }
-
-                if (node == null) {
-                    return;
-                }
-
-                // You try to select the currently selected node. This would set the parent of the node to itself
-                // ==> You are trapped in the node and can't go back
-                if (pane.getSelected().isPresent() && pane.getSelected().get().equals(node)) {
-                    return;
-                }
-
-                ItemRecipeNode clone = node.clone();
-                clone.setOwner(treePane);
-
-                treePane.getSelected()
-                        .ifPresent(treePaneNode -> PlayerHistory.INSTANCE.addToPlayerHistory(clickEvent.getPlayer().getUniqueId(), treePaneNode));
-
-                treePane.select(clone);
-            });
-        }
-
-        @Override
-        public RecipeButton deepClone() {
-            RecipeButton clone = (RecipeButton) super.deepClone();
-            clone.treePane = treePane;
-
             return clone;
         }
     }

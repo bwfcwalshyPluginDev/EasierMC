@@ -3,13 +3,15 @@ package com.bwfcwalshy.easiermc.itemsandblocks.items;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
-import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
+
+import java.util.Arrays;
 
 public class ReinforcedStick implements ItemBase {
 

@@ -1,11 +1,13 @@
 package com.bwfcwalshy.easiermc.itemsandblocks;
 
 import com.bwfcwalshy.easiermc.Handler;
-import java.util.Arrays;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 public enum Category {
 
@@ -16,12 +18,10 @@ public enum Category {
     WEAPONS(new ItemStack(Material.IRON_SWORD), ChatColor.WHITE + "Weapons"),
     MISC(getHandler().getItem("MasterStar"), ChatColor.AQUA + "Miscellaneous");
 
+    public static final Category[] values = values();
     private static Handler handler;
-
     private ItemStack displayItem;
     private String categoryName;
-
-    public static final Category[] values = values();
 
     Category(EasierMCBase displayItem, String name) {
         this.displayItem = displayItem.getItem();
@@ -42,6 +42,18 @@ public enum Category {
         return values;
     }
 
+    public static Category getCategory(ItemStack currentItem) {
+        for (Category c : values)
+            if (c.getDisplayItem().equals(currentItem)) return c;
+        return null;
+    }
+
+    public static boolean isCategory(String name) {
+        for (Category c : values)
+            if (c.getCategoryName().equals(name)) return true;
+        return false;
+    }
+
     public ItemStack getDisplayItem() {
         ItemMeta im = displayItem.getItemMeta();
         im.setDisplayName(categoryName);
@@ -59,17 +71,5 @@ public enum Category {
 
     public String getCategoryName() {
         return this.categoryName;
-    }
-
-    public static Category getCategory(ItemStack currentItem) {
-        for (Category c : values)
-            if (c.getDisplayItem().equals(currentItem)) return c;
-        return null;
-    }
-
-    public static boolean isCategory(String name) {
-        for (Category c : values)
-            if (c.getCategoryName().equals(name)) return true;
-        return false;
     }
 }

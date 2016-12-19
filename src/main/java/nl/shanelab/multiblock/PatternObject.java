@@ -1,8 +1,9 @@
 package nl.shanelab.multiblock;
 
-import javax.annotation.Nonnull;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+
+import javax.annotation.Nonnull;
 
 /**
  * Pattern for the multiblock structure

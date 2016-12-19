@@ -1,8 +1,9 @@
 package com.bwfcwalshy.easiermc.utils.nbt;
 
+import org.bukkit.Bukkit;
+
 import java.lang.reflect.Method;
 import java.util.Optional;
-import org.bukkit.Bukkit;
 
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 

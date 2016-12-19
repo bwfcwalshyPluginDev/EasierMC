@@ -8,9 +8,11 @@ import com.perceivedev.perceivecore.gui.components.panes.tree.TreePaneNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.perceivecore.util.TextUtils;
+
+import org.bukkit.inventory.ItemStack;
+
 import java.util.List;
 import java.util.stream.Collectors;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * The tree pane root node

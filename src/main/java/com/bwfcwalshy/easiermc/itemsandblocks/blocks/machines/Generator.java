@@ -5,10 +5,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,14 +16,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-public class Generator implements MachineBase {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    private Inventory inventory;
+public class Generator implements MachineBase {
 
     private final int STORAGE = 4000;
     // How long the fuel will burn for
     private final int BURN_TIME = 100;
-
+    private Inventory inventory;
     private int currentEU = 0;
     private int currentBurnTime = 0;
     private ItemStack currentFuelItem = null;
@@ -222,14 +222,6 @@ public class Generator implements MachineBase {
             this.fuels = items;
         }
 
-        public ItemStack[] getFuels() {
-            return this.fuels;
-        }
-
-        public int getEuValue() {
-            return this.euValue;
-        }
-
         public static List<ItemStack> getAllFuels() {
             if (allFuels == null)
                 allFuels = Arrays.stream(values()).flatMap(fuel -> Arrays.stream(fuel.getFuels())).collect(Collectors.toList());
@@ -245,6 +237,14 @@ public class Generator implements MachineBase {
                 }
             }
             return Fuel.NO_FUEL;
+        }
+
+        public ItemStack[] getFuels() {
+            return this.fuels;
+        }
+
+        public int getEuValue() {
+            return this.euValue;
         }
     }
 }

@@ -5,13 +5,15 @@ import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.bwfcwalshy.easiermc.recipe.nodes.ItemRecipeNode;
 import com.perceivedev.perceivecore.gui.util.Dimension;
+
+import org.bukkit.inventory.ItemStack;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * A Registry, that maps {@link ItemStack}s to {@link ItemRecipeNode}s

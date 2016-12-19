@@ -1,6 +1,12 @@
 package nl.shanelab.multiblock;
 
-import nl.shanelab.multiblock.validators.*;
+import nl.shanelab.multiblock.validators.CauldronValidator;
+import nl.shanelab.multiblock.validators.DyeColorValidator;
+import nl.shanelab.multiblock.validators.GrassSpeciesValidator;
+import nl.shanelab.multiblock.validators.SlabValidator;
+import nl.shanelab.multiblock.validators.TreeSpeciesValidator;
+import nl.shanelab.multiblock.validators.WoodSlabValidator;
+
 import org.bukkit.DyeColor;
 import org.bukkit.GrassSpecies;
 import org.bukkit.Material;

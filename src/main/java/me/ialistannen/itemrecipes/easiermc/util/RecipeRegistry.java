@@ -6,15 +6,21 @@ import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.multiblock.MultiBlock;
 import com.perceivedev.perceivecore.gui.util.Dimension;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A registry for Recipes
@@ -61,45 +67,6 @@ public enum RecipeRegistry {
         return mcBases;
     }
 
-    private static class EasierMcNormalItemBridge implements EasierMCBase {
-
-        private Recipe recipe;
-
-        private EasierMcNormalItemBridge(Recipe recipe) {
-            this.recipe = recipe;
-        }
-
-        @Override
-        public Recipe getRecipe() {
-            return recipe;
-        }
-
-        @Override
-        public String getName() {
-            return "normal item";
-        }
-
-        @Override
-        public String getSimpleName() {
-            return "normal item";
-        }
-
-        @Override
-        public Category getCategory() {
-            return null;
-        }
-
-        @Override
-        public ItemStack getItem() {
-            return getRecipe().getResult();
-        }
-
-        @Override
-        public EasierMCBase copy() {
-            return new EasierMcNormalItemBridge(getRecipe());
-        }
-    }
-
     /**
      * Loads the recipes
      */
@@ -137,5 +104,44 @@ public enum RecipeRegistry {
                 ItemRegistry.INSTANCE.build(new Dimension(9, 6));
             }
         }.runTaskAsynchronously(EasierMC.getPlugin(EasierMC.class));
+    }
+
+    private static class EasierMcNormalItemBridge implements EasierMCBase {
+
+        private Recipe recipe;
+
+        private EasierMcNormalItemBridge(Recipe recipe) {
+            this.recipe = recipe;
+        }
+
+        @Override
+        public Recipe getRecipe() {
+            return recipe;
+        }
+
+        @Override
+        public String getName() {
+            return "normal item";
+        }
+
+        @Override
+        public String getSimpleName() {
+            return "normal item";
+        }
+
+        @Override
+        public Category getCategory() {
+            return null;
+        }
+
+        @Override
+        public ItemStack getItem() {
+            return getRecipe().getResult();
+        }
+
+        @Override
+        public EasierMCBase copy() {
+            return new EasierMcNormalItemBridge(getRecipe());
+        }
     }
 }

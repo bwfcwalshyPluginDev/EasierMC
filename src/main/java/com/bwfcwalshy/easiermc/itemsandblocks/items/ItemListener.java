@@ -3,6 +3,7 @@ package com.bwfcwalshy.easiermc.itemsandblocks.items;
 import com.bwfcwalshy.easiermc.Handler;
 import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.ItemBase;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

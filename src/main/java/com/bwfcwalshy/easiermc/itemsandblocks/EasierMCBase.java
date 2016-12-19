@@ -1,6 +1,7 @@
 package com.bwfcwalshy.easiermc.itemsandblocks;
 
 import com.bwfcwalshy.easiermc.Handler;
+
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 

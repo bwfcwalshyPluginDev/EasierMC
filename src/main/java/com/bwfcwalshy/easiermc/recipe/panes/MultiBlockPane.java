@@ -1,5 +1,9 @@
 package com.bwfcwalshy.easiermc.recipe.panes;
 
+import nl.shanelab.multiblock.MultiBlockPattern;
+import nl.shanelab.multiblock.PatternObject;
+import nl.shanelab.multiblock.patternobjects.PatternBlock;
+
 import com.bwfcwalshy.easiermc.recipe.nodes.ItemRecipeNode;
 import com.perceivedev.perceivecore.gui.base.Component;
 import com.perceivedev.perceivecore.gui.components.Button;
@@ -8,13 +12,12 @@ import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
 import com.perceivedev.perceivecore.gui.components.panes.tree.TreePane;
 import com.perceivedev.perceivecore.gui.util.Dimension;
 import com.perceivedev.perceivecore.util.ItemFactory;
-import java.util.ArrayList;
-import nl.shanelab.multiblock.MultiBlockPattern;
-import nl.shanelab.multiblock.PatternObject;
-import nl.shanelab.multiblock.patternobjects.PatternBlock;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
+import java.util.ArrayList;
 
 public class MultiBlockPane extends AnchorPane {
 

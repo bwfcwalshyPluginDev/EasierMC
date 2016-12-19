@@ -1,13 +1,24 @@
 package com.bwfcwalshy.easiermc.utils.nbt;
 
-import java.lang.reflect.*;
-import java.util.*;
+import org.bukkit.Bukkit;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Executable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import org.bukkit.Bukkit;
 
 /**
  * Provides utility methods for reflection
@@ -674,6 +685,22 @@ public class ReflectionUtil {
         }
 
         /**
+         * Returns the {@link NameSpace} which contains the identifier
+         *
+         * @param input The input string, containing the identifier (and what
+         *              else it wants)
+         * @return The NameSpace which has this identifier
+         */
+        public static Optional<NameSpace> getFromIdentifier(String input) {
+            for (NameSpace nameSpace : values()) {
+                if (nameSpace.matchesPattern(input)) {
+                    return Optional.of(nameSpace);
+                }
+            }
+            return Optional.empty();
+        }
+
+        /**
          * Checks if the input is this pattern
          *
          * @param input The input to check
@@ -709,26 +736,56 @@ public class ReflectionUtil {
         public String resolve(String className) {
             return resolverFunction.apply(removePattern(className));
         }
-
-        /**
-         * Returns the {@link NameSpace} which contains the identifier
-         *
-         * @param input The input string, containing the identifier (and what
-         *              else it wants)
-         * @return The NameSpace which has this identifier
-         */
-        public static Optional<NameSpace> getFromIdentifier(String input) {
-            for (NameSpace nameSpace : values()) {
-                if (nameSpace.matchesPattern(input)) {
-                    return Optional.of(nameSpace);
-                }
-            }
-            return Optional.empty();
-        }
     }
     // </editor-fold>
 
     // <editor-fold desc="ReflectResponse">
+
+    /**
+     * The possible modifiers
+     */
+    public enum Modifier {
+        PUBLIC(1),
+        PRIVATE(2),
+        PROTECTED(4),
+        STATIC(8),
+        FINAL(16),
+        SYNCHRONIZED(32),
+        VOLATILE(64),
+        TRANSIENT(128),
+        NATIVE(256),
+        INTERFACE(512),
+        ABSTRACT(1024),
+        STRICT(2048);
+
+        private int bitMask;
+
+        /**
+         * @param bitMask The bitmask of the modifier
+         */
+        Modifier(int bitMask) {
+            this.bitMask = bitMask;
+        }
+
+        /**
+         * Checks if the this modifier is set
+         *
+         * @param modifiers The modifiers
+         * @return True if the method has this modifier
+         */
+        public boolean isSet(int modifiers) {
+            return (modifiers & bitMask) != 0;
+        }
+
+        @Override
+        public String toString() {
+            return "Modifier{" + "bitMask=" + bitMask + '}';
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Predicates">
+    // <editor-fold desc="Member Predicate">
 
     /**
      * The response to a reflective Operation.
@@ -856,8 +913,7 @@ public class ReflectionUtil {
     }
     // </editor-fold>
 
-    // <editor-fold desc="Predicates">
-    // <editor-fold desc="Member Predicate">
+    // <editor-fold desc="Field Predicate">
 
     /**
      * A member predicate
@@ -966,7 +1022,7 @@ public class ReflectionUtil {
     }
     // </editor-fold>
 
-    // <editor-fold desc="Field Predicate">
+    // <editor-fold desc="ExecutablePredicate">
 
     /**
      * A predicate for {@link Field}s
@@ -1049,7 +1105,7 @@ public class ReflectionUtil {
     }
     // </editor-fold>
 
-    // <editor-fold desc="ExecutablePredicate">
+    // <editor-fold desc="Method Predicate">
 
     /**
      * A {@link Predicate} for an {@link Executable}
@@ -1135,8 +1191,9 @@ public class ReflectionUtil {
         }
     }
     // </editor-fold>
+    // </editor-fold>
 
-    // <editor-fold desc="Method Predicate">
+    // <editor-fold desc="Modifier">
 
     /**
      * A Predicate for a method
@@ -1217,52 +1274,6 @@ public class ReflectionUtil {
             }
             Method method = (Method) member;
             return returnType == null || returnType.equals(method.getReturnType());
-        }
-    }
-    // </editor-fold>
-    // </editor-fold>
-
-    // <editor-fold desc="Modifier">
-
-    /**
-     * The possible modifiers
-     */
-    public enum Modifier {
-        PUBLIC(1),
-        PRIVATE(2),
-        PROTECTED(4),
-        STATIC(8),
-        FINAL(16),
-        SYNCHRONIZED(32),
-        VOLATILE(64),
-        TRANSIENT(128),
-        NATIVE(256),
-        INTERFACE(512),
-        ABSTRACT(1024),
-        STRICT(2048);
-
-        private int bitMask;
-
-        /**
-         * @param bitMask The bitmask of the modifier
-         */
-        Modifier(int bitMask) {
-            this.bitMask = bitMask;
-        }
-
-        /**
-         * Checks if the this modifier is set
-         *
-         * @param modifiers The modifiers
-         * @return True if the method has this modifier
-         */
-        public boolean isSet(int modifiers) {
-            return (modifiers & bitMask) != 0;
-        }
-
-        @Override
-        public String toString() {
-            return "Modifier{" + "bitMask=" + bitMask + '}';
         }
     }
     // </editor-fold>

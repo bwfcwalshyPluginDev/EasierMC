@@ -1,11 +1,13 @@
 package com.bwfcwalshy.easiermc;
 
+import me.ialistannen.itemrecipes.easiermc.util.RecipeRegistry;
+
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.BlockListener;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ItemListener;
 import com.bwfcwalshy.easiermc.tasks.BlockTickTask;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
-import me.ialistannen.itemrecipes.easiermc.util.RecipeRegistry;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;

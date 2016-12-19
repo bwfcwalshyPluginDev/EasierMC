@@ -3,7 +3,17 @@ package com.bwfcwalshy.easiermc.utils.nbt;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 
@@ -15,13 +25,44 @@ import static com.bwfcwalshy.easiermc.utils.nbt.ReflectionUtil.NameSpace.NMS;
 public class NBTWrappers {
 
     /**
+     * Returns the method also existing in the Superclass
+     *
+     * @param clazz       The Class to invoke it on
+     * @param returnClass The Return class it should have
+     * @return The found Method
+     */
+    private static Method findNBTNumberGetMethod(Class<?> clazz, Class<?> returnClass) {
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (!method.getReturnType().equals(returnClass)) {
+                continue;
+            }
+            if (!Modifier.isPublic(method.getModifiers())) {
+                continue;
+            }
+            if (Modifier.isStatic(method.getModifiers())) {
+                continue;
+            }
+            if (method.getName().equals("hashCode") || method.getName().equals("getTypeId")) {
+                continue;
+            }
+
+            try {
+                // noinspection ConfusingArgumentToVarargsMethod // The array is
+                // desired. If it is in the Superclass too, it is out method
+                clazz.getSuperclass().getMethod(method.getName(), method.getParameterTypes());
+                return method;
+            } catch (NoSuchMethodException ignored) {
+            }
+        }
+        return null;
+    }
+
+    /**
      * A base class for the essential methods
      */
     public static abstract class INBTBase {
         public INBTBase() {
         }
-
-        abstract Object toNBT();
 
         /**
          * @param nbtObject The NBT object
@@ -66,6 +107,8 @@ public class NBTWrappers {
             }
             return null;
         }
+
+        abstract Object toNBT();
     }
 
     /**
@@ -86,11 +129,13 @@ public class NBTWrappers {
             this.string = string;
         }
 
-        /**
-         * @param string The new value
-         */
-        public void setString(String string) {
-            this.string = string;
+        public static INBTBase fromNBT(Object nbtObject) {
+            ReflectionUtil.ReflectResponse<Object> data = ReflectionUtil.getFieldValue("data", nbtObject.getClass(), nbtObject);
+            if (!data.isValuePresent()) {
+                System.err.println("An error occurred. Field not found in fromNBT String");
+                return null;
+            }
+            return new NBTTagString((String) data.getValue());
         }
 
         /**
@@ -100,18 +145,16 @@ public class NBTWrappers {
             return string;
         }
 
+        /**
+         * @param string The new value
+         */
+        public void setString(String string) {
+            this.string = string;
+        }
+
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_STRING_CONSTRUCTOR, getString()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            ReflectionUtil.ReflectResponse<Object> data = ReflectionUtil.getFieldValue("data", nbtObject.getClass(), nbtObject);
-            if (!data.isValuePresent()) {
-                System.err.println("An error occurred. Field not found in fromNBT String");
-                return null;
-            }
-            return new NBTTagString((String) data.getValue());
         }
 
         @Override
@@ -149,6 +192,39 @@ public class NBTWrappers {
                 .getValue();
 
         private Map<String, INBTBase> map = new HashMap<>();
+
+        public static INBTBase fromNBT(Object nbtObject) {
+            Collection<String> keys = new HashSet<>();
+            for (Method method : nbtObject.getClass().getMethods()) {
+                if (Modifier.isPublic(method.getModifiers()) && Set.class.isAssignableFrom(method.getReturnType())) {
+                    @SuppressWarnings("unchecked")
+                    Collection<String> collection = (Collection<String>) ReflectionUtil.invokeMethod(method, nbtObject).getValue();
+                    if (collection != null) {
+                        keys.addAll(collection);
+                    }
+                }
+            }
+            NBTTagCompound compound = new NBTTagCompound();
+
+            ReflectionUtil.ReflectResponse<Method> getMethod = ReflectionUtil.getMethod(nbtObject.getClass(), new ReflectionUtil.MethodPredicate()
+                    .withName("get")
+                    .withParameters(String.class));
+
+            if (!getMethod.isSuccessful()) {
+                System.out.println("Didn't find get method in NBTTagCompound class fromNBT");
+                return null;
+            }
+
+            for (String key : keys) {
+                Object value = ReflectionUtil.invokeMethod(getMethod.getValue(), nbtObject, key).getValue();
+                INBTBase base = INBTBase.fromNBT(value);
+                if (base != null) {
+                    compound.set(key, base);
+                }
+            }
+
+            return compound;
+        }
 
         public void set(String key, INBTBase value) {
             map.put(key, value);
@@ -359,39 +435,6 @@ public class NBTWrappers {
             return compound;
         }
 
-        public static INBTBase fromNBT(Object nbtObject) {
-            Collection<String> keys = new HashSet<>();
-            for (Method method : nbtObject.getClass().getMethods()) {
-                if (Modifier.isPublic(method.getModifiers()) && Set.class.isAssignableFrom(method.getReturnType())) {
-                    @SuppressWarnings("unchecked")
-                    Collection<String> collection = (Collection<String>) ReflectionUtil.invokeMethod(method, nbtObject).getValue();
-                    if (collection != null) {
-                        keys.addAll(collection);
-                    }
-                }
-            }
-            NBTTagCompound compound = new NBTTagCompound();
-
-            ReflectionUtil.ReflectResponse<Method> getMethod = ReflectionUtil.getMethod(nbtObject.getClass(), new ReflectionUtil.MethodPredicate()
-                    .withName("get")
-                    .withParameters(String.class));
-
-            if (!getMethod.isSuccessful()) {
-                System.out.println("Didn't find get method in NBTTagCompound class fromNBT");
-                return null;
-            }
-
-            for (String key : keys) {
-                Object value = ReflectionUtil.invokeMethod(getMethod.getValue(), nbtObject, key).getValue();
-                INBTBase base = INBTBase.fromNBT(value);
-                if (base != null) {
-                    compound.set(key, base);
-                }
-            }
-
-            return compound;
-        }
-
         @Override
         public String toString() {
             return "NBTTagCompound{" +
@@ -427,6 +470,24 @@ public class NBTWrappers {
                 .getValue();
 
         private List<INBTBase> list = new ArrayList<>();
+
+        public static INBTBase fromNBT(Object nbtObject) {
+            NBTTagList list = new NBTTagList();
+            ReflectionUtil.ReflectResponse<Object> listResponse = ReflectionUtil.getFieldValue("list", nbtObject.getClass(), nbtObject);
+
+            if (!listResponse.isValuePresent()) {
+                System.out.println("An error occurred reading an NBTTagList from nbt. Response: " + listResponse);
+            }
+
+            List<?> savedList = (List<?>) listResponse.getValue();
+            if (savedList == null) {
+                return list;
+            }
+            for (Object entry : savedList) {
+                list.add(INBTBase.fromNBT(entry));
+            }
+            return list;
+        }
 
         /**
          * Adds the {@link INBTBase}, if the type of the list is correct or the
@@ -512,24 +573,6 @@ public class NBTWrappers {
                         nbtList, inbtBase.toNBT());
             }
             return nbtList;
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            NBTTagList list = new NBTTagList();
-            ReflectionUtil.ReflectResponse<Object> listResponse = ReflectionUtil.getFieldValue("list", nbtObject.getClass(), nbtObject);
-
-            if (!listResponse.isValuePresent()) {
-                System.out.println("An error occurred reading an NBTTagList from nbt. Response: " + listResponse);
-            }
-
-            List<?> savedList = (List<?>) listResponse.getValue();
-            if (savedList == null) {
-                return list;
-            }
-            for (Object entry : savedList) {
-                list.add(INBTBase.fromNBT(entry));
-            }
-            return list;
         }
 
         @Override
@@ -627,6 +670,23 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagDouble");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagDouble class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), double.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagDouble! The value was null. Response object: "
+                        + response);
+            }
+
+            Double value = (Double) response.getValue();
+            return value == null ? new NBTTagDouble(-1) : new NBTTagDouble(value);
+        }
+
         /**
          * @param value The new value
          */
@@ -646,23 +706,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_DOUBLE_CONSTRUCTOR, getAsDouble()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagDouble");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagDouble class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), double.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagDouble! The value was null. Response object: "
-                        + response);
-            }
-
-            Double value = (Double) response.getValue();
-            return value == null ? new NBTTagDouble(-1) : new NBTTagDouble(value);
         }
 
         @Override
@@ -708,6 +751,24 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagInt");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagInt class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), int.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagInt! The value was null. Response object: "
+                        + response);
+            }
+
+            Integer value = (Integer) response.getValue();
+
+            return new NBTTagInt(value == null ? 0 : value);
+        }
+
         /**
          * @param value The new value
          */
@@ -732,24 +793,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_INT_CONSTRUCTOR, getAsInt()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagInt");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagInt class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), int.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagInt! The value was null. Response object: "
-                        + response);
-            }
-
-            Integer value = (Integer) response.getValue();
-
-            return new NBTTagInt(value == null ? 0 : value);
         }
 
         @Override
@@ -798,18 +841,6 @@ public class NBTWrappers {
             this.value = value;
         }
 
-        /**
-         * @return The saved integer array
-         */
-        public int[] getValue() {
-            return value;
-        }
-
-        @Override
-        public Object toNBT() {
-            return ReflectionUtil.instantiate(NBT_TAG_INT_ARRAY_CONSTRUCTOR, (Object) getValue()).getValue();
-        }
-
         public static INBTBase fromNBT(Object nbtObject) {
             ReflectionUtil.ReflectResponse<Method> methodResponse = ReflectionUtil.getMethod(nbtObject.getClass(),
                     new ReflectionUtil.MethodPredicate().withReturnType(int[].class));
@@ -825,6 +856,18 @@ public class NBTWrappers {
             }
 
             return new NBTTagIntArray((int[]) dataResponse.getValue());
+        }
+
+        /**
+         * @return The saved integer array
+         */
+        public int[] getValue() {
+            return value;
+        }
+
+        @Override
+        public Object toNBT() {
+            return ReflectionUtil.instantiate(NBT_TAG_INT_ARRAY_CONSTRUCTOR, (Object) getValue()).getValue();
         }
 
         @Override
@@ -870,6 +913,22 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagByte");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagByte class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), byte.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagByte! The value was null. Response object: "
+                        + response);
+            }
+            Byte value = (Byte) response.getValue();
+            return new NBTTagByte(value == null ? 0 : value);
+        }
+
         /**
          * @param value The new value
          */
@@ -889,22 +948,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_BYTE_CONSTRUCTOR, getAsByte()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagByte");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagByte class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), byte.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagByte! The value was null. Response object: "
-                        + response);
-            }
-            Byte value = (Byte) response.getValue();
-            return new NBTTagByte(value == null ? 0 : value);
         }
 
         @Override
@@ -953,18 +996,6 @@ public class NBTWrappers {
             this.value = value;
         }
 
-        /**
-         * @return The saved bytes
-         */
-        public byte[] getValue() {
-            return value;
-        }
-
-        @Override
-        public Object toNBT() {
-            return ReflectionUtil.instantiate(NBT_TAG_BYTE_ARRAY_CONSTRUCTOR, (Object) getValue()).getValue();
-        }
-
         public static INBTBase fromNBT(Object nbtObject) {
             ReflectionUtil.ReflectResponse<Method> methodResponse = ReflectionUtil.getMethod(nbtObject.getClass(),
                     new ReflectionUtil.MethodPredicate().withReturnType(byte[].class));
@@ -980,6 +1011,18 @@ public class NBTWrappers {
             }
 
             return new NBTTagByteArray((byte[]) dataResponse.getValue());
+        }
+
+        /**
+         * @return The saved bytes
+         */
+        public byte[] getValue() {
+            return value;
+        }
+
+        @Override
+        public Object toNBT() {
+            return ReflectionUtil.instantiate(NBT_TAG_BYTE_ARRAY_CONSTRUCTOR, (Object) getValue()).getValue();
         }
 
         @Override
@@ -1025,6 +1068,22 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagShort");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagShort class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), short.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagShort! The value was null. Response object: "
+                        + response);
+            }
+            Short value = (Short) response.getValue();
+            return new NBTTagShort(value == null ? 0 : value);
+        }
+
         /**
          * @param value The new value
          */
@@ -1044,22 +1103,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_SHORT_CONSTRUCTOR, getAsShort()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagShort");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagShort class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), short.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagShort! The value was null. Response object: "
-                        + response);
-            }
-            Short value = (Short) response.getValue();
-            return new NBTTagShort(value == null ? 0 : value);
         }
 
         @Override
@@ -1105,6 +1148,23 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagLong");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagLong class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), long.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagLong! The value was null. Response object: "
+                        + response);
+            }
+
+            Long value = (Long) response.getValue();
+            return new NBTTagLong(value == null ? 0 : value);
+        }
+
         /**
          * @param value The new value
          */
@@ -1129,23 +1189,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_LONG_CONSTRUCTOR, getAsLong()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagLong");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagLong class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), long.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagLong! The value was null. Response object: "
-                        + response);
-            }
-
-            Long value = (Long) response.getValue();
-            return new NBTTagLong(value == null ? 0 : value);
         }
 
         @Override
@@ -1191,6 +1234,23 @@ public class NBTWrappers {
             this.value = value;
         }
 
+        public static INBTBase fromNBT(Object nbtObject) {
+            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagFloat");
+            if (!clazz.isPresent()) {
+                System.out.println("Can't find NBTTagFloat class");
+                return null;
+            }
+            Method method = findNBTNumberGetMethod(clazz.get(), float.class);
+            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
+            if (!response.isValuePresent()) {
+                System.out.println("An error occurred reading from an NBTTagFloat! The value was null. Response object: "
+                        + response);
+            }
+
+            Float value = (Float) response.getValue();
+            return new NBTTagFloat(value == null ? 0 : value);
+        }
+
         /**
          * @param value The new value
          */
@@ -1210,23 +1270,6 @@ public class NBTWrappers {
         @Override
         public Object toNBT() {
             return ReflectionUtil.instantiate(NBT_TAG_LONG_CONSTRUCTOR, getAsFloat()).getValue();
-        }
-
-        public static INBTBase fromNBT(Object nbtObject) {
-            Optional<Class<?>> clazz = ReflectionUtil.getClass(NMS, "NBTTagFloat");
-            if (!clazz.isPresent()) {
-                System.out.println("Can't find NBTTagFloat class");
-                return null;
-            }
-            Method method = findNBTNumberGetMethod(clazz.get(), float.class);
-            ReflectionUtil.ReflectResponse<Object> response = ReflectionUtil.invokeMethod(method, nbtObject);
-            if (!response.isValuePresent()) {
-                System.out.println("An error occurred reading from an NBTTagFloat! The value was null. Response object: "
-                        + response);
-            }
-
-            Float value = (Float) response.getValue();
-            return new NBTTagFloat(value == null ? 0 : value);
         }
 
         @Override
@@ -1252,38 +1295,5 @@ public class NBTWrappers {
         public int hashCode() {
             return Objects.hash(value);
         }
-    }
-
-    /**
-     * Returns the method also existing in the Superclass
-     *
-     * @param clazz       The Class to invoke it on
-     * @param returnClass The Return class it should have
-     * @return The found Method
-     */
-    private static Method findNBTNumberGetMethod(Class<?> clazz, Class<?> returnClass) {
-        for (Method method : clazz.getDeclaredMethods()) {
-            if (!method.getReturnType().equals(returnClass)) {
-                continue;
-            }
-            if (!Modifier.isPublic(method.getModifiers())) {
-                continue;
-            }
-            if (Modifier.isStatic(method.getModifiers())) {
-                continue;
-            }
-            if (method.getName().equals("hashCode") || method.getName().equals("getTypeId")) {
-                continue;
-            }
-
-            try {
-                // noinspection ConfusingArgumentToVarargsMethod // The array is
-                // desired. If it is in the Superclass too, it is out method
-                clazz.getSuperclass().getMethod(method.getName(), method.getParameterTypes());
-                return method;
-            } catch (NoSuchMethodException ignored) {
-            }
-        }
-        return null;
     }
 }

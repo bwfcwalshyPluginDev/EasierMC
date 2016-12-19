@@ -1,13 +1,16 @@
 package com.bwfcwalshy.easiermc.utils;
 
+import me.ialistannen.itemrecipes.easiermc.util.Util;
+
 import com.bwfcwalshy.easiermc.CustomHead;
 import com.bwfcwalshy.easiermc.EasierMC;
-import java.util.ArrayList;
-import java.util.List;
-import me.ialistannen.itemrecipes.easiermc.util.Util;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemStackBuilder {
 

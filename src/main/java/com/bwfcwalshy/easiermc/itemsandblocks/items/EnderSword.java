@@ -7,14 +7,16 @@ import com.bwfcwalshy.easiermc.recipe.AdvancedRecipe;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.nbt.ItemNBTUtil;
 import com.bwfcwalshy.easiermc.utils.nbt.NBTWrappers;
-import java.util.Arrays;
-import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 public class EnderSword implements ItemBase {
 
