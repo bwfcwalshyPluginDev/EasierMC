@@ -1,7 +1,9 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.bases;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -61,12 +63,22 @@ public interface MachineBase extends BlockBase {
             }
         }
 
-        if(outputs.size() == 0) return;
+        if(outputs.size() == 0 || getCurrentEu() < getEuOutput()) return;
         int euPerOutput = getEuOutput() / outputs.size();
 
         for(BlockBase output : outputs){
             if(output instanceof MachineBase){
-                ((MachineBase) output).setCurrentEu(getCurrentEu()+euPerOutput);
+                MachineBase machine = (MachineBase) output;
+                if(machine.getEuInput() <= 0 || machine.getCurrentEu() == machine.getEuCapacity()) return;
+                if(euPerOutput <= machine.getEuInput()) {
+                    System.out.println(getSimpleName() + " is giving " + machine.getSimpleName() + " " + euPerOutput + " EU");
+                    if((machine.getCurrentEu() + euPerOutput) > machine.getEuCapacity())
+                        machine.setCurrentEu(machine.getEuCapacity());
+                    else
+                        machine.setCurrentEu(machine.getCurrentEu() + euPerOutput);
+                    System.out.println(machine.getCurrentEu());
+                    setCurrentEu(getCurrentEu() - euPerOutput);
+                }
             }else{
                 // Do the node crap
             }

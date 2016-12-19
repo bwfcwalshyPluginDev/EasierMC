@@ -3,14 +3,25 @@ package com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines;
 import com.bwfcwalshy.easiermc.itemsandblocks.Category;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
+import com.bwfcwalshy.easiermc.utils.StringUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Batbox implements MachineBase {
 
     private int currentEU = 0;
+    private final int STORAGE = 40000;
+
+    private Inventory inventory;
 
     @Override
     public String getName() {
@@ -35,7 +46,7 @@ public class Batbox implements MachineBase {
 
     @Override
     public int getEuCapacity() {
-        return 40000;
+        return STORAGE;
     }
 
     @Override
@@ -56,5 +67,52 @@ public class Batbox implements MachineBase {
     @Override
     public void setCurrentEu(int currentEU) {
         this.currentEU = currentEU;
+    }
+
+    @Override
+    public void onInteract(PlayerInteractEvent e){
+        e.setCancelled(true);
+        e.getPlayer().openInventory(getInventory());
+    }
+
+    private Inventory getInventory() {
+        if (inventory == null) {
+            inventory = Bukkit.createInventory(null, 27, getName());
+
+            for (int i = 0; i < 27; i++) {
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, " ").setData(7).build());
+            }
+
+            for (int i = 10; i < 17; i++) {
+                inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: "
+                        + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).setData(14).build());
+            }
+        }
+
+        return inventory;
+    }
+
+    private void updateInventory() {
+        if(inventory == null) inventory = getInventory();
+        for (int i = 10; i < 17; i++) {
+            inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: "
+                    + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).setData(14).build());
+        }
+    }
+
+    @Override
+    public void tick(Location location, int tick) {
+        handleOutput(location);
+        updateInventory();
+    }
+
+    @Override
+    public void saveData(FileConfiguration data, String path){
+        data.set(path + ".EU", currentEU);
+    }
+
+    @Override
+    public void loadData(FileConfiguration data, String path){
+        this.currentEU = data.getInt(path + ".EU");
     }
 }

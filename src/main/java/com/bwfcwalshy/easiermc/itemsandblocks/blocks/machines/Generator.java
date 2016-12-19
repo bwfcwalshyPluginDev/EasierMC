@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
+import com.bwfcwalshy.easiermc.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -111,15 +112,11 @@ public class Generator implements MachineBase {
 
     @Override
     public void loadData(FileConfiguration data, String path) {
-        System.out.println("Loading generator data");
         this.currentEU = data.getInt(path + ".EU");
-        System.out.println("Current EU: " + currentEU);
         this.currentFuel = Fuel.valueOf(data.getString(path + ".Fuel"));
         this.currentFuelItem = data.getItemStack(data +  ".Current-Fuel-Item");
         this.currentBurnTime = data.getInt(path + ".Current-Burn-Time");
         this.burning = currentBurnTime > 0;
-
-        System.out.println("Loaded Generator-" + instance);
     }
 
     @Override
@@ -147,7 +144,7 @@ public class Generator implements MachineBase {
 
         if (currentFuel == null) currentFuel = Fuel.NO_FUEL;
 
-        if (currentFuel == Fuel.NO_FUEL) return;
+        if (currentFuel == Fuel.NO_FUEL && currentEU == 0) return;
 
         if (currentBurnTime == BURN_TIME) {
             currentBurnTime = 0;
@@ -182,10 +179,9 @@ public class Generator implements MachineBase {
                 inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.WHITE + "Idle").build());
             }
 
-            System.out.println("Inv EU: " + currentEU);
-            System.out.println("Generator-" + instance);
             inventory.setItem(16, new ItemStackBuilder(Material.BLAZE_POWDER, ChatColor.AQUA + "Status",
-                    Collections.singletonList(ChatColor.GRAY + "Storage: " + ChatColor.RED + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
+                    Collections.singletonList(ChatColor.GRAY + "Storage: " + StringUtil.getColorFromEnergy(currentEU, STORAGE)
+                            + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
         }
 
         return inventory;
@@ -200,8 +196,8 @@ public class Generator implements MachineBase {
             }
         }
 
-        inventory.setItem(16, new ItemStackBuilder(Material.BLAZE_POWDER, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: " + ChatColor.RED
-                + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
+        inventory.setItem(16, new ItemStackBuilder(Material.BLAZE_POWDER, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: "
+                + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).build());
     }
 
     public enum Fuel {
