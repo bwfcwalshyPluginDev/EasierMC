@@ -16,11 +16,11 @@ import java.util.List;
  * The ItemStackBuilder allows ItemStacks to be very easily created.
  * ItemStackBuilder also comes with an automatic lore-shorter, so if your lore is greater than MAX_LORE_LENGTH then it will be moved to a new line.
  * The lore will also keep whatever ChatColor it was using as well! And it will not split it mid-word, it will always check for the <b>closest</b> space and split there.
- *
+ * <br>
  * ItemStackBuilder also comes with an auto-updater, this means you can make your items or blocks automatically update the lore.
  * To do this the builder will save the current version in the lore hidden with ChatColors and EasierMC will check that when a player first moves or when a player interacts.
  * If the item is not up to date it will make sure it is!
- *
+ * <br>
  * To enable to auto-updater just do {@link #autoUpdate()} and if you want to disable it or enable it at other times you can do {@link #setAutoUpdate(boolean)}
  */
 public class ItemStackBuilder {
@@ -65,6 +65,7 @@ public class ItemStackBuilder {
      * @param material The item Material.
      * @param amount The item amount.
      * @param name The item display name.
+     * @param lore The item lore.
      */
     public ItemStackBuilder(Material material, int amount, String name, List<String> lore) {
         is = new ItemStack(material, amount);
@@ -86,7 +87,7 @@ public class ItemStackBuilder {
 
     /**
      * Create an ItemStack with a custom skull URL and display name
-     * @param skullURL The item skull URL. Make sure this is the full URL! http://textures.minecraft.net/texture/<Skull ID>
+     * @param skullURL The item skull URL. Make sure this is the full URL! http://textures.minecraft.net/texture/{@literal <SkullURL>}
      * @param name The item display name.
      */
     public ItemStackBuilder(String skullURL, String name) {
@@ -106,6 +107,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the ItemStack data.
+     * @param data The item data value.
      */
     public ItemStackBuilder setData(int data) {
         is.setDurability((short) data);
@@ -114,6 +116,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the ItemStack display name.
+     * @param The item display name.
      */
     public ItemStackBuilder setDisplayName(String name) {
         if (im == null) im = is.getItemMeta();
