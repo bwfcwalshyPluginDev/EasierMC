@@ -32,7 +32,7 @@ public class LongFallBoots implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        ItemStack is = new ItemStackBuilder(Material.DIAMOND_BOOTS, getName(), Arrays.asList(ChatColor.GRAY + "Fall with great heights without fear of dying!")).build();
+        ItemStack is = new ItemStackBuilder(Material.DIAMOND_BOOTS, getName(), Arrays.asList(ChatColor.GRAY + "Fall with great heights without fear of dying!")).autoUpdate().build();
         ItemMeta im = is.getItemMeta();
         im.spigot().setUnbreakable(true);
         is.setItemMeta(im);

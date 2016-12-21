@@ -32,7 +32,7 @@ public class MasterStar implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.NETHER_STAR, getName(), Arrays.asList(ChatColor.AQUA + "This Master Star is used to make the most powerful weapons around!")).build();
+        return new ItemStackBuilder(Material.NETHER_STAR, getName(), Arrays.asList(ChatColor.AQUA + "This Master Star is used to make the most powerful weapons around!")).autoUpdate().build();
     }
 
     @Override

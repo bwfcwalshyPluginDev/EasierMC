@@ -40,7 +40,7 @@ public class EnderSword implements ItemBase {
     @Override
     public ItemStack getItem() {
         ItemStack is = new ItemStackBuilder(Material.DIAMOND_SWORD, getName(), Arrays.asList(ChatColor.GRAY + "This is the most powerful sword known to man.", " "
-                , ChatColor.DARK_PURPLE + "Powered by a dragon egg, this sword will guarantee you can slay any dragon in the land.")).build();
+                , ChatColor.DARK_PURPLE + "Powered by a dragon egg, this sword will guarantee you can slay any dragon in the land.")).autoUpdate().build();
         ItemMeta im = is.getItemMeta();
         im.spigot().setUnbreakable(true);
         is.setItemMeta(im);

@@ -32,7 +32,7 @@ public class TrashBin implements BlockBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.CAULDRON_ITEM, ChatColor.DARK_GRAY + "Trash Bin").build();
+        return new ItemStackBuilder(Material.CAULDRON_ITEM, ChatColor.DARK_GRAY + "Trash Bin").autoUpdate().build();
     }
 
     @Override

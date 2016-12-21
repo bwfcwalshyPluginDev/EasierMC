@@ -38,7 +38,7 @@ public class TreeTap implements ItemBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder(Material.WOOD_HOE, getName(), Arrays.asList(ChatColor.GRAY + "Use this to tap some rubber from trees!"
-                , ChatColor.GRAY + "This gives a 10% chance for rubber to be given from oak logs.")).build();
+                , ChatColor.GRAY + "This gives a 10% chance for rubber to be given from oak logs.")).autoUpdate().build();
     }
 
     @Override

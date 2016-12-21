@@ -16,6 +16,9 @@ public class BlockListener implements Listener {
             }
         } else if (e.getInventory().getName().equals(ChatColor.DARK_GRAY + "Batbox")) {
             e.setCancelled(true);
+        } else if (e.getInventory().getName().equals(ChatColor.GRAY + "Electric Furnace")) {
+            if(getClickedInventory(e) != null && e.getClickedInventory() != e.getWhoClicked().getInventory() && e.getSlot() == 1)
+                e.setCancelled(true);
         }
     }
 

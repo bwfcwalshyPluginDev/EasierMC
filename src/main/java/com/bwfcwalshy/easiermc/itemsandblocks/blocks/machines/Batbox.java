@@ -104,7 +104,7 @@ public class Batbox implements MachineBase {
         if (inventory == null) inventory = getInventory();
         for (int i = 10; i < 17; i++) {
             inventory.setItem(i, new ItemStackBuilder(Material.STAINED_GLASS_PANE, ChatColor.AQUA + "Status", Collections.singletonList(ChatColor.GRAY + "Storage: "
-                    + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).setData(14).build());
+                    + StringUtil.getColorFromEnergy(currentEU, STORAGE) + currentEU + ChatColor.GRAY + "/" + ChatColor.AQUA + STORAGE + " EU")).setData(14).autoUpdate().build());
         }
     }
 

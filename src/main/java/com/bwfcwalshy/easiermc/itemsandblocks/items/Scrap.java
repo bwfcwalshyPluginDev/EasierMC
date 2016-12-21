@@ -28,7 +28,7 @@ public class Scrap implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.BRICK, getName()).build();
+        return new ItemStackBuilder(Material.BRICK, getName()).autoUpdate().build();
     }
 
     @Override

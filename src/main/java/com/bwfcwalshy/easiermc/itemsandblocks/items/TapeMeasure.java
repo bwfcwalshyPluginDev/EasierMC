@@ -43,7 +43,7 @@ public class TapeMeasure implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.COMPASS, getName()).build();
+        return new ItemStackBuilder(Material.COMPASS, getName()).autoUpdate().build();
     }
 
     @Override

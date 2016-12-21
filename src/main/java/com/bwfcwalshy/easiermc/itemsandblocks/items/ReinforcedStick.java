@@ -32,7 +32,7 @@ public class ReinforcedStick implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.STICK, getName(), Arrays.asList(ChatColor.GRAY + "This can be used to make more powerful weapons than a normal stick.")).build();
+        return new ItemStackBuilder(Material.STICK, getName(), Arrays.asList(ChatColor.GRAY + "This can be used to make more powerful weapons than a normal stick.")).autoUpdate().build();
     }
 
     @Override

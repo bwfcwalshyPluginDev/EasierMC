@@ -35,7 +35,7 @@ public class AutoShear implements BlockBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe", getName())
-                .setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to shear sheep that are in-front of it.", ChatColor.GRAY + "Can shear from 3 blocks away!")).build();
+                .setLore(Arrays.asList(ChatColor.GRAY + "You can use this item to shear sheep that are in-front of it.", ChatColor.GRAY + "Can shear from 3 blocks away!")).autoUpdate().build();
     }
 
     @Override

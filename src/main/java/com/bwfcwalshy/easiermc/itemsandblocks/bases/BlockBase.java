@@ -75,7 +75,7 @@ public interface BlockBase extends EasierMCBase {
 
     /**
      * Clones the inventory
-     * <p>
+     *
      * Returns null if inventory is null
      *
      * @param inventory The inventory to clone

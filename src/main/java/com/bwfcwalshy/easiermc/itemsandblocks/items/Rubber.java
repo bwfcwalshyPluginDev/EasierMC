@@ -27,6 +27,6 @@ public class Rubber implements ItemBase {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStackBuilder(Material.CLAY_BALL, getName()).build();
+        return new ItemStackBuilder(Material.CLAY_BALL, getName()).autoUpdate().build();
     }
 }

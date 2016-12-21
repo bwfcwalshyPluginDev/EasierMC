@@ -35,7 +35,7 @@ public class WellMiner implements BlockBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/a881a2be964282a4c7c63850e13d12a8f5ddf2fad7b93670e22bb729eae337fe", getName())
-                .setLore(Collections.singletonList(ChatColor.GRAY + "You can use this item to dig straight down.")).build();
+                .setLore(Collections.singletonList(ChatColor.GRAY + "You can use this item to dig straight down.")).autoUpdate().build();
     }
 
     @Override

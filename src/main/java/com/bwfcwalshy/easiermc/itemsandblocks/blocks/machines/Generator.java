@@ -54,7 +54,7 @@ public class Generator implements MachineBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/12616a70e8f74ccb6f7f44e4aee5dbcbbcb80c9f23e1dccb07a5f156521215", getName())
-                .setLore(Collections.singletonList(ChatColor.GRAY + "Generate electricity by burning fuel sources.")).build();
+                .setLore(Collections.singletonList(ChatColor.GRAY + "Generate electricity by burning fuel sources.")).autoUpdate().build();
     }
 
     @Override
@@ -121,11 +121,6 @@ public class Generator implements MachineBase {
 
     @Override
     public void tick(Location location, int tick) {
-        System.out.println(getInventory().getItem(10));
-        if(getInventory().getItem(10) != null)
-            System.out.println(getInventory().getItem(10).getType());
-        System.out.println(currentEU + " - " + STORAGE + " (" + (currentEU < STORAGE) + ")");
-        System.out.println(currentFuel + " - " + (currentFuel == Fuel.NO_FUEL));
         if (getInventory().getItem(10) != null && getInventory().getItem(10).getType() != Material.AIR && currentEU < STORAGE && currentFuel == Fuel.NO_FUEL) {
             for (ItemStack is : Fuel.getAllFuels()) {
                 if (handler.itemStackEquals(getInventory().getItem(10), is, false)) {
@@ -151,8 +146,6 @@ public class Generator implements MachineBase {
         if (currentFuel == null) currentFuel = Fuel.NO_FUEL;
 
         if (currentFuel == Fuel.NO_FUEL && currentEU == 0) return;
-
-        System.out.println("Burn time: " + currentBurnTime);
 
         if (currentBurnTime == BURN_TIME) {
             System.out.println("Stopping");
