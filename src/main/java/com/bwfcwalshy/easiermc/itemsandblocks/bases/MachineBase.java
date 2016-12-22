@@ -60,9 +60,11 @@ public interface MachineBase extends BlockBase {
                 if (handler.isBlock(location.getBlock().getRelative(face).getLocation())) {
                     BlockBase base = handler.getBlock(location.getBlock().getRelative(face).getLocation());
 
-                    if (base instanceof MachineBase || base instanceof Cable) {
+                    if (base instanceof MachineBase) {
+                        if(((MachineBase) base).getEuInput() > 0)
+                            outputs.add(base);
+                    }else if(base instanceof Cable)
                         outputs.add(base);
-                    }
                 }
             }
         }

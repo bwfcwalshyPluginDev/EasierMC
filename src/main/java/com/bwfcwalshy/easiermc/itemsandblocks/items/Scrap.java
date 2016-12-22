@@ -35,9 +35,4 @@ public class Scrap implements ItemBase {
     public Recipe getRecipe() {
         return null;
     }
-
-    @Override
-    public Scrap copy() {
-        return this;
-    }
 }

@@ -10,6 +10,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -87,7 +88,11 @@ public interface BlockBase extends EasierMCBase {
             return null;
         }
 
-        Inventory clone = Bukkit.createInventory(inventory.getHolder(), inventory.getSize(), inventory.getTitle());
+        Inventory clone;
+        if(inventory.getType() != InventoryType.CHEST)
+            clone = Bukkit.createInventory(inventory.getHolder(), inventory.getType(), inventory.getTitle());
+        else
+            clone = Bukkit.createInventory(inventory.getHolder(), inventory.getSize(), inventory.getTitle());
 
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack binItem = inventory.getItem(i);
