@@ -5,7 +5,6 @@ import com.bwfcwalshy.easiermc.itemsandblocks.bases.MachineBase;
 import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import com.bwfcwalshy.easiermc.utils.StringUtil;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,13 +13,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
-import java.util.Arrays;
 import java.util.Collections;
 
-public class ElectricFurnace implements MachineBase {
+public class ElectricFurnace implements MachineBase, EnergyConsumer {
 
     private int currentEU;
     private boolean burning;

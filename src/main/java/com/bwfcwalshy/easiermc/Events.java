@@ -59,13 +59,13 @@ public class Events implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         // Make sure I don't keep doing full inventory checks.
         if (checkedPlayers.contains(e.getPlayer().getUniqueId())) return;
-        System.out.println("Noobtubes fired");
+//        System.out.println("Noobtubes fired");
         for (int i = 0; i < e.getPlayer().getInventory().getContents().length; i++) {
             ItemStack is = e.getPlayer().getInventory().getContents()[i];
             if (is != null && handler.getItemFromEverything(is) != null) {
                 EasierMCBase base = handler.getItemFromEverything(is);
-                System.out.println(is);
-                System.out.println(base);
+//                System.out.println(is);
+//                System.out.println(base);
                 if (handler.isHigherVersion(handler.getVersion(is), handler.getVersion(base.getItem()))) {
                     e.getPlayer().getInventory().setItem(i, base.getItem());
                 }

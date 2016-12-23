@@ -24,7 +24,7 @@ public class ItemListener implements Listener {
                 EasierMCBase base = handler.getItemFromEverything(e.getItem());
                 if (base != null) {
                     if (handler.isHigherVersion(handler.getVersion(base.getItem()), handler.getVersion(e.getItem()))) {
-                        System.out.println("Updated " + e.getPlayer().getName() + "'s " + base.getSimpleName());
+//                        System.out.println("Updated " + e.getPlayer().getName() + "'s " + base.getSimpleName());
                         ItemStack is = base.getItem();
                         is.setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount());
                         e.getPlayer().getInventory().setItemInMainHand(is);

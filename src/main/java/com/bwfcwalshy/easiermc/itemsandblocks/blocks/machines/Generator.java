@@ -18,7 +18,7 @@ import org.bukkit.inventory.Recipe;
 
 import java.util.Collections;
 
-public class Generator implements MachineBase {
+public class Generator extends AbstractEnergyProvider implements MachineBase {
 
     private final int STORAGE = 4000;
     // How long the fuel will burn for
@@ -155,7 +155,7 @@ public class Generator implements MachineBase {
             return;
         }
 
-        if(burning) {
+        if (burning) {
             if (currentEU < STORAGE) {
                 if ((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
                     currentEU = STORAGE;

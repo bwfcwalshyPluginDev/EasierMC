@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Batbox implements MachineBase {
+public class Batbox extends AbstractEnergyProvider implements MachineBase, EnergyConsumer {
 
     private final int STORAGE = 40000;
     private int currentEU = 0;
@@ -41,7 +41,9 @@ public class Batbox implements MachineBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/6e6366e47831f107ac8a781df1bb3aa54f777612c9157d8be8e84803361e16f", getName())
-                .setLore(Arrays.asList(ChatColor.GRAY + "Max I/O 32 EU/t", ChatColor.GRAY + "Capacity: 40,000 EU")).build();
+                .setLore(Arrays.asList(ChatColor.GRAY + "Max I/O 32 EU/t", ChatColor.GRAY + "Capacity: 40,000 EU"))
+                .autoUpdate()
+                .build();
     }
 
     @Override

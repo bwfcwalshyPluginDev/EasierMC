@@ -7,6 +7,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.bases.BlockBase;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
 import com.bwfcwalshy.easiermc.recipe.nodes.ItemRootNode;
+import com.bwfcwalshy.easiermc.utils.EnergyProviderUpdater;
 import com.bwfcwalshy.easiermc.utils.pathfinder.Node;
 import com.bwfcwalshy.easiermc.utils.pathfinder.PathSearcher;
 import com.perceivedev.perceivecore.gui.Gui;
@@ -51,7 +52,8 @@ public class EasierMCCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (args.length == 0) {
-
+            EnergyProviderUpdater updater = new EnergyProviderUpdater();
+            updater.run();
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("recipe")) {
                 if (sender.hasPermission("easiermc.recipe")) {
@@ -126,7 +128,7 @@ public class EasierMCCommand implements CommandExecutor {
                 for (Node<BlockBase> node : nodes.stream()
                         .sorted(Comparator.reverseOrder())
                         .collect(Collectors.toList())) {
-                    Node<BlockBase> tmp = node;
+                    Node<? extends BlockBase> tmp = node;
                     byte data = (byte) (outerCounter++ % 16);
 
                     int counter = 0;
