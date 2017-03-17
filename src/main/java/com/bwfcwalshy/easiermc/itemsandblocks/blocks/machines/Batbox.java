@@ -13,6 +13,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,6 +43,11 @@ public class Batbox implements MachineBase {
     public ItemStack getItem() {
         return new ItemStackBuilder("http://textures.minecraft.net/texture/6e6366e47831f107ac8a781df1bb3aa54f777612c9157d8be8e84803361e16f", getName())
                 .setLore(Arrays.asList(ChatColor.GRAY + "Max I/O 32 EU/t", ChatColor.GRAY + "Capacity: 40,000 EU")).build();
+    }
+
+    @Override
+    public Recipe getRecipe() {
+        return null;
     }
 
     @Override

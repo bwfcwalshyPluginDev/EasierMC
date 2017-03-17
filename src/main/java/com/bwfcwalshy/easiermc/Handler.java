@@ -16,6 +16,8 @@ import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.IronCable;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Batbox;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.ElectricFurnace;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.CoalDust;
+import com.bwfcwalshy.easiermc.itemsandblocks.items.ElectronicCircuit;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.LongFallBoots;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.MasterStar;
@@ -212,6 +214,8 @@ public class Handler {
         registerItem(new TreeTap());
         registerItem(new Rubber());
         registerItem(new Scrap());
+        registerItem(new ElectronicCircuit());
+        registerItem(new CoalDust());
 
         registerMultiBlock(new AdvancedCraftingTable());
     }
@@ -374,5 +378,15 @@ public class Handler {
         }
         throw new IllegalArgumentException(is.getItemMeta().getDisplayName() + " - Does not have a version!");
         //return null;
+    }
+
+    /**
+     * This scans and caches all the cables on the server.
+     * This runs an async task to find all cables, make sure to only call this on certain events!
+     */
+    protected void scanForCables() {
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+
+        });
     }
 }

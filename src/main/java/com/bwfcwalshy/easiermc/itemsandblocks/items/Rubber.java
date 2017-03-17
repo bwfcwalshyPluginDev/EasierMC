@@ -7,6 +7,7 @@ import com.bwfcwalshy.easiermc.utils.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 public class Rubber implements ItemBase {
 
@@ -28,5 +29,10 @@ public class Rubber implements ItemBase {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder(Material.CLAY_BALL, getName()).autoUpdate().build();
+    }
+
+    @Override
+    public Recipe getRecipe() {
+        return null;
     }
 }

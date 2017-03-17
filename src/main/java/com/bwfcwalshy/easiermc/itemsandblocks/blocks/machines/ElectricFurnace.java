@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
@@ -48,6 +49,11 @@ public class ElectricFurnace implements MachineBase {
         //"http://textures.minecraft.net/texture/3b81998d8cb0257bd569a220304dd3862462f8e5a23e7b1d126fb98826f1ac9"
         return new ItemStackBuilder(Material.FURNACE, getName()).setLore(
                 Collections.singletonList(ChatColor.GRAY + "Max EU Input: 32 EU/t")).autoUpdate().build();
+    }
+
+    @Override
+    public Recipe getRecipe() {
+        return null;
     }
 
     @Override
@@ -88,9 +94,7 @@ public class ElectricFurnace implements MachineBase {
         if(furnace.getCookTime() < 50) furnace.setCookTime((short) 50);
         if(furnace.getBurnTime() < 100) furnace.setBurnTime(Short.MAX_VALUE);
 
-        System.out.println(furnace.getCookTime());
         if(furnace.getCookTime() > 55){
-            System.out.println(currentEU);
             if(currentEU < 3)
                 furnace.setCookTime((short) (furnace.getCookTime()-1));
             else

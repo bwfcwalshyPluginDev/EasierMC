@@ -17,9 +17,7 @@ public interface EasierMCBase {
 
     ItemStack getItem();
 
-    default Recipe getRecipe() {
-        return null;
-    }
+    Recipe getRecipe();
 
     /**
      * @return A clone of this object

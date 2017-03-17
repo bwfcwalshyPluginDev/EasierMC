@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class EasierMC extends JavaPlugin {
 
-    public static final String VERSION = "v0.0.11-1";
+    public static final String VERSION = "v0.0.11-3";
 
     private Handler handler;
     private BukkitTask tickTask;
@@ -64,6 +64,9 @@ public class EasierMC extends JavaPlugin {
         getLogger().info("*                                *");
         getLogger().info("*" + StringUtil.padToLength("Loaded " + handler.getBlocks().size() + " blocks!", ' ', 32) + "*");
         getLogger().info("**********************************");
+
+        // Scan for cables
+        handler.scanForCables();
     }
 
     @Override

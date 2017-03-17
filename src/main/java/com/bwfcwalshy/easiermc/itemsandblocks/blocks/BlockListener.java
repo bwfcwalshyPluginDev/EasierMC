@@ -1,12 +1,20 @@
 package com.bwfcwalshy.easiermc.itemsandblocks.blocks;
 
+import com.bwfcwalshy.easiermc.Handler;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.ElectricFurnace;
+
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+import org.bukkit.block.Furnace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 public class BlockListener implements Listener {
+
+    private Handler handler = Handler.getInstance();
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
@@ -29,6 +37,18 @@ public class BlockListener implements Listener {
             return e.getView().getTopInventory();
         } else {
             return e.getView().getBottomInventory();
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e){
+        Block block = e.getBlock();
+        if(handler.isBlock(block.getLocation())){
+            if(handler.getBlock(block.getLocation()) instanceof ElectricFurnace){
+                Furnace furnace = (Furnace) block.getState();
+                furnace.getInventory().setFuel(null);
+                System.out.println("Yay");
+            }
         }
     }
 }

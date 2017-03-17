@@ -2,6 +2,8 @@ package nl.shanelab.multiblock;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -12,7 +14,7 @@ import org.bukkit.plugin.Plugin;
  */
 public interface IMultiBlock {
 
-    void onActivate(Plugin plugin, Location location, Player player, MultiBlockActivation activation);
+    void onActivate(Plugin plugin, Location location, Player player, MultiBlockActivation activation, Cancellable event);
 
     MultiBlockPattern getMultiBlockPattern();
 }

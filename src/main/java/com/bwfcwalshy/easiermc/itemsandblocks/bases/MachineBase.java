@@ -54,6 +54,8 @@ public interface MachineBase extends BlockBase {
      * @param location The location of the machine, pass in the location argument used in the tick method.
      */
     default void handleOutput(Location location) {
+        if(getCurrentEu() <= 0) return;
+
         List<BlockBase> outputs = new ArrayList<>();
         for (BlockFace face : BlockFace.values()) {
             if (checkedFaces.contains(face)) {
@@ -69,14 +71,24 @@ public interface MachineBase extends BlockBase {
             }
         }
 
-        if (outputs.size() == 0 || getCurrentEu() < getEuOutput()) return;
-        int euPerOutput = getEuOutput() / outputs.size();
+        if (outputs.size() == 0) return;
+        int canOutput = getEuOutput();
+        if(getCurrentEu() < getEuOutput())
+            canOutput = getCurrentEu();
+        int euPerOutput = canOutput / outputs.size();
+
+        System.out.println(getSimpleName() + " has " + getCurrentEu());
+        System.out.println(euPerOutput);
 
         for (BlockBase output : outputs) {
             if (output instanceof MachineBase) {
                 MachineBase machine = (MachineBase) output;
+                System.out.println("a");
                 if (machine.getEuInput() <= 0 || machine.getCurrentEu() == machine.getEuCapacity()) return;
+                System.out.println("b");
+                System.out.println(machine.getEuInput());
                 if (euPerOutput <= machine.getEuInput()) {
+                    System.out.println("c");
                     System.out.println(getSimpleName() + " is giving " + machine.getSimpleName() + " " + euPerOutput + " EU");
                     if ((machine.getCurrentEu() + euPerOutput) > machine.getEuCapacity())
                         machine.setCurrentEu(machine.getEuCapacity());

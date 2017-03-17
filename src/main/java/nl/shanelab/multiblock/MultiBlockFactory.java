@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -42,7 +44,6 @@ public enum MultiBlockFactory {
      *
      * @param plugin
      * @param clazz
-     * @param params
      */
     public <T extends IMultiBlock> void register(Plugin plugin, Class<T> clazz) {
         if (pluginMultiBlocks.isEmpty() || !hasPluginMultiBlock(plugin, clazz)) {
@@ -85,13 +86,13 @@ public enum MultiBlockFactory {
         return flag;
     }
 
-    private void activate(Plugin plugin, Block block, Player player, MultiBlockActivationType activationType) {
+    private void activate(Plugin plugin, Block block, Player player, MultiBlockActivationType activationType, Cancellable event) {
         if (block != null && player != null) {
-            activate(plugin, block.getType(), block.getLocation(), player, activationType);
+            activate(plugin, block.getType(), block.getLocation(), player, activationType, event);
         }
     }
 
-    private void activate(Plugin plugin, Material material, Location location, Player player, MultiBlockActivationType activationType) {
+    private void activate(Plugin plugin, Material material, Location location, Player player, MultiBlockActivationType activationType, Cancellable event) {
         if (location != null && player != null) {
             List<IMultiBlock> multiBlocks = getRegisteredPluginMultiBlocks(plugin, material);
 
@@ -105,7 +106,7 @@ public enum MultiBlockFactory {
                         if (pattern != null && pattern.isMultiBlock(location)) {
                             flag = true;
 
-                            multiBlock.onActivate(plugin, location, player, new MultiBlockActivation(activationType, pattern.getLastPatternFacing()));
+                            multiBlock.onActivate(plugin, location, player, new MultiBlockActivation(activationType, pattern.getLastPatternFacing()), event);
                         }
                     }
                 }
@@ -156,7 +157,7 @@ public enum MultiBlockFactory {
 
         @EventHandler
         public void onBlockPlaceEvent(BlockPlaceEvent event) {
-            INSTANCE.activate(plugin, event.getBlock(), event.getPlayer(), MultiBlockActivationType.CORE_PLACED);
+            INSTANCE.activate(plugin, event.getBlock(), event.getPlayer(), MultiBlockActivationType.CORE_PLACED, event);
         }
 
         @EventHandler
@@ -171,7 +172,7 @@ public enum MultiBlockFactory {
                 Block block = event.getClickedBlock();
 
                 if (block != null && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    INSTANCE.activate(plugin, block, player, MultiBlockActivationType.CORE_INTERACTED);
+                    INSTANCE.activate(plugin, block, player, MultiBlockActivationType.CORE_INTERACTED, event);
                 }
 
                 setLastSysTime(player, currentSysTime);

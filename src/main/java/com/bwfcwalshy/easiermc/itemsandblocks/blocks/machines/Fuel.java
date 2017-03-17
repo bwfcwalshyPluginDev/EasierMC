@@ -11,6 +11,7 @@ import static com.bwfcwalshy.easiermc.itemsandblocks.EasierMCBase.handler;
 
 public enum Fuel {
 
+    COAL_BLOCK(36000, new ItemStack(Material.COAL_BLOCK)),
     COAL_CHARCOAL(4000, new ItemStack(Material.COAL), new ItemStack(Material.COAL, (byte) 1)),
     SCRAP(870, handler.getItem("Scrap").getItem()),
     WOOD(750, new ItemStack(Material.WOOD), new ItemStack(Material.WOOD, (byte) 1), new ItemStack(Material.WOOD, (byte) 2), new ItemStack(Material.WOOD, (byte) 3)

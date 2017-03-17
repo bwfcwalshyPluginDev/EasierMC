@@ -16,6 +16,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -45,7 +47,7 @@ public class AdvancedCraftingTable implements MultiBlock {
     }
 
     @Override
-    public void onActivate(Plugin plugin, Location location, Player player, MultiBlockActivation activation) {
+    public void onActivate(Plugin plugin, Location location, Player player, MultiBlockActivation activation, Cancellable event) {
         if (activation.getType() == MultiBlockActivationType.CORE_PLACED) {
             player.sendMessage(ChatColor.GRAY + "You have placed down an " + ChatColor.AQUA + "Advanced Crafting Table");
         } else if (activation.getType() == MultiBlockActivationType.CORE_INTERACTED) {
@@ -85,6 +87,8 @@ public class AdvancedCraftingTable implements MultiBlock {
                 for (int i = 0; i < totalSum; i++)
                     dropper.drop();
                 dropper.getInventory().setContents(contents);
+
+                event.setCancelled(true);
 
                 return;
             }

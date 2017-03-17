@@ -26,7 +26,7 @@ public class PathSearcher<T> {
      * Just to prevent {@link StackOverflowError}s due to too long cable lines
      */
     @SuppressWarnings("FieldCanBeLocal")
-    private final long MAX_ITERATIONS = 10000;
+    private final long MAX_ITERATIONS = 500;
 
     private Function<Node<T>, Collection<Node<T>>> nodeExpandFunction;
     private BiFunction<Node<T>, Node<T>, Double> gCostFunction;

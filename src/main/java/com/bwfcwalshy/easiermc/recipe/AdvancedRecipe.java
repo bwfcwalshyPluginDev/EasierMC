@@ -34,6 +34,12 @@ public class AdvancedRecipe implements Recipe {
         return this;
     }
 
+    public AdvancedRecipe setIngredient(char c, ItemStack is, int amount) {
+        is.setAmount(amount);
+        this.ingredients.put(c, is);
+        return this;
+    }
+
     public String[] getShape() {
         return this.shape;
     }

@@ -156,6 +156,7 @@ public class Generator implements MachineBase {
         }
 
         if(burning) {
+            if(currentEU == STORAGE) return;
             if (currentEU < STORAGE) {
                 if ((currentEU + (currentFuel.getEuValue() / BURN_TIME)) >= STORAGE)
                     currentEU = STORAGE;
