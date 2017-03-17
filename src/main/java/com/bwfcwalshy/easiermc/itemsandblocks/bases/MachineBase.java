@@ -43,9 +43,9 @@ public interface MachineBase extends BlockBase {
     /**
      * Sets the current EU of the machine.
      *
-     * @param currentEU The new current EU value of the machine.
+     * @param newEU The new current EU value of the machine.
      */
-    void setCurrentEu(int currentEU);
+    void setCurrentEu(int newEU);
 
     /**
      * This method is used to handle output of EU to other machines and cables around it.
@@ -77,24 +77,16 @@ public interface MachineBase extends BlockBase {
             canOutput = getCurrentEu();
         int euPerOutput = canOutput / outputs.size();
 
-        System.out.println(getSimpleName() + " has " + getCurrentEu());
-        System.out.println(euPerOutput);
-
         for (BlockBase output : outputs) {
             if (output instanceof MachineBase) {
                 MachineBase machine = (MachineBase) output;
-                System.out.println("a");
                 if (machine.getEuInput() <= 0 || machine.getCurrentEu() == machine.getEuCapacity()) return;
-                System.out.println("b");
-                System.out.println(machine.getEuInput());
                 if (euPerOutput <= machine.getEuInput()) {
-                    System.out.println("c");
                     System.out.println(getSimpleName() + " is giving " + machine.getSimpleName() + " " + euPerOutput + " EU");
                     if ((machine.getCurrentEu() + euPerOutput) > machine.getEuCapacity())
                         machine.setCurrentEu(machine.getEuCapacity());
                     else
                         machine.setCurrentEu(machine.getCurrentEu() + euPerOutput);
-                    System.out.println(machine.getCurrentEu());
                     setCurrentEu(getCurrentEu() - euPerOutput);
                 }
             } else {

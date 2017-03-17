@@ -26,7 +26,7 @@ public class GlassFibreCable implements Cable {
     @Override
     public ItemStack getItem() {
         return new ItemStackBuilder(Material.THIN_GLASS, 4, getName(),
-                Collections.singletonList(ChatColor.GRAY + "Carries up to 512 EU/t"))
+                Collections.singletonList(ChatColor.GRAY + "Carries up to 512 EU/t")).autoUpdate()
                 .build();
     }
 

@@ -16,6 +16,7 @@ import com.bwfcwalshy.easiermc.itemsandblocks.blocks.cable.IronCable;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Batbox;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.ElectricFurnace;
 import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.Generator;
+import com.bwfcwalshy.easiermc.itemsandblocks.blocks.machines.SolarPanel;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.CoalDust;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.ElectronicCircuit;
 import com.bwfcwalshy.easiermc.itemsandblocks.items.EnderSword;
@@ -205,6 +206,7 @@ public class Handler {
         registerBlock(new GlassFibreCable());
         registerBlock(new Batbox());
         registerBlock(new ElectricFurnace());
+        registerBlock(new SolarPanel());
 
         registerItem(new MasterStar());
         registerItem(new ReinforcedStick());

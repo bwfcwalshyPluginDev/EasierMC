@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class EasierMC extends JavaPlugin {
 
-    public static final String VERSION = "v0.0.11-3";
+    public static final String VERSION = "v0.0.11-4";
 
     private Handler handler;
     private BukkitTask tickTask;
